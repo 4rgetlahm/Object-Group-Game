@@ -8,6 +8,6 @@ namespace object_group_game
 {
     class Player
     {
-        private double Health;
+        private double health;
     }
 }
