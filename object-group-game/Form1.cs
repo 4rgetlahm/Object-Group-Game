@@ -16,6 +16,5 @@ namespace object_group_game
         {
             InitializeComponent();
         }
-
     }
 }
