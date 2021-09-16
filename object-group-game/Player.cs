@@ -6,8 +6,12 @@ using System.Threading.Tasks;
 
 namespace object_group_game
 {
-    class Player
+    public class Player
     {
-        private double health;
+        public int health { get; set; }
+        public int experience { get; set; }    
+        public int mana { get; set; }
+        public int gold { get; set; }
+
     }
 }
