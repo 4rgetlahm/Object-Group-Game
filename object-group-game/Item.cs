@@ -4,20 +4,12 @@ using System.Text;
 
 namespace object_group_game {
 	class Item {
-		private string name;
-		private List<Effect> effects;
+		public string Name { get; set; }
+		public List<Effect> effects { get; set; }
 
 		Item(string name, List<Effect> effects) {
 			this.name = name;
 			this.effects = effects;
-		}
-
-		string GetName() {
-			return name;
-		}
-
-		List<Effect> GetEffects() {
-			return effects.clone();
 		}
 	}
 }
