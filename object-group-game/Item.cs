@@ -5,7 +5,7 @@ using System.Text;
 namespace object_group_game {
 	class Item {
 		public string Name { get; set; }
-		public List<Effect> effects { get; set; }
+		public List<Effect> Effects { get; set; }
 
 		Item(string name, List<Effect> effects) {
 			this.name = name;
