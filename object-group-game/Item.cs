@@ -8,8 +8,8 @@ namespace object_group_game {
 		public List<Effect> Effects { get; set; }
 
 		Item(string name, List<Effect> effects) {
-			this.name = name;
-			this.effects = effects;
+			Name.set(name);
+			Effects.set(effects);
 		}
 	}
 }

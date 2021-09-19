@@ -9,9 +9,9 @@ namespace object_group_game {
 		public int Value { get; set; }
 
 		Effect(string status, string displayName, int value) {
-			this.status = status;
-			this.displayName = displayName;
-			this.value = value;
+			Status.set(status);
+			DisplayName.set(displayName);
+			Value.set(value);
 		}
 	}
 }
