@@ -8,14 +8,14 @@ namespace object_group_game
 {
     public class Player
     {
-        private int health { get; set; }
-        private int experience { get; set; }    
-        private int mana { get; set; }
-        private int gold { get; set; 
+        private int Health { get; set; }
+        private int Experience { get; set; }    
+        private int Mana { get; set; }
+        private int Gold { get; set; 
 
-        private int strenght { get; set; }
-        private int agility { get; set; }
-        private int wisdom { get; set; }
+        private int Strenght { get; set; }
+        private int Agility { get; set; }
+        private int Wisdom { get; set; }
 
     }
 }
