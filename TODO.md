@@ -4,6 +4,7 @@ and an inventory of collected items. Additionally, a map in which the user can s
 surrounding locations from a database.
 
 1. Add more functionality to backend
+	- Change Player class to represent Player as the User that is playing and add Character class to represent the User's character
 	- Add functionality to eventually read the location and item database
 	- Add functionality for GUI to get player and inventory information
 	- Add functionality to save and load user database (collected and equipped (to-be implemented) items)
