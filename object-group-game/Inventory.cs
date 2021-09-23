@@ -4,7 +4,16 @@ using System.Text;
 
 namespace object_group_game {
 	class Inventory {
-		private List<Item> Items { get; set; }
+		private List<Item> _items;
+		public List<Item> Items {
+			get {
+				return _items.clone();
+			}
+
+			private set {
+				_items = value;
+			}
+		}
 
 		Inventory() {
 			Items = new List<Item>();
@@ -12,10 +21,6 @@ namespace object_group_game {
 
 		Inventory(List<Item> items) {
 			Items = items;
-		}
-		
-		public List<Item> GetItems() {
-			return Items.clone();
 		}
 	}
 }
