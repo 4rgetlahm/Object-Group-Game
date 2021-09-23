@@ -8,15 +8,15 @@ namespace object_group_game
 {
     class Location
     {
-        private float Latitude { get; set; }
-        private float Longtitude { get; set; }
-        private LocationType LocationType { get; set; }
+        private float latitude;
+        private float longtitude;
+        private LocationType locationType;
 
         public Location(float latitude, float longtitude, LocationType locationType)
         {
-            this.Latitude = latitude;
-            this.Longtitude = longtitude;
-            this.LocationType = locationType;
+            this.latitude = latitude;
+            this.longtitude = longtitude;
+            this.locationType = locationType;
         }
     }
 }
