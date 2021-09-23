@@ -6,16 +6,22 @@ using System.Threading.Tasks;
 
 namespace object_group_game
 {
-    public class Player
+    class Player
     {
-        private int Health { get; set; }
-        private int Experience { get; set; }    
-        private int Mana { get; set; }
-        private int Gold { get; set; 
+        public Character Character { get; set; }
+        public List<Item> Items { get; set; }
+        public List<Location> VisitedLocations { get; set; }
 
-        private int Strenght { get; set; }
-        private int Agility { get; set; }
-        private int Wisdom { get; set; }
+        public Player(Character character)
+        {
+            this.Character = character;
+        }
 
+        public Player(Character character, List<Item> items, List<Location> visitedLocations)
+        {
+            this.Character = character;
+            this.Items = items;
+            this.VisitedLocations = visitedLocations;
+        }
     }
 }
