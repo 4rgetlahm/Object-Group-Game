@@ -29,13 +29,24 @@ namespace object_group_game
         /// </summary>
         private void InitializeComponent()
         {
+            this.button1 = new System.Windows.Forms.Button();
             this.SuspendLayout();
+            // 
+            // button1
+            // 
+            this.button1.Location = new System.Drawing.Point(841, 848);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(188, 72);
+            this.button1.TabIndex = 0;
+            this.button1.Text = "Login";
+            this.button1.UseVisualStyleBackColor = true;
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(10F, 25F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(2006, 1104);
+            this.Controls.Add(this.button1);
             this.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.Name = "Form1";
             this.Text = "Form1";
@@ -44,6 +55,8 @@ namespace object_group_game
         }
 
         #endregion
+
+        private System.Windows.Forms.Button button1;
     }
 }
 
