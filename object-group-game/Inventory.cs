@@ -2,25 +2,25 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace object_group_game {
-	class Inventory {
-		private List<Item> _items;
-		public List<Item> Items {
-			get {
-				return _items.clone();
-			}
+namespace object_group_game
+{
+	class Inventory 
+	{
+		public List<Item> Items { get; private set; }
 
-			private set {
-				_items = value;
-			}
-		}
-
-		Inventory() {
+		Inventory()
+		{
 			Items = new List<Item>();
 		}
 
-		Inventory(List<Item> items) {
-			Items = items;
+		Inventory(ICollection<Item> items)
+		{
+			Items = items.ToList();
+		}
+
+		public List<Item> GetItems()
+		{
+			return Items.clone();
 		}
 	}
 }
