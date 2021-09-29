@@ -2,14 +2,17 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace object_group_game {
-	class Item {
-		public string Name { get; set; }
-		public List<Effect> Effects { get; set; }
+namespace object_group_game 
+{
+	class Item
+	{
+		public string Name { get; private set; }
+		public List<Effect> Effects { get; private set; }
 
-		Item(string name, List<Effect> effects) {
-			Name.set(name);
-			Effects.set(effects);
+		Item(string name, ICollection<Effect> effects)
+		{
+			Name = name;
+			Effects = effects.ToList();
 		}
 	}
 }
