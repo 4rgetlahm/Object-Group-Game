@@ -10,11 +10,16 @@ using System.Windows.Forms;
 
 namespace object_group_game
 {
-    public partial class Form1 : Form
+    public partial class LoginMenu : Form
     {
-        public Form1()
+        public LoginMenu()
         {
             InitializeComponent();
+        }
+
+        private void MainMenu_Load(object sender, EventArgs e)
+        {
+
         }
     }
 }
