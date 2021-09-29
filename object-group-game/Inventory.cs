@@ -17,10 +17,5 @@ namespace object_group_game
 		{
 			Items = items.ToList();
 		}
-
-		public List<Item> GetItems()
-		{
-			return Items.clone();
-		}
 	}
 }
