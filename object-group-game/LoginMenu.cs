@@ -21,5 +21,15 @@ namespace object_group_game
         {
 
         }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            //Login attempt with database
+            //If success, open MainMenu
+            MainMenu mainmenu = new MainMenu();
+            this.Hide();
+            mainmenu.ShowDialog();
+            this.Close();
+        }
     }
 }
