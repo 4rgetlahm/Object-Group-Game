@@ -9,12 +9,12 @@ namespace object_group_game
 	{
 		public List<Item> Items { get; private set; }
 
-		Inventory()
+		public Inventory()
 		{
 			Items = new List<Item>();
 		}
 
-		Inventory(ICollection<Item> items)
+		public Inventory(ICollection<Item> items)
 		{
 			Items = items.ToList();
 		}
