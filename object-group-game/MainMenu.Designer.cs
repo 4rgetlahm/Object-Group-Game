@@ -29,18 +29,19 @@ namespace object_group_game
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.groupBox6 = new System.Windows.Forms.GroupBox();
-            this.progressBar3 = new System.Windows.Forms.ProgressBar();
-            this.progressBar2 = new System.Windows.Forms.ProgressBar();
-            this.progressBar1 = new System.Windows.Forms.ProgressBar();
+            this.intelligenceBar = new System.Windows.Forms.ProgressBar();
+            this.dexterityBar = new System.Windows.Forms.ProgressBar();
+            this.strengthBar = new System.Windows.Forms.ProgressBar();
             this.label9 = new System.Windows.Forms.Label();
             this.label8 = new System.Windows.Forms.Label();
             this.label7 = new System.Windows.Forms.Label();
             this.label6 = new System.Windows.Forms.Label();
             this.groupBox4 = new System.Windows.Forms.GroupBox();
             this.groupBox5 = new System.Windows.Forms.GroupBox();
-            this.label4 = new System.Windows.Forms.Label();
+            this.characterNameLabel = new System.Windows.Forms.Label();
             this.manaBar = new System.Windows.Forms.ProgressBar();
             this.experienceBar = new System.Windows.Forms.ProgressBar();
             this.label3 = new System.Windows.Forms.Label();
@@ -48,16 +49,18 @@ namespace object_group_game
             this.label1 = new System.Windows.Forms.Label();
             this.healthBar = new System.Windows.Forms.ProgressBar();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.goldLabel = new System.Windows.Forms.Label();
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
             this.label5 = new System.Windows.Forms.Label();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
+            this.groupBox7 = new System.Windows.Forms.GroupBox();
+            this.label10 = new System.Windows.Forms.Label();
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.gameToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.logOutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.optionsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.label10 = new System.Windows.Forms.Label();
-            this.groupBox7 = new System.Windows.Forms.GroupBox();
+            this.updateTimer = new System.Windows.Forms.Timer(this.components);
             this.groupBox1.SuspendLayout();
             this.groupBox6.SuspendLayout();
             this.groupBox4.SuspendLayout();
@@ -77,74 +80,76 @@ namespace object_group_game
             this.groupBox1.Controls.Add(this.label2);
             this.groupBox1.Controls.Add(this.label1);
             this.groupBox1.Controls.Add(this.healthBar);
-            this.groupBox1.Location = new System.Drawing.Point(12, 34);
+            this.groupBox1.Location = new System.Drawing.Point(17, 57);
+            this.groupBox1.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(421, 303);
+            this.groupBox1.Padding = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.groupBox1.Size = new System.Drawing.Size(601, 505);
             this.groupBox1.TabIndex = 0;
             this.groupBox1.TabStop = false;
             this.groupBox1.Enter += new System.EventHandler(this.groupBox1_Enter);
             // 
             // groupBox6
             // 
-            this.groupBox6.Controls.Add(this.progressBar3);
-            this.groupBox6.Controls.Add(this.progressBar2);
-            this.groupBox6.Controls.Add(this.progressBar1);
+            this.groupBox6.Controls.Add(this.intelligenceBar);
+            this.groupBox6.Controls.Add(this.dexterityBar);
+            this.groupBox6.Controls.Add(this.strengthBar);
             this.groupBox6.Controls.Add(this.label9);
             this.groupBox6.Controls.Add(this.label8);
             this.groupBox6.Controls.Add(this.label7);
             this.groupBox6.Controls.Add(this.label6);
-            this.groupBox6.Location = new System.Drawing.Point(203, 131);
+            this.groupBox6.Location = new System.Drawing.Point(290, 218);
+            this.groupBox6.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.groupBox6.Name = "groupBox6";
-            this.groupBox6.Size = new System.Drawing.Size(212, 157);
+            this.groupBox6.Padding = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.groupBox6.Size = new System.Drawing.Size(303, 262);
             this.groupBox6.TabIndex = 7;
             this.groupBox6.TabStop = false;
             // 
-            // progressBar3
+            // intelligenceBar
             // 
-            this.progressBar3.Location = new System.Drawing.Point(106, 117);
-            this.progressBar3.Margin = new System.Windows.Forms.Padding(50);
-            this.progressBar3.Maximum = 50;
-            this.progressBar3.Minimum = 1;
-            this.progressBar3.Name = "progressBar3";
-            this.progressBar3.Size = new System.Drawing.Size(96, 13);
-            this.progressBar3.Step = 1;
-            this.progressBar3.Style = System.Windows.Forms.ProgressBarStyle.Continuous;
-            this.progressBar3.TabIndex = 7;
-            this.progressBar3.Value = 15;
+            this.intelligenceBar.Location = new System.Drawing.Point(151, 195);
+            this.intelligenceBar.Margin = new System.Windows.Forms.Padding(71, 83, 71, 83);
+            this.intelligenceBar.Maximum = 1000;
+            this.intelligenceBar.Name = "intelligenceBar";
+            this.intelligenceBar.Size = new System.Drawing.Size(137, 22);
+            this.intelligenceBar.Step = 1;
+            this.intelligenceBar.Style = System.Windows.Forms.ProgressBarStyle.Continuous;
+            this.intelligenceBar.TabIndex = 7;
+            this.intelligenceBar.Value = 15;
             // 
-            // progressBar2
+            // dexterityBar
             // 
-            this.progressBar2.Location = new System.Drawing.Point(106, 84);
-            this.progressBar2.Margin = new System.Windows.Forms.Padding(50);
-            this.progressBar2.Maximum = 50;
-            this.progressBar2.Minimum = 1;
-            this.progressBar2.Name = "progressBar2";
-            this.progressBar2.Size = new System.Drawing.Size(96, 13);
-            this.progressBar2.Step = 1;
-            this.progressBar2.Style = System.Windows.Forms.ProgressBarStyle.Continuous;
-            this.progressBar2.TabIndex = 6;
-            this.progressBar2.Value = 15;
+            this.dexterityBar.Location = new System.Drawing.Point(151, 140);
+            this.dexterityBar.Margin = new System.Windows.Forms.Padding(71, 83, 71, 83);
+            this.dexterityBar.Maximum = 1000;
+            this.dexterityBar.Name = "dexterityBar";
+            this.dexterityBar.Size = new System.Drawing.Size(137, 22);
+            this.dexterityBar.Step = 1;
+            this.dexterityBar.Style = System.Windows.Forms.ProgressBarStyle.Continuous;
+            this.dexterityBar.TabIndex = 6;
+            this.dexterityBar.Value = 15;
             // 
-            // progressBar1
+            // strengthBar
             // 
-            this.progressBar1.Location = new System.Drawing.Point(106, 48);
-            this.progressBar1.Margin = new System.Windows.Forms.Padding(50);
-            this.progressBar1.Maximum = 50;
-            this.progressBar1.Minimum = 1;
-            this.progressBar1.Name = "progressBar1";
-            this.progressBar1.Size = new System.Drawing.Size(96, 13);
-            this.progressBar1.Step = 1;
-            this.progressBar1.Style = System.Windows.Forms.ProgressBarStyle.Continuous;
-            this.progressBar1.TabIndex = 5;
-            this.progressBar1.Value = 15;
+            this.strengthBar.Location = new System.Drawing.Point(151, 80);
+            this.strengthBar.Margin = new System.Windows.Forms.Padding(71, 83, 71, 83);
+            this.strengthBar.Maximum = 1000;
+            this.strengthBar.Name = "strengthBar";
+            this.strengthBar.Size = new System.Drawing.Size(137, 22);
+            this.strengthBar.Step = 1;
+            this.strengthBar.Style = System.Windows.Forms.ProgressBarStyle.Continuous;
+            this.strengthBar.TabIndex = 5;
+            this.strengthBar.Value = 15;
             // 
             // label9
             // 
             this.label9.AutoSize = true;
             this.label9.Font = new System.Drawing.Font("SimSun", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.label9.Location = new System.Drawing.Point(6, 117);
+            this.label9.Location = new System.Drawing.Point(9, 195);
+            this.label9.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label9.Name = "label9";
-            this.label9.Size = new System.Drawing.Size(91, 13);
+            this.label9.Size = new System.Drawing.Size(129, 20);
             this.label9.TabIndex = 4;
             this.label9.Text = "Intelligence";
             // 
@@ -152,9 +157,10 @@ namespace object_group_game
             // 
             this.label8.AutoSize = true;
             this.label8.Font = new System.Drawing.Font("SimSun", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.label8.Location = new System.Drawing.Point(6, 84);
+            this.label8.Location = new System.Drawing.Point(9, 140);
+            this.label8.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label8.Name = "label8";
-            this.label8.Size = new System.Drawing.Size(70, 13);
+            this.label8.Size = new System.Drawing.Size(99, 20);
             this.label8.TabIndex = 3;
             this.label8.Text = "Dexterity";
             // 
@@ -162,59 +168,64 @@ namespace object_group_game
             // 
             this.label7.AutoSize = true;
             this.label7.Font = new System.Drawing.Font("SimSun", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.label7.Location = new System.Drawing.Point(6, 48);
+            this.label7.Location = new System.Drawing.Point(9, 80);
+            this.label7.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(63, 13);
+            this.label7.Size = new System.Drawing.Size(89, 20);
             this.label7.TabIndex = 2;
-            this.label7.Text = "Strenght";
+            this.label7.Text = "Strength";
             // 
             // label6
             // 
             this.label6.AutoSize = true;
             this.label6.Font = new System.Drawing.Font("SimSun", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
-            this.label6.Location = new System.Drawing.Point(54, 19);
+            this.label6.Location = new System.Drawing.Point(77, 32);
+            this.label6.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(97, 15);
+            this.label6.Size = new System.Drawing.Size(140, 23);
             this.label6.TabIndex = 0;
             this.label6.Text = "Attributes";
             // 
             // groupBox4
             // 
             this.groupBox4.Controls.Add(this.groupBox5);
-            this.groupBox4.Controls.Add(this.label4);
-            this.groupBox4.Location = new System.Drawing.Point(10, 31);
+            this.groupBox4.Controls.Add(this.characterNameLabel);
+            this.groupBox4.Location = new System.Drawing.Point(14, 52);
+            this.groupBox4.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.groupBox4.Name = "groupBox4";
-            this.groupBox4.Size = new System.Drawing.Size(187, 257);
+            this.groupBox4.Padding = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.groupBox4.Size = new System.Drawing.Size(267, 428);
             this.groupBox4.TabIndex = 6;
             this.groupBox4.TabStop = false;
             // 
             // groupBox5
             // 
-            this.groupBox5.Location = new System.Drawing.Point(6, 44);
+            this.groupBox5.Location = new System.Drawing.Point(9, 73);
+            this.groupBox5.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.groupBox5.Name = "groupBox5";
-            this.groupBox5.Size = new System.Drawing.Size(175, 195);
+            this.groupBox5.Padding = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.groupBox5.Size = new System.Drawing.Size(250, 325);
             this.groupBox5.TabIndex = 1;
             this.groupBox5.TabStop = false;
             // 
-            // label4
+            // characterNameLabel
             // 
-            this.label4.AutoSize = true;
-            this.label4.Font = new System.Drawing.Font("SimSun", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
-            this.label4.Location = new System.Drawing.Point(42, 25);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(97, 16);
-            this.label4.TabIndex = 0;
-            this.label4.Text = "PlayerName";
-            this.label4.Click += new System.EventHandler(this.label4_Click);
+            this.characterNameLabel.AutoSize = true;
+            this.characterNameLabel.Font = new System.Drawing.Font("SimSun", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
+            this.characterNameLabel.Location = new System.Drawing.Point(36, 44);
+            this.characterNameLabel.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.characterNameLabel.Name = "characterNameLabel";
+            this.characterNameLabel.Size = new System.Drawing.Size(192, 24);
+            this.characterNameLabel.TabIndex = 0;
+            this.characterNameLabel.Text = "Character Name";
+            this.characterNameLabel.Click += new System.EventHandler(this.label4_Click);
             // 
             // manaBar
             // 
-            this.manaBar.Location = new System.Drawing.Point(309, 98);
-            this.manaBar.Margin = new System.Windows.Forms.Padding(50);
-            this.manaBar.Maximum = 50;
-            this.manaBar.Minimum = 1;
+            this.manaBar.Location = new System.Drawing.Point(441, 163);
+            this.manaBar.Margin = new System.Windows.Forms.Padding(71, 83, 71, 83);
             this.manaBar.Name = "manaBar";
-            this.manaBar.Size = new System.Drawing.Size(96, 13);
+            this.manaBar.Size = new System.Drawing.Size(137, 22);
             this.manaBar.Step = 1;
             this.manaBar.Style = System.Windows.Forms.ProgressBarStyle.Continuous;
             this.manaBar.TabIndex = 5;
@@ -222,12 +233,11 @@ namespace object_group_game
             // 
             // experienceBar
             // 
-            this.experienceBar.Location = new System.Drawing.Point(309, 75);
-            this.experienceBar.Margin = new System.Windows.Forms.Padding(50);
-            this.experienceBar.Maximum = 50;
-            this.experienceBar.Minimum = 1;
+            this.experienceBar.Location = new System.Drawing.Point(441, 125);
+            this.experienceBar.Margin = new System.Windows.Forms.Padding(71, 83, 71, 83);
+            this.experienceBar.Maximum = 1000000;
             this.experienceBar.Name = "experienceBar";
-            this.experienceBar.Size = new System.Drawing.Size(96, 13);
+            this.experienceBar.Size = new System.Drawing.Size(137, 22);
             this.experienceBar.Step = 1;
             this.experienceBar.Style = System.Windows.Forms.ProgressBarStyle.Continuous;
             this.experienceBar.TabIndex = 4;
@@ -237,9 +247,10 @@ namespace object_group_game
             // 
             this.label3.AutoSize = true;
             this.label3.Font = new System.Drawing.Font("SimSun", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.label3.Location = new System.Drawing.Point(216, 98);
+            this.label3.Location = new System.Drawing.Point(309, 163);
+            this.label3.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(35, 13);
+            this.label3.Size = new System.Drawing.Size(49, 20);
             this.label3.TabIndex = 3;
             this.label3.Text = "Mana";
             // 
@@ -247,9 +258,10 @@ namespace object_group_game
             // 
             this.label2.AutoSize = true;
             this.label2.Font = new System.Drawing.Font("SimSun", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.label2.Location = new System.Drawing.Point(216, 75);
+            this.label2.Location = new System.Drawing.Point(309, 125);
+            this.label2.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(77, 13);
+            this.label2.Size = new System.Drawing.Size(109, 20);
             this.label2.TabIndex = 2;
             this.label2.Text = "Experience";
             // 
@@ -257,20 +269,19 @@ namespace object_group_game
             // 
             this.label1.AutoSize = true;
             this.label1.Font = new System.Drawing.Font("SimSun", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.label1.Location = new System.Drawing.Point(216, 49);
+            this.label1.Location = new System.Drawing.Point(309, 82);
+            this.label1.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(49, 13);
+            this.label1.Size = new System.Drawing.Size(69, 20);
             this.label1.TabIndex = 1;
             this.label1.Text = "Health";
             // 
             // healthBar
             // 
-            this.healthBar.Location = new System.Drawing.Point(309, 49);
-            this.healthBar.Margin = new System.Windows.Forms.Padding(50);
-            this.healthBar.Maximum = 50;
-            this.healthBar.Minimum = 1;
+            this.healthBar.Location = new System.Drawing.Point(441, 82);
+            this.healthBar.Margin = new System.Windows.Forms.Padding(71, 83, 71, 83);
             this.healthBar.Name = "healthBar";
-            this.healthBar.Size = new System.Drawing.Size(96, 13);
+            this.healthBar.Size = new System.Drawing.Size(137, 22);
             this.healthBar.Step = 1;
             this.healthBar.Style = System.Windows.Forms.ProgressBarStyle.Continuous;
             this.healthBar.TabIndex = 0;
@@ -279,30 +290,46 @@ namespace object_group_game
             // 
             // groupBox2
             // 
+            this.groupBox2.Controls.Add(this.goldLabel);
             this.groupBox2.Controls.Add(this.dataGridView1);
             this.groupBox2.Controls.Add(this.label5);
-            this.groupBox2.Location = new System.Drawing.Point(449, 34);
+            this.groupBox2.Location = new System.Drawing.Point(641, 57);
+            this.groupBox2.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(872, 303);
+            this.groupBox2.Padding = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.groupBox2.Size = new System.Drawing.Size(1246, 505);
             this.groupBox2.TabIndex = 1;
             this.groupBox2.TabStop = false;
+            // 
+            // goldLabel
+            // 
+            this.goldLabel.AutoSize = true;
+            this.goldLabel.Font = new System.Drawing.Font("SimSun", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.goldLabel.Location = new System.Drawing.Point(997, 41);
+            this.goldLabel.Name = "goldLabel";
+            this.goldLabel.Size = new System.Drawing.Size(76, 22);
+            this.goldLabel.TabIndex = 2;
+            this.goldLabel.Text = "Gold: ";
             // 
             // dataGridView1
             // 
             this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridView1.Location = new System.Drawing.Point(42, 56);
+            this.dataGridView1.Location = new System.Drawing.Point(60, 93);
+            this.dataGridView1.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.dataGridView1.Name = "dataGridView1";
+            this.dataGridView1.RowHeadersWidth = 62;
             this.dataGridView1.RowTemplate.Height = 25;
-            this.dataGridView1.Size = new System.Drawing.Size(792, 232);
+            this.dataGridView1.Size = new System.Drawing.Size(1140, 387);
             this.dataGridView1.TabIndex = 1;
             // 
             // label5
             // 
             this.label5.AutoSize = true;
             this.label5.Font = new System.Drawing.Font("SimSun", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
-            this.label5.Location = new System.Drawing.Point(365, 19);
+            this.label5.Location = new System.Drawing.Point(521, 32);
+            this.label5.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(118, 21);
+            this.label5.Size = new System.Drawing.Size(168, 33);
             this.label5.TabIndex = 0;
             this.label5.Text = "Inventory";
             // 
@@ -310,20 +337,45 @@ namespace object_group_game
             // 
             this.groupBox3.Controls.Add(this.groupBox7);
             this.groupBox3.Controls.Add(this.label10);
-            this.groupBox3.Location = new System.Drawing.Point(12, 343);
+            this.groupBox3.Location = new System.Drawing.Point(17, 572);
+            this.groupBox3.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.groupBox3.Name = "groupBox3";
-            this.groupBox3.Size = new System.Drawing.Size(1309, 288);
+            this.groupBox3.Padding = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.groupBox3.Size = new System.Drawing.Size(1870, 480);
             this.groupBox3.TabIndex = 2;
             this.groupBox3.TabStop = false;
             // 
+            // groupBox7
+            // 
+            this.groupBox7.Location = new System.Drawing.Point(23, 72);
+            this.groupBox7.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.groupBox7.Name = "groupBox7";
+            this.groupBox7.Padding = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.groupBox7.Size = new System.Drawing.Size(1839, 398);
+            this.groupBox7.TabIndex = 1;
+            this.groupBox7.TabStop = false;
+            // 
+            // label10
+            // 
+            this.label10.AutoSize = true;
+            this.label10.Font = new System.Drawing.Font("SimSun", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
+            this.label10.Location = new System.Drawing.Point(861, 32);
+            this.label10.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label10.Name = "label10";
+            this.label10.Size = new System.Drawing.Size(151, 33);
+            this.label10.TabIndex = 0;
+            this.label10.Text = "Location";
+            // 
             // menuStrip1
             // 
+            this.menuStrip1.ImageScalingSize = new System.Drawing.Size(24, 24);
             this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.gameToolStripMenuItem,
             this.optionsToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Size = new System.Drawing.Size(1333, 24);
+            this.menuStrip1.Padding = new System.Windows.Forms.Padding(9, 3, 0, 3);
+            this.menuStrip1.Size = new System.Drawing.Size(1904, 35);
             this.menuStrip1.TabIndex = 3;
             this.menuStrip1.Text = "menuStrip1";
             // 
@@ -333,56 +385,45 @@ namespace object_group_game
             this.logOutToolStripMenuItem,
             this.exitToolStripMenuItem});
             this.gameToolStripMenuItem.Name = "gameToolStripMenuItem";
-            this.gameToolStripMenuItem.Size = new System.Drawing.Size(50, 20);
+            this.gameToolStripMenuItem.Size = new System.Drawing.Size(74, 29);
             this.gameToolStripMenuItem.Text = "Game";
             // 
             // logOutToolStripMenuItem
             // 
             this.logOutToolStripMenuItem.Name = "logOutToolStripMenuItem";
-            this.logOutToolStripMenuItem.Size = new System.Drawing.Size(115, 22);
+            this.logOutToolStripMenuItem.Size = new System.Drawing.Size(176, 34);
             this.logOutToolStripMenuItem.Text = "Log out";
+            this.logOutToolStripMenuItem.Click += new System.EventHandler(this.logOutToolStripMenuItem_Click);
             // 
             // exitToolStripMenuItem
             // 
             this.exitToolStripMenuItem.Name = "exitToolStripMenuItem";
-            this.exitToolStripMenuItem.Size = new System.Drawing.Size(115, 22);
+            this.exitToolStripMenuItem.Size = new System.Drawing.Size(176, 34);
             this.exitToolStripMenuItem.Text = "Exit";
             // 
             // optionsToolStripMenuItem
             // 
             this.optionsToolStripMenuItem.Name = "optionsToolStripMenuItem";
-            this.optionsToolStripMenuItem.Size = new System.Drawing.Size(61, 20);
+            this.optionsToolStripMenuItem.Size = new System.Drawing.Size(92, 29);
             this.optionsToolStripMenuItem.Text = "Options";
             // 
-            // label10
+            // updateTimer
             // 
-            this.label10.AutoSize = true;
-            this.label10.Font = new System.Drawing.Font("SimSun", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
-            this.label10.Location = new System.Drawing.Point(603, 19);
-            this.label10.Name = "label10";
-            this.label10.Size = new System.Drawing.Size(106, 21);
-            this.label10.TabIndex = 0;
-            this.label10.Text = "Location";
-            // 
-            // groupBox7
-            // 
-            this.groupBox7.Location = new System.Drawing.Point(16, 43);
-            this.groupBox7.Name = "groupBox7";
-            this.groupBox7.Size = new System.Drawing.Size(1287, 239);
-            this.groupBox7.TabIndex = 1;
-            this.groupBox7.TabStop = false;
+            this.updateTimer.Interval = 1000;
+            this.updateTimer.Tick += new System.EventHandler(this.updateTimer_Tick);
             // 
             // MainMenu
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(10F, 25F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.Tan;
-            this.ClientSize = new System.Drawing.Size(1333, 643);
+            this.ClientSize = new System.Drawing.Size(1904, 1072);
             this.Controls.Add(this.groupBox3);
             this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.menuStrip1);
             this.MainMenuStrip = this.menuStrip1;
+            this.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.Name = "MainMenu";
             this.Text = "Form1";
             this.groupBox1.ResumeLayout(false);
@@ -421,7 +462,7 @@ namespace object_group_game
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.GroupBox groupBox5;
-        private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.Label characterNameLabel;
         private System.Windows.Forms.DataGridView dataGridView1;
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.GroupBox groupBox6;
@@ -429,10 +470,12 @@ namespace object_group_game
         private System.Windows.Forms.Label label9;
         private System.Windows.Forms.Label label8;
         private System.Windows.Forms.Label label7;
-        private System.Windows.Forms.ProgressBar progressBar3;
-        private System.Windows.Forms.ProgressBar progressBar2;
-        private System.Windows.Forms.ProgressBar progressBar1;
+        private System.Windows.Forms.ProgressBar intelligenceBar;
+        private System.Windows.Forms.ProgressBar dexterityBar;
+        private System.Windows.Forms.ProgressBar strengthBar;
         private System.Windows.Forms.GroupBox groupBox7;
         private System.Windows.Forms.Label label10;
+        private System.Windows.Forms.Label goldLabel;
+        private System.Windows.Forms.Timer updateTimer;
     }
 }

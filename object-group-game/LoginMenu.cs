@@ -22,14 +22,29 @@ namespace object_group_game
 
         }
 
-        private void button1_Click(object sender, EventArgs e)
+        private void loginButton_Click(object sender, EventArgs e)
         {
             //Login attempt with database
             //If success, open MainMenu
-            MainMenu mainmenu = new MainMenu();
-            this.Hide();
-            mainmenu.ShowDialog();
-            this.Close();
+            Authenticator authenticator = Authenticator.GetAuthenticator();
+            Tuple<int, Player> loginResponse = authenticator.Login(usernameInput.Text, passwordInput.Text);
+
+            if(loginResponse.Item1 == 1)
+            {
+                LocalData.Player = loginResponse.Item2;
+                MainMenu mainMenu = new MainMenu();
+                this.Hide();
+                mainMenu.Show();
+                return;
+            }
+
+            MessageBox.Show("Error occured! Error code " + loginResponse.Item1);
+
+        }
+
+        private void registerButton_Click(object sender, EventArgs e)
+        {
+            Authenticator.GetAuthenticator().Register(usernameInput.Text, passwordInput.Text);
         }
     }
 }
