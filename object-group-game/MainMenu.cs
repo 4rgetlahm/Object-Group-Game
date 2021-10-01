@@ -18,6 +18,24 @@ namespace object_group_game
             healthBar.ForeColor = Color.Red;
             experienceBar.ForeColor = Color.Yellow;
             manaBar.ForeColor = Color.Blue;
+
+            updateTimer.Start();
+
+            updateBars();
+
+        }
+
+        public void updateBars()
+        {
+            characterNameLabel.Text = LocalData.Player.Character.Name;
+            healthBar.Value = (int)LocalData.Player.Character.Health;
+            manaBar.Value = (int)LocalData.Player.Character.Mana;
+
+            strengthBar.Value = LocalData.Player.Character.Attributes.Strength;
+            dexterityBar.Value = LocalData.Player.Character.Attributes.Dexterity;
+            intelligenceBar.Value = LocalData.Player.Character.Attributes.Intelligence;
+
+            goldLabel.Text = "Gold: " + LocalData.Player.Character.Gold;
         }
 
         
@@ -35,6 +53,16 @@ namespace object_group_game
         private void label4_Click(object sender, EventArgs e)
         {
 
+        }
+
+        private void logOutToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void updateTimer_Tick(object sender, EventArgs e)
+        {
+            updateBars();
         }
     }
 }

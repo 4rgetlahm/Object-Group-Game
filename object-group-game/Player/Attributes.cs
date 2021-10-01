@@ -6,11 +6,11 @@ using System.Threading.Tasks;
 
 namespace object_group_game
 {
-    class Attributes
+    public class Attributes
     {
-        private int Strength { get; set; }
-        private int Dexterity { get; set; }
-        private int Intelligence { get; set; }
+        public int Strength { get; set; }
+        public int Dexterity { get; set; }
+        public int Intelligence { get; set; }
 
         public Attributes(int strength = 0, int dexterity = 0, int intelligence = 0)
         {

@@ -8,15 +8,15 @@ namespace object_group_game
 {
     public class Character
     {
-        private string Name { get; set; }
-        private double Health { get; set; }
-        private double Experience { get; set; }    
-        private double Mana { get; set; }
-        private double Gold { get; set; }
+        public string Name { get; private set; }
+        public double Health { get; set; }
+        public double Experience { get; set; }    
+        public double Mana { get; set; }
+        public double Gold { get; set; }
 
         private Inventory Inventory { get; set; }
 
-        private Attributes Attributes { get; set; }
+        public Attributes Attributes { get; set; }
 
         public Character(string name)
         {
