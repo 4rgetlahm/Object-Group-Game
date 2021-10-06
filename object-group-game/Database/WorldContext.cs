@@ -26,6 +26,8 @@ namespace object_group_game.Database
 				entity.Property(e => e.Latitude).IsRequired();
 				entity.Property(e => e.Longtitude).IsRequired();
 				entity.Property(e => e.Radius).IsRequired();
+				entity.Property(e => e.ItemID).IsRequired();
+				entity.Property(e => e.DisplayName).IsRequired();
 			});
 
 			modelBuilder.Entity<Item>(entity =>
