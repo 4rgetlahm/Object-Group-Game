@@ -16,6 +16,8 @@ namespace object_group_game
         RIVER,
         LAKE,
         HOLY,
-        DARK
+        DARK,
+        PARK,
+        MISC
     }
 }
