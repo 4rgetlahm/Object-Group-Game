@@ -9,13 +9,15 @@ namespace object_group_game.Database
 		public DbSet<Effect> Effect { get; set; }
 		public DbSet<ItemEffects> ItemEffects { get; set; }
 
-		protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder) {
+		protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder) 
+		{
 			// SQL server connection string
 			// Set user and password values appropriate to your server settings
-			optionsBuilder.UseMySQL("server=localhost;database=World;user=;password=");
+			optionsBuilder.UseMySQL("server=localhost;database=object-group;user=;password=");
 		}
 
-		protected override void OnModelCreating(ModelBuilder modelBuilder) {
+		protected override void OnModelCreating(ModelBuilder modelBuilder)
+		{
 			base.OnModelCreating(modelBuilder);
 
 			modelBuilder.Entity<Location>(entity => 
@@ -34,6 +36,7 @@ namespace object_group_game.Database
 			modelBuilder.Entity<Effect>(entity => 
 			{
 				entity.HasKey(e => e.ID);
+				entity.Ignore(e => e.Value);
 			});
 
 			modelBuilder.Entity<ItemEffects>(entity => 

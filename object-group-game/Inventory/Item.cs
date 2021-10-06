@@ -5,15 +5,22 @@ using System.Text;
 
 namespace object_group_game 
 {
-	class Item
+	public class Item
 	{
-		public string Name { get; private set; }
-		public List<Effect> Effects { get; private set; }
+		public int ID { get; set; }
+		public string DisplayName { get; set; }
+		public List<Effect> Effects { get; set; }
 
-		Item(string name, ICollection<Effect> effects)
+		public Item(Database.Item item, List<Effect> effects)
 		{
-			Name = name;
-			Effects = effects.ToList();
+			this.ID = item.ID;
+			this.DisplayName = item.DisplayName;
+			this.Effects = effects;
+		}
+
+		public Item()
+		{
+
 		}
 	}
 }

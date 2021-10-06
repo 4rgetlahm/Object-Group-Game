@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace object_group_game
 {
-    enum LocationType
+    public enum LocationType
     {
         FOREST,
         PLAINS,

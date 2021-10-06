@@ -6,17 +6,26 @@ using System.Threading.Tasks;
 
 namespace object_group_game
 {
-    class Location
+    public class Location
     {
-        private float Latitude { get; set; }
-        private float Longtitude { get; set; }
-        private LocationType LocationType { get; set; }
+        public int ID { get; set; }
+        public string DisplayName { get; set; }
+        public LocationType Type { get; set; }
+        public double Latitude { get; set; }
+        public double Longtitude { get; set; }
+        public int Radius { get; set; }
+        public Item Item { get; set; }
 
-        public Location(float latitude, float longtitude, LocationType locationType)
+        
+        public Location(Database.Location location, Item item)
         {
-            this.Latitude = latitude;
-            this.Longtitude = longtitude;
-            this.LocationType = locationType;
-        }
+            ID = location.ID;
+            DisplayName = location.DisplayName;
+            Type = location.Type;
+            Latitude = location.Latitude;
+            Longtitude = location.Longtitude;
+            Radius = location.Radius;
+            Item = item;
+		}
     }
 }
