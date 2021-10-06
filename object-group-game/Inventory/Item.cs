@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace object_group_game 
+namespace object_group_game
 {
 	public class Item
 	{
@@ -11,14 +11,14 @@ namespace object_group_game
 		public string DisplayName { get; set; }
 		public List<Effect> Effects { get; set; }
 
-		public Item(Database.Item item, List<Effect> effects)
+		public Item (Database.Item item, List<Effect> effects)
 		{
 			this.ID = item.ID;
 			this.DisplayName = item.DisplayName;
 			this.Effects = effects;
 		}
 
-		public Item()
+		public Item ()
 		{
 
 		}
