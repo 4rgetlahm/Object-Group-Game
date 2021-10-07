@@ -3,12 +3,12 @@
 ## Description
 
 * "Object-Group-Game" is a travelling based-game.
-* The app is written in C# and NET. framework.
+* The app is written in C# and .NET framework.
 * It's the first version of game, so it's quite primitive UI.
 
 ## Installation
 
-Game can only be launched only through visual studio forms, later it will be transfered to Web.
+Game is developed as Windows Application, later will be transferred to Web.
 
 ## Gameplay
 
