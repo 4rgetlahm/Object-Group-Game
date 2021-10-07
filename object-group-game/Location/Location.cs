@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -8,24 +9,23 @@ namespace object_group_game
 {
 	public class Location
 	{
-		public int ID { get; set; }
+		[Key]
+		public int LocationID { get; set; }
 		public string DisplayName { get; set; }
-		public LocationType Type { get; set; }
+		public LocationType LocationType { get; set; }
 		public double Latitude { get; set; }
 		public double Longtitude { get; set; }
 		public int Radius { get; set; }
-		public Item Item { get; set; }
 
 
-		public Location (Database.Location location, Item item)
+		public Location (int LocationID, string DisplayName, LocationType LocationType, double Latitude, double Longtitude, int Radius)
 		{
-			ID = location.ID;
-			DisplayName = location.DisplayName;
-			Type = location.Type;
-			Latitude = location.Latitude;
-			Longtitude = location.Longtitude;
-			Radius = location.Radius;
-			Item = item;
+			this.LocationID = LocationID;
+			this.DisplayName = DisplayName;
+			this.LocationType = LocationType;
+			this.Latitude = Latitude;
+			this.Longtitude = Longtitude;
+			this.Radius = Radius;
 		}
 	}
 }

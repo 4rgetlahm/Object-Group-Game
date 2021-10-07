@@ -8,17 +8,13 @@ namespace object_group_game
 		// Returns all locations from the database
 		public static List<Location> GetLocations ()
 		{
-			using (var context = new Database.WorldContext())
+			using (var context = new Database.DataContext())
 			{
 				var locations = context.Location;
-
 				List<Location> locationList = new List<Location>();
-
 				foreach (var location in locations)
 				{
-					var item = GetItem(location.ItemID);
-
-					locationList.Add(new Location(location, item));
+					locationList.Add(location);
 				}
 
 				return locationList;
@@ -27,12 +23,11 @@ namespace object_group_game
 
 		// Returns item with provided ID if exists
 		// Returns null otherwise
-		public static Item GetItem (int id)
+		/*public static Item GetItem (int id)
 		{
 			using (var context = new Database.WorldContext())
 			{
 				var item = context.Item.Where(i => i.ID == id).First();
-
 				if (item == null)
 				{
 					return null;
@@ -55,10 +50,10 @@ namespace object_group_game
 					return new Item(item, effects);
 				}
 			}
-		}
+		}*/
 
 		// Returns all items from the database
-		public static List<Item> GetItems ()
+		/*public static List<Item> GetItems ()
 		{
 			using (var context = new Database.WorldContext())
 			{
@@ -73,6 +68,6 @@ namespace object_group_game
 
 				return itemList;
 			}
-		}
+		}*/
 	}
 }

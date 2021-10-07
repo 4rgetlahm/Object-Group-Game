@@ -426,6 +426,7 @@ namespace object_group_game
             this.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.Name = "MainMenu";
             this.Text = "Form1";
+            this.Load += new System.EventHandler(this.MainMenu_Load);
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
             this.groupBox6.ResumeLayout(false);
