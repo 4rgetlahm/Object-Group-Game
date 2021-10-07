@@ -22,4 +22,8 @@
     </EmbeddedResource>
   </ItemGroup>
 
+  <ItemGroup>
+    <PackageReference Include="MySql.EntityFrameworkCore" Version="5.0.5" />
+  </ItemGroup>
+
 </Project>
