@@ -29,7 +29,10 @@ namespace object_group_game.Database
 			modelBuilder.Entity<Player>().HasOne(c => c.Character);
 
 			modelBuilder.Entity<Character>().HasMany(i => i.Items);
+			modelBuilder.Entity<Item>().HasMany(c => c.Characters);
+
 			modelBuilder.Entity<Character>().HasMany(l => l.VisitedLocations);
+			modelBuilder.Entity<Location>().HasMany(c => c.Characters);
 
 
 			modelBuilder.Entity<Item>().HasMany(e => e.Effects);

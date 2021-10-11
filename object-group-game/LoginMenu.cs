@@ -30,29 +30,10 @@ namespace object_group_game
 
             using (var db = new DataContext())
             {
-                var player = new Player(0, "test");
-                player.Character = new Character(0, "testchar", 100.0, 100999.0, 50.0, 500.0);
 
-                List <Effect> effects = new List<Effect>();
-                effects.Add(new Effect("coolstatus", "cooler name", 5));
-                effects.Add(new Effect("shiny", "shiny name", 0));
 
-                List<Item> items = new List<Item>();
-
-                Item item = new Item(0, "Thunderfury", 999, 100, 0, effects);
-
-                List<Effect> newEffects = new List<Effect>(effects);
-
-                effects.Add(new Effect("anoda", "one", 99));
-
-                Item item2 = new Item(0, "Bonecrusher", 5, 106, 3, newEffects);
-
-                items.Add(item);
-                items.Add(item2);
-
-                player.Character.Items = items;
-
-                db.Add(player);
+                Location l = new Location("TestLocation", LocationType.HOLY, 45.5641654, 65.23131776, 3);
+                db.Add(l);
 
 
                 db.SaveChanges();

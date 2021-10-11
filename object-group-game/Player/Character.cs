@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 
 namespace object_group_game
 {
+    [Table("Characters")]
     public class Character
     {
         [Key]
@@ -32,9 +33,8 @@ namespace object_group_game
             this.VisitedLocations = visitedLocations;
         }
 
-        public Character(int CharacterID, string name, double health, double experience, double mana, double gold)
+        public Character(string name, double health, double experience, double mana, double gold)
         {
-            this.CharacterID = CharacterID;
             this.Name = name;
             this.Health = health;
             this.Experience = experience;

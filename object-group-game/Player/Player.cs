@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 
 namespace object_group_game
 {
+    [Table("Players")]
     public class Player
     {
         [Key]
@@ -15,6 +16,10 @@ namespace object_group_game
         public string Name { get; private set; }
         public Character Character { get; set; }
 
+        public Player(string name)
+        {
+            this.Name = name;
+        }
         public Player(int PlayerID, string name)
         {
             this.PlayerID = PlayerID;
