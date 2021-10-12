@@ -1,5 +1,7 @@
 ﻿using GMap.NET;
 using GMap.NET.MapProviders;
+using GMap.NET.WindowsForms;
+using GMap.NET.WindowsForms.Markers;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -84,12 +86,24 @@ namespace object_group_game
 
         private void liveMap_Load(object sender, EventArgs e)
         {
+            GMapOverlay markers = new GMapOverlay("markers");
 
+            foreach(Location location in VisitableLocations.GetInstance().Locations)
+            {
+                GMapMarker marker = new GMarkerGoogle(new PointLatLng(location.Latitude, location.Longtitude), GMarkerGoogleType.blue);
+                markers.Markers.Add(marker);
+            }
+            liveMap.Overlays.Add(markers);
         }
 
         private void MainMenu_Load(object sender, EventArgs e)
         {
 
+        }
+
+        private void exitToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Application.Exit();
         }
     }
 }
