@@ -25,40 +25,15 @@ namespace object_group_game
 
         private void loginButton_Click(object sender, EventArgs e)
         {
-            //Login attempt with database
-            //If success, open MainMenu
 
-            using (var db = new DataContext())
-            {
-
-
-                Location l = new Location("TestLocation", LocationType.HOLY, 45.5641654, 65.23131776, 3);
-                db.Add(l);
-
-
-                db.SaveChanges();
-            }
-            
-            /*List<Location> locations = World.GetLocations();
-            foreach(Location location in locations)
-            {
-                MessageBox.Show(location.DisplayName);
-            }*/
-
-            /*Authenticator authenticator = Authenticator.GetAuthenticator();
-            Tuple<int, Player> loginResponse = authenticator.Login(usernameInput.Text, passwordInput.Text);
-
+            Tuple<int, Player> loginResponse = Authenticator.GetAuthenticator().Login(usernameInput.Text, passwordInput.Text);
             if(loginResponse.Item1 == 1)
             {
                 LocalData.Player = loginResponse.Item2;
                 MainMenu mainMenu = new MainMenu();
-                this.Hide();
                 mainMenu.Show();
-                return;
+                this.Hide();
             }
-
-            MessageBox.Show("Error occured! Error code " + loginResponse.Item1);*/
-
         }
 
         private void registerButton_Click(object sender, EventArgs e)

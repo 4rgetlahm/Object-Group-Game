@@ -16,8 +16,8 @@ namespace object_group_game
 		public int Strength { get; set; }
 		public int Dexterity { get; set; }
 		public int Intelligence { get; set; }
-		public List<Effect> Effects { get; set; }
-		public List<Character> Characters { get; set; }
+		public virtual List<Effect> Effects { get; set; }
+		public virtual List<Character> Characters { get; set; }
 
 		public Item(string DisplayName, int Strength, int Dexterity, int Intelligence, List<Effect> Effects)
 		{
@@ -40,7 +40,7 @@ namespace object_group_game
 			this.Characters = characters;
 		}
 
-		public Item ()
+		protected Item ()
 		{
 
 		}

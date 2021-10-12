@@ -18,7 +18,7 @@ namespace object_group_game
 		public double Latitude { get; set; }
 		public double Longtitude { get; set; }
 		public int Radius { get; set; }
-		public List<Character> Characters {get;set;}
+		public virtual List<Character> Characters {get;set;}
 
 
 		public Location (string DisplayName, LocationType LocationType, double Latitude, double Longtitude, int Radius)
@@ -29,5 +29,10 @@ namespace object_group_game
 			this.Longtitude = Longtitude;
 			this.Radius = Radius;
 		}
+
+		protected Location()
+        {
+
+        }
 	}
 }

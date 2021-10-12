@@ -14,7 +14,12 @@ namespace object_group_game
         [Key]
         public int PlayerID { get; set; }
         public string Name { get; private set; }
-        public Character Character { get; set; }
+        public virtual Character Character { get; set; }
+
+        protected Player()
+        {
+
+        }
 
         public Player(string name)
         {
