@@ -67,7 +67,13 @@ namespace object_group_game
 
         private void logOutToolStripMenuItem_Click(object sender, EventArgs e)
         {
-
+            var loginForm = Application.OpenForms.Cast<Form>().Where(form => form.Name == "LoginMenu").FirstOrDefault();
+            if(loginForm != null)
+            {
+                LocalData.Clear();
+                loginForm.Show();
+                this.Close();
+            }
         }
 
         private void updateTimer_Tick(object sender, EventArgs e)

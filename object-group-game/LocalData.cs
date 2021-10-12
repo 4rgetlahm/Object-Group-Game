@@ -9,5 +9,10 @@ namespace object_group_game
     static class LocalData
     {
         public static Player Player { get; set; }
+
+        public static void Clear()
+        {
+            Player = null;
+        }
     }
 }
