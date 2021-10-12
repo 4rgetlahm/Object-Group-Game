@@ -1,20 +1,24 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Text;
 
 namespace object_group_game
 {
-	class Effect
+	public class Effect
 	{
-		public string Status { get; private set; }
-		public string DisplayName { get; private set; }
-		public int Value { get; private set; }
+		[Key]
+		public int ID { get; set; }
+		public string StatusName { get; set; }
+		public string DisplayName { get; set; }
+		public int Value { get; set; }
+		public ICollection<Item> Items { get; set; }
 
-		Effect(string status, string displayName, int value)
+		public Effect(string statusName, string displayName, int value)
 		{
-			Status = status;
-			DisplayName = displayName;
-			Value = value;
+			this.StatusName = statusName;
+			this.DisplayName = displayName;
+			this.Value = value;
 		}
 	}
 }

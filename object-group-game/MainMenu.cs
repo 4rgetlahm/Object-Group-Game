@@ -41,9 +41,9 @@ namespace object_group_game
             healthBar.Value = (int)LocalData.Player.Character.Health;
             manaBar.Value = (int)LocalData.Player.Character.Mana;
 
-            strengthBar.Value = LocalData.Player.Character.Attributes.Strength;
-            dexterityBar.Value = LocalData.Player.Character.Attributes.Dexterity;
-            intelligenceBar.Value = LocalData.Player.Character.Attributes.Intelligence;
+            //strengthBar.Value = LocalData.Player.Character.GetStrength();
+            //dexterityBar.Value = LocalData.Player.Character.GetDexterity();
+            //intelligenceBar.Value = LocalData.Player.Character.GetIntelligence();
 
             goldLabel.Text = "Gold: " + LocalData.Player.Character.Gold;
         }
@@ -74,6 +74,7 @@ namespace object_group_game
         {
             updateBars();
         }
+
 
         private void liveMap_Load(object sender, EventArgs e)
         {

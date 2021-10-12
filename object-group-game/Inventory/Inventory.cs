@@ -5,16 +5,16 @@ using System.Text;
 
 namespace object_group_game
 {
-	class Inventory 
+	class Inventory
 	{
 		public List<Item> Items { get; private set; }
 
-		public Inventory()
+		public Inventory ()
 		{
 			Items = new List<Item>();
 		}
 
-		public Inventory(ICollection<Item> items)
+		public Inventory (ICollection<Item> items)
 		{
 			Items = items.ToList();
 		}

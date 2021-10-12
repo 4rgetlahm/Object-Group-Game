@@ -48,7 +48,7 @@ namespace object_group_game
         {
             MessageBox.Show(HashSHA256(password));
             //DB request
-            Player player = new Player(username, new Character("thelegend27"), new List<Item>(), new List<Location>());
+            Player player = new Player(0, username);
             return new Tuple<int, Player>(1, player);
         }
 
