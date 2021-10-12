@@ -73,7 +73,7 @@ namespace object_group_game
             }
             catch (Exception e)
             {
-                 MessageBox.Show(e.Message);
+                Console.WriteLine(e.Message);
             }
 
             return new Tuple<int, Player>(0, null);
@@ -101,14 +101,13 @@ namespace object_group_game
                     db.Add(player);
                     db.SaveChanges();
 
-                    MessageBox.Show("Register");
                     return new Tuple<int, Player>(1, player);
                 }
 
             }
             catch (Exception e)
             {
-                MessageBox.Show(e.Message);
+                Console.WriteLine(e.Message);
             }
             return new Tuple<int, Player>(0, null);
         }
