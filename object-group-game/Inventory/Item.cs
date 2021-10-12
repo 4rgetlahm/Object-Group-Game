@@ -7,6 +7,7 @@ using System.Text;
 
 namespace object_group_game
 {
+	[Table("Items")]
 	public class Item
 	{
 		[Key]
@@ -15,9 +16,10 @@ namespace object_group_game
 		public int Strength { get; set; }
 		public int Dexterity { get; set; }
 		public int Intelligence { get; set; }
-		public List<Effect> Effects { get; set; }
+		public virtual List<Effect> Effects { get; set; }
+		public virtual List<Character> Characters { get; set; }
 
-		public Item (int ItemID, string DisplayName, int Strength, int Dexterity, int Intelligence, List<Effect> Effects)
+		public Item(string DisplayName, int Strength, int Dexterity, int Intelligence, List<Effect> Effects)
 		{
 			this.ItemID = ItemID;
 			this.DisplayName = DisplayName;
@@ -27,7 +29,18 @@ namespace object_group_game
 			this.Effects = Effects;
 		}
 
-		public Item ()
+		public Item (int ItemID, string DisplayName, int Strength, int Dexterity, int Intelligence, List<Effect> Effects, List<Character> characters)
+		{
+			this.ItemID = ItemID;
+			this.DisplayName = DisplayName;
+			this.Strength = Strength;
+			this.Dexterity = Dexterity;
+			this.Intelligence = Intelligence;
+			this.Effects = Effects;
+			this.Characters = characters;
+		}
+
+		protected Item ()
 		{
 
 		}

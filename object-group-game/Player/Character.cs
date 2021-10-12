@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 
 namespace object_group_game
 {
+    [Table("Characters")]
     public class Character
     {
         [Key]
@@ -17,8 +18,13 @@ namespace object_group_game
         public double Experience { get; set; }    
         public double Mana { get; set; }
         public double Gold { get; set; }
-        public ICollection<Item> Items { get; set; }
-        public ICollection<Location> VisitedLocations { get; set; }
+        public virtual ICollection<Item> Items { get; set; }
+        public virtual ICollection<Location> VisitedLocations { get; set; }
+
+        protected Character()
+        {
+
+        }
 
         public Character(int CharacterID, string name, double health, double experience, double mana, double gold, ICollection<Item> items, ICollection<Location> visitedLocations)
         {
@@ -32,9 +38,8 @@ namespace object_group_game
             this.VisitedLocations = visitedLocations;
         }
 
-        public Character(int CharacterID, string name, double health, double experience, double mana, double gold)
+        public Character(string name, double health, double experience, double mana, double gold)
         {
-            this.CharacterID = CharacterID;
             this.Name = name;
             this.Health = health;
             this.Experience = experience;

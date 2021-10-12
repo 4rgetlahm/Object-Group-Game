@@ -8,13 +8,23 @@ using System.Threading.Tasks;
 
 namespace object_group_game
 {
+    [Table("Players")]
     public class Player
     {
         [Key]
         public int PlayerID { get; set; }
         public string Name { get; private set; }
-        public Character Character { get; set; }
+        public virtual Character Character { get; set; }
 
+        protected Player()
+        {
+
+        }
+
+        public Player(string name)
+        {
+            this.Name = name;
+        }
         public Player(int PlayerID, string name)
         {
             this.PlayerID = PlayerID;

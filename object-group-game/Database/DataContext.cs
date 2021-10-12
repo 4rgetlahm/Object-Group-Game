@@ -7,7 +7,7 @@ namespace object_group_game.Database
 		public DataContext()
 		{
 			//use when want to add tables
-			Database.EnsureDeleted();
+			//Database.EnsureDeleted();
 			Database.EnsureCreated();
 		}
 
@@ -29,11 +29,19 @@ namespace object_group_game.Database
 			modelBuilder.Entity<Player>().HasOne(c => c.Character);
 
 			modelBuilder.Entity<Character>().HasMany(i => i.Items);
+			modelBuilder.Entity<Item>().HasMany(c => c.Characters);
+
 			modelBuilder.Entity<Character>().HasMany(l => l.VisitedLocations);
+			modelBuilder.Entity<Location>().HasMany(c => c.Characters);
 
 
 			modelBuilder.Entity<Item>().HasMany(e => e.Effects);
 			modelBuilder.Entity<Effect>().HasMany(i => i.Items);
+
+			modelBuilder.Entity<Player>().Property<string>("Password");
+			modelBuilder.Entity<Player>().Property<string>("Salt");
+
+			base.OnModelCreating(modelBuilder);
         }
 	}
 }

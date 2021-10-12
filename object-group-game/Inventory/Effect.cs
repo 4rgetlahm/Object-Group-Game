@@ -1,10 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Text;
 
 namespace object_group_game
 {
+	[Table("Effects")]
 	public class Effect
 	{
 		[Key]
@@ -12,7 +14,7 @@ namespace object_group_game
 		public string StatusName { get; set; }
 		public string DisplayName { get; set; }
 		public int Value { get; set; }
-		public ICollection<Item> Items { get; set; }
+		public virtual ICollection<Item> Items { get; set; }
 
 		public Effect(string statusName, string displayName, int value)
 		{
@@ -20,5 +22,10 @@ namespace object_group_game
 			this.DisplayName = displayName;
 			this.Value = value;
 		}
+
+		protected Effect()
+        {
+
+        }
 	}
 }
