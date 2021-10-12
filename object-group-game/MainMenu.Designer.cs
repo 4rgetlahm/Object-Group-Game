@@ -54,6 +54,7 @@ namespace object_group_game
             this.label5 = new System.Windows.Forms.Label();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
             this.groupBox7 = new System.Windows.Forms.GroupBox();
+            this.liveMap = new GMap.NET.WindowsForms.GMapControl();
             this.label10 = new System.Windows.Forms.Label();
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.gameToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -67,6 +68,7 @@ namespace object_group_game
             this.groupBox2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.groupBox3.SuspendLayout();
+            this.groupBox7.SuspendLayout();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -347,6 +349,7 @@ namespace object_group_game
             // 
             // groupBox7
             // 
+            this.groupBox7.Controls.Add(this.liveMap);
             this.groupBox7.Location = new System.Drawing.Point(23, 72);
             this.groupBox7.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.groupBox7.Name = "groupBox7";
@@ -354,6 +357,33 @@ namespace object_group_game
             this.groupBox7.Size = new System.Drawing.Size(1839, 398);
             this.groupBox7.TabIndex = 1;
             this.groupBox7.TabStop = false;
+            // 
+            // liveMap
+            // 
+            this.liveMap.Bearing = 0F;
+            this.liveMap.CanDragMap = true;
+            this.liveMap.EmptyTileColor = System.Drawing.Color.Navy;
+            this.liveMap.GrayScaleMode = false;
+            this.liveMap.HelperLineOption = GMap.NET.WindowsForms.HelperLineOptions.DontShow;
+            this.liveMap.LevelsKeepInMemory = 5;
+            this.liveMap.Location = new System.Drawing.Point(25, 0);
+            this.liveMap.MarkersEnabled = true;
+            this.liveMap.MaxZoom = 2;
+            this.liveMap.MinZoom = 2;
+            this.liveMap.MouseWheelZoomEnabled = true;
+            this.liveMap.MouseWheelZoomType = GMap.NET.MouseWheelZoomType.MousePositionAndCenter;
+            this.liveMap.Name = "liveMap";
+            this.liveMap.NegativeMode = false;
+            this.liveMap.PolygonsEnabled = true;
+            this.liveMap.RetryLoadTile = 0;
+            this.liveMap.RoutesEnabled = true;
+            this.liveMap.ScaleMode = GMap.NET.WindowsForms.ScaleModes.Integer;
+            this.liveMap.SelectedAreaFillColor = System.Drawing.Color.FromArgb(((int)(((byte)(33)))), ((int)(((byte)(65)))), ((int)(((byte)(105)))), ((int)(((byte)(225)))));
+            this.liveMap.ShowTileGridLines = false;
+            this.liveMap.Size = new System.Drawing.Size(1804, 376);
+            this.liveMap.TabIndex = 0;
+            this.liveMap.Zoom = 0D;
+            this.liveMap.Load += new System.EventHandler(this.liveMap_Load);
             // 
             // label10
             // 
@@ -438,6 +468,7 @@ namespace object_group_game
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
             this.groupBox3.ResumeLayout(false);
             this.groupBox3.PerformLayout();
+            this.groupBox7.ResumeLayout(false);
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
             this.ResumeLayout(false);
@@ -478,5 +509,6 @@ namespace object_group_game
         private System.Windows.Forms.Label label10;
         private System.Windows.Forms.Label goldLabel;
         private System.Windows.Forms.Timer updateTimer;
+        private GMap.NET.WindowsForms.GMapControl liveMap;
     }
 }

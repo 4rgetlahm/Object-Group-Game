@@ -1,4 +1,6 @@
-﻿using System;
+﻿using GMap.NET;
+using GMap.NET.MapProviders;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -22,6 +24,14 @@ namespace object_group_game
             updateTimer.Start();
 
             updateBars();
+
+            // config map
+            liveMap.MapProvider = GMapProviders.GoogleMap;
+            liveMap.ShowCenter = false;
+            liveMap.Position = new PointLatLng(54.6961334816182, 25.2985095977783);
+            liveMap.MinZoom = 0;
+            liveMap.MaxZoom = 24;
+            liveMap.Zoom = 9;
 
         }
 
@@ -63,6 +73,12 @@ namespace object_group_game
         private void updateTimer_Tick(object sender, EventArgs e)
         {
             updateBars();
+        }
+
+
+        private void liveMap_Load(object sender, EventArgs e)
+        {
+
         }
 
         private void MainMenu_Load(object sender, EventArgs e)
