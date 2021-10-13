@@ -8,7 +8,7 @@ using System.Text;
 namespace object_group_game
 {
 	[Table("Items")]
-	public class Item
+	public class Item : IComparable
 	{
 		[Key]
 		public int ItemID { get; set; }
@@ -44,5 +44,38 @@ namespace object_group_game
 		{
 
 		}
-	}
+
+		public int GetStats()
+        {
+			return this.Strength + this.Intelligence + this.Dexterity;
+        }
+
+        public int CompareTo(object obj)
+        {
+			if (obj == null) return 1;
+
+			Item compareItem = obj as Item;
+			if(compareItem != null)
+            {
+				int thisStats = this.GetStats();
+				int compareStats = compareItem.GetStats();
+				if(thisStats == compareStats)
+                {
+					return 0;
+                }
+				else if(thisStats > compareStats)
+                {
+					return 1;
+                } 
+				else
+                {
+					return -1;
+                }
+            }
+			else
+            {
+				throw new ArgumentException("Object is not a Item");
+			}
+		}
+    }
 }
