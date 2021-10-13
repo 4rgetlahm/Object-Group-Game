@@ -35,6 +35,15 @@ namespace object_group_game
             liveMap.MaxZoom = 24;
             liveMap.Zoom = 9;
 
+            if(LocalData.Player.PlayerRole == PlayerRole.ADMINISTRATOR)
+            {
+                gameMasterToolStripMenuItem.Visible = true;
+            }
+            else
+            {
+                gameMasterToolStripMenuItem.Visible = false;
+            }
+
         }
 
         public void updateBars()
@@ -88,7 +97,7 @@ namespace object_group_game
         {
             GMapOverlay markers = new GMapOverlay("markers");
 
-            foreach(Location location in VisitableLocations.GetInstance().Locations)
+            foreach(Location location in LocationList.GetInstance().Locations)
             {
                 GMapMarker marker = new GMarkerGoogle(new PointLatLng(location.Latitude, location.Longtitude), GMarkerGoogleType.blue);
                 markers.Markers.Add(marker);
@@ -104,6 +113,12 @@ namespace object_group_game
         private void exitToolStripMenuItem_Click(object sender, EventArgs e)
         {
             Application.Exit();
+        }
+
+        private void createNewItemToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            CreateItemMenu createItemMenu = new CreateItemMenu(LocalData.Player);
+            createItemMenu.ShowDialog();
         }
     }
 }

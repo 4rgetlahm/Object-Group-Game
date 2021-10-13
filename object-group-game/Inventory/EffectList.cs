@@ -7,31 +7,31 @@ using System.Threading.Tasks;
 
 namespace object_group_game
 {
-    class VisitableLocations
+    class EffectList
     {
-        private static VisitableLocations _obj;
-        public List<Location> Locations { get; set; }
-        private VisitableLocations()
+        private static EffectList _obj;
+        public List<Effect> Effects { get; set; }
+        private EffectList()
         {
-            Locations = new List<Location>();
+            Effects = new List<Effect>();
             try
             {
                 using (var context = new DataContext())
                 {
-                    Locations.AddRange(context.Location.ToList());
+                    Effects.AddRange(context.Effect.ToList());
                 }
             }
-            catch(Exception e)
+            catch (Exception e)
             {
                 Console.WriteLine(e.Message);
             }
         }
 
-        public static VisitableLocations GetInstance()
+        public static EffectList GetInstance()
         {
-            if(_obj == null)
+            if (_obj == null)
             {
-                _obj = new VisitableLocations();
+                _obj = new EffectList();
             }
             return _obj;
         }

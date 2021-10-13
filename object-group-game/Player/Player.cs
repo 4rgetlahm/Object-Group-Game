@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
@@ -14,6 +15,9 @@ namespace object_group_game
         [Key]
         public int PlayerID { get; set; }
         public string Name { get; private set; }
+
+        [DefaultValue(PlayerRole.DEFAULT)]
+        public PlayerRole PlayerRole { get; private set; }
         public virtual Character Character { get; set; }
 
         protected Player()
@@ -25,6 +29,7 @@ namespace object_group_game
         {
             this.Name = name;
         }
+
         public Player(int PlayerID, string name)
         {
             this.PlayerID = PlayerID;
