@@ -13,14 +13,14 @@ namespace object_group_game
     {
         public static string GetSQL()
         {
-            string sql = "";
+            var someData = new Dictionary<string, string>() { { "ConnectionString", "" } };
             string path = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), @"config.txt");
             try
             {
                 using StreamReader sr = new StreamReader(path);
                 for (int i = 0; i < 5; i++)
                 {
-                    sql += sr.ReadLine() + ";";
+                    someData["ConnectionString"] += sr.ReadLine() + ";";
                 }
 
             }
@@ -34,6 +34,7 @@ namespace object_group_game
                 throw new Exception(string.Format("config.txt file not found", ex.Message), ex);
             }
 
+            string sql = someData["ConnectionString"];
             return sql;
         }
 
