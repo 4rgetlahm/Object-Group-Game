@@ -22,7 +22,7 @@ namespace object_group_game.Database
 		{
 			// SQL server connection string
 			// Set user and password values appropriate to your server settings
-			optionsBuilder.UseMySQL(ConfigurationManager.AppSettings.Get("ConnectionString"));
+			optionsBuilder.UseMySQL(GetConfiguration.GetSQL());
 		}
 
 		protected override void OnModelCreating(ModelBuilder modelBuilder)
