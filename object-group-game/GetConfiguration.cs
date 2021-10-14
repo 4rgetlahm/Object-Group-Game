@@ -18,7 +18,7 @@ namespace object_group_game
             try
             {
                 using StreamReader sr = new StreamReader(path);
-                for (int i = 0; i < 4; i++)
+                for (int i = 0; i < 5; i++)
                 {
                     sql += sr.ReadLine() + ";";
                 }
