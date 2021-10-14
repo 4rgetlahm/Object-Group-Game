@@ -9,22 +9,26 @@ using System.Threading.Tasks;
 
 namespace object_group_game
 {
-    public static class GetConfiguration
+    class Settings
     {
-        public static string GetSQL()
+        Dictionary<string, string> allconfig = new Dictionary<string, string>();
+        public void ReadConfig(string path)
         {
-            var someData = new Dictionary<string, string>() { { "ConnectionString", "" } };
-            string path = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), @"config.txt");
             try
             {
-                using StreamReader sr = new StreamReader(path);
-                for (int i = 0; i < 5; i++)
+                using (var reader = new StreamReader(path))
                 {
-                    someData["ConnectionString"] += sr.ReadLine() + ";";
+                    string? line;
+                    line = reader.ReadLine();
+                    while (line != null)
+                    {
+                       var keyValue = line.Split('=');
+                       allconfig.Add(keyValue[0].Trim(), keyValue[1].Trim());    
+                       line = reader.ReadLine();
+                    }
                 }
-
             }
-            
+
             catch (UnauthorizedAccessException ex)
             {
                 throw new Exception(string.Format("Access denied to read config.txt", ex.Message), ex);
@@ -34,10 +38,7 @@ namespace object_group_game
                 throw new Exception(string.Format("config.txt file not found", ex.Message), ex);
             }
 
-            string sql = someData["ConnectionString"];
-            return sql;
         }
-
 
     }
 }
