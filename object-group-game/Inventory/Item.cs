@@ -8,7 +8,7 @@ using System.Text;
 namespace object_group_game
 {
 	[Table("Items")]
-	public class Item
+	public class Item : IComparable<Item>
 	{
 		[Key]
 		public int ItemID { get; set; }
@@ -19,14 +19,14 @@ namespace object_group_game
 		public virtual List<Effect> Effects { get; set; }
 		public virtual List<Character> Characters { get; set; }
 
-		public Item(string DisplayName, int Strength, int Dexterity, int Intelligence, List<Effect> Effects)
+		public Item(string DisplayName, int Strength = 0, int Dexterity = 0, int Intelligence = 0, List<Effect> Effects = null)
 		{
 			this.ItemID = ItemID;
 			this.DisplayName = DisplayName;
 			this.Strength = Strength;
 			this.Dexterity = Dexterity;
 			this.Intelligence = Intelligence;
-			this.Effects = Effects;
+			this.Effects = Effects == null ? new List<Effect>() : Effects;
 		}
 
 		public Item (int ItemID, string DisplayName, int Strength, int Dexterity, int Intelligence, List<Effect> Effects, List<Character> characters)
@@ -44,5 +44,30 @@ namespace object_group_game
 		{
 
 		}
-	}
+
+		public int GetStats()
+        {
+			return this.Strength + this.Intelligence + this.Dexterity;
+        }
+
+		public int CompareTo(Item obj)
+		{
+			if (obj == null) return 1;
+
+			int thisStats = obj.GetStats();
+			int compareStats = obj.GetStats();
+			if (thisStats == compareStats)
+			{
+				return 0;
+			}
+			else if (thisStats > compareStats)
+			{
+				return 1;
+			}
+			else
+			{
+				return -1;
+			}
+		}
+    }
 }

@@ -61,6 +61,12 @@ namespace object_group_game
             this.logOutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.optionsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.gameMasterToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.createNewItemToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.createNewLocationToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.createNewEffectToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.editPlayerToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.editCharacterToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.updateTimer = new System.Windows.Forms.Timer(this.components);
             this.groupBox1.SuspendLayout();
             this.groupBox6.SuspendLayout();
@@ -401,7 +407,8 @@ namespace object_group_game
             this.menuStrip1.ImageScalingSize = new System.Drawing.Size(24, 24);
             this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.gameToolStripMenuItem,
-            this.optionsToolStripMenuItem});
+            this.optionsToolStripMenuItem,
+            this.gameMasterToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
             this.menuStrip1.Padding = new System.Windows.Forms.Padding(9, 3, 0, 3);
@@ -430,12 +437,56 @@ namespace object_group_game
             this.exitToolStripMenuItem.Name = "exitToolStripMenuItem";
             this.exitToolStripMenuItem.Size = new System.Drawing.Size(176, 34);
             this.exitToolStripMenuItem.Text = "Exit";
+            this.exitToolStripMenuItem.Click += new System.EventHandler(this.exitToolStripMenuItem_Click);
             // 
             // optionsToolStripMenuItem
             // 
             this.optionsToolStripMenuItem.Name = "optionsToolStripMenuItem";
             this.optionsToolStripMenuItem.Size = new System.Drawing.Size(92, 29);
             this.optionsToolStripMenuItem.Text = "Options";
+            // 
+            // gameMasterToolStripMenuItem
+            // 
+            this.gameMasterToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.createNewItemToolStripMenuItem,
+            this.createNewLocationToolStripMenuItem,
+            this.createNewEffectToolStripMenuItem,
+            this.editPlayerToolStripMenuItem,
+            this.editCharacterToolStripMenuItem});
+            this.gameMasterToolStripMenuItem.Name = "gameMasterToolStripMenuItem";
+            this.gameMasterToolStripMenuItem.Size = new System.Drawing.Size(133, 29);
+            this.gameMasterToolStripMenuItem.Text = "Game Master";
+            // 
+            // createNewItemToolStripMenuItem
+            // 
+            this.createNewItemToolStripMenuItem.Name = "createNewItemToolStripMenuItem";
+            this.createNewItemToolStripMenuItem.Size = new System.Drawing.Size(273, 34);
+            this.createNewItemToolStripMenuItem.Text = "Create new Item";
+            this.createNewItemToolStripMenuItem.Click += new System.EventHandler(this.createNewItemToolStripMenuItem_Click);
+            // 
+            // createNewLocationToolStripMenuItem
+            // 
+            this.createNewLocationToolStripMenuItem.Name = "createNewLocationToolStripMenuItem";
+            this.createNewLocationToolStripMenuItem.Size = new System.Drawing.Size(273, 34);
+            this.createNewLocationToolStripMenuItem.Text = "Create new Location";
+            // 
+            // createNewEffectToolStripMenuItem
+            // 
+            this.createNewEffectToolStripMenuItem.Name = "createNewEffectToolStripMenuItem";
+            this.createNewEffectToolStripMenuItem.Size = new System.Drawing.Size(273, 34);
+            this.createNewEffectToolStripMenuItem.Text = "Create new Effect";
+            // 
+            // editPlayerToolStripMenuItem
+            // 
+            this.editPlayerToolStripMenuItem.Name = "editPlayerToolStripMenuItem";
+            this.editPlayerToolStripMenuItem.Size = new System.Drawing.Size(273, 34);
+            this.editPlayerToolStripMenuItem.Text = "Edit Player";
+            // 
+            // editCharacterToolStripMenuItem
+            // 
+            this.editCharacterToolStripMenuItem.Name = "editCharacterToolStripMenuItem";
+            this.editCharacterToolStripMenuItem.Size = new System.Drawing.Size(273, 34);
+            this.editCharacterToolStripMenuItem.Text = "Edit Character";
             // 
             // updateTimer
             // 
@@ -510,5 +561,11 @@ namespace object_group_game
         private System.Windows.Forms.Label goldLabel;
         private System.Windows.Forms.Timer updateTimer;
         private GMap.NET.WindowsForms.GMapControl liveMap;
+        private System.Windows.Forms.ToolStripMenuItem gameMasterToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem createNewItemToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem createNewLocationToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem createNewEffectToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem editPlayerToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem editCharacterToolStripMenuItem;
     }
 }

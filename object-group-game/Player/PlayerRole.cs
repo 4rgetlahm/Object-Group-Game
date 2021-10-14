@@ -6,13 +6,10 @@ using System.Threading.Tasks;
 
 namespace object_group_game
 {
-    static class LocalData
+    public enum PlayerRole
     {
-        public static Player Player { get; set; }
-
-        public static void Clear()
-        {
-            Player = null;
-        }
+        DEFAULT,
+        MODERATOR,
+        ADMINISTRATOR
     }
 }
