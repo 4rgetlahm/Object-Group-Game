@@ -22,7 +22,7 @@ namespace object_group_game.Database
 		{
 			// SQL server connection string
 			// Set user and password values appropriate to your server settings
-			optionsBuilder.UseMySQL("server=localhost;database=test;user=root;password=;SslMode=none;");
+				optionsBuilder.UseMySQL("server=localhost;database=test;user=root;password=;SslMode=none;");
 		}
 
 		protected override void OnModelCreating(ModelBuilder modelBuilder)
