@@ -17,7 +17,7 @@ namespace object_group_game
 		public LocationType LocationType { get; set; }
 		public Coordinate Coordinate { get; set; }
 		public int Radius { get; set; }
-		public virtual List<Character> Characters {get;set;}
+		public virtual List<Character> Characters { get; set; }
 
 
 		public Location (string DisplayName, LocationType LocationType, double Latitude, double Longtitude, int Radius)

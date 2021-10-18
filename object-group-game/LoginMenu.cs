@@ -26,7 +26,7 @@ namespace object_group_game
 
         private void LoadGame(Player player)
         {
-            LocalData.Player = player;
+            Session.Player = player;
             MainMenu mainMenu = new MainMenu();
             mainMenu.Show();
             this.Hide();
