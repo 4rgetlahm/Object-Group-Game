@@ -15,8 +15,7 @@ namespace object_group_game
 		public int LocationID { get; set; }
 		public string DisplayName { get; set; }
 		public LocationType LocationType { get; set; }
-		public double Latitude { get; set; }
-		public double Longtitude { get; set; }
+		public Coordinate Coordinate { get; set; }
 		public int Radius { get; set; }
 		public virtual List<Character> Characters {get;set;}
 
@@ -25,8 +24,7 @@ namespace object_group_game
 		{
 			this.DisplayName = DisplayName;
 			this.LocationType = LocationType;
-			this.Latitude = Latitude;
-			this.Longtitude = Longtitude;
+			Coordinate = new Coordinate(Latitude, Longtitude);
 			this.Radius = Radius;
 		}
 
@@ -38,7 +36,7 @@ namespace object_group_game
 		//Locations are equal if their coordinates match
         public bool Equals(Location other)
         {
-			if(this.Latitude == other.Latitude && this.Longtitude == other.Longtitude)
+			if(this.Coordinate.Latitude == other.Coordinate.Latitude && this.Coordinate.Longtitude == other.Coordinate.Longtitude)
             {
 				return true;
             }

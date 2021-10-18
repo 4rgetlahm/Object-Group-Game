@@ -2,6 +2,7 @@
 using GMap.NET.MapProviders;
 using GMap.NET.WindowsForms;
 using GMap.NET.WindowsForms.Markers;
+using object_group_game.Database;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -35,7 +36,7 @@ namespace object_group_game
             liveMap.MaxZoom = 24;
             liveMap.Zoom = 9;
 
-            if(LocalData.Player.PlayerRole == PlayerRole.ADMINISTRATOR)
+            if(LocalData.Player.PlayerRole.HasFlag(PlayerRole.Administrator))
             {
                 gameMasterToolStripMenuItem.Visible = true;
             }
@@ -99,7 +100,7 @@ namespace object_group_game
 
             foreach(Location location in LocationList.GetInstance().Locations)
             {
-                GMapMarker marker = new GMarkerGoogle(new PointLatLng(location.Latitude, location.Longtitude), GMarkerGoogleType.blue);
+                GMapMarker marker = new GMarkerGoogle(new PointLatLng(location.Coordinate.Latitude, location.Coordinate.Longtitude), GMarkerGoogleType.blue);
                 markers.Markers.Add(marker);
             }
             liveMap.Overlays.Add(markers);
@@ -119,6 +120,11 @@ namespace object_group_game
         {
             CreateItemMenu createItemMenu = new CreateItemMenu(LocalData.Player);
             createItemMenu.ShowDialog();
+        }
+
+        private void createNewLocationToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }

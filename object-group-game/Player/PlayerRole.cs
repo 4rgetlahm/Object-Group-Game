@@ -6,10 +6,14 @@ using System.Threading.Tasks;
 
 namespace object_group_game
 {
+    [Flags]
     public enum PlayerRole
     {
-        DEFAULT,
-        MODERATOR,
-        ADMINISTRATOR
+        Default = 1,
+        Subscriber = 2,
+        Moderator = 4,
+        Administrator = 8,
+        PlayerModerator = Default | Subscriber | Moderator,
+        Manager = Default | Subscriber | Moderator | Administrator
     }
 }

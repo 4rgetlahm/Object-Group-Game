@@ -82,11 +82,12 @@ namespace Tests.Database
             Assert.Pass();
         }
 
+        [Test]
         public void Add_Remove_Location()
         {
             using (var db = new DataContext())
             {
-                Location location = new Location("TestLocation", LocationType.HOLY, 45.5641654, 65.23131776, 3);
+                Location location = new Location("Test Location", LocationType.HOLY, 45.5641654, 65.23131776, 3);
 
                 db.Add(location);
                 db.SaveChanges();
