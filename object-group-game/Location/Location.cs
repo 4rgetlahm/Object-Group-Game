@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 namespace object_group_game
 {
 	[Table("Locations")]
-	public class Location
+	public class Location : IEquatable<Location>
 	{
 		[Key]
 		public int LocationID { get; set; }
@@ -34,5 +34,15 @@ namespace object_group_game
         {
 
         }
-	}
+
+		//Locations are equal if their coordinates match
+        public bool Equals(Location other)
+        {
+			if(this.Latitude == other.Latitude && this.Longtitude == other.Longtitude)
+            {
+				return true;
+            }
+			return false;
+        }
+    }
 }

@@ -23,22 +23,58 @@ namespace object_group_game
 
         }
 
+        private void LoadGame(Player player)
+        {
+            LocalData.Player = player;
+            MainMenu mainMenu = new MainMenu();
+            mainMenu.Show();
+            this.Hide();
+        }
+
         private void loginButton_Click(object sender, EventArgs e)
         {
-
             Tuple<int, Player> loginResponse = Authenticator.GetAuthenticator().Login(usernameInput.Text, passwordInput.Text);
             if(loginResponse.Item1 == 1)
             {
-                LocalData.Player = loginResponse.Item2;
-                MainMenu mainMenu = new MainMenu();
-                mainMenu.Show();
-                this.Hide();
+                LoadGame(loginResponse.Item2);
+            }
+            else if(loginResponse.Item1 < 0)
+            {
+                switch(loginResponse.Item1){
+                    case -1:
+                        MessageBox.Show("Player doesn't exist!");
+                        break;
+                }
+            }
+            else
+            {
+                MessageBox.Show("Incorrect login!");
             }
         }
 
         private void registerButton_Click(object sender, EventArgs e)
         {
-            Authenticator.GetAuthenticator().Register(usernameInput.Text, passwordInput.Text);
+            Tuple<int, Player> registerResponse = Authenticator.GetAuthenticator().Register(usernameInput.Text, passwordInput.Text);
+            if (registerResponse.Item1 == 1)
+            {
+                LoadGame(registerResponse.Item2);
+            }
+            else if (registerResponse.Item1 < 0)
+            {
+                switch (registerResponse.Item1)
+                {
+                    case -1:
+                        MessageBox.Show("Username already exists!");
+                        break;
+                    case -2:
+                        MessageBox.Show("Incorrect username!");
+                        break;
+                }
+            }
+            else
+            {
+                MessageBox.Show("Registration failed");
+            }
         }
     }
 }
