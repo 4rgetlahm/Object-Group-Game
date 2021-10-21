@@ -22,7 +22,7 @@ namespace object_group_game
         public CreateItemMenu(Player player)
         {
             InitializeComponent();
-            if(player.PlayerRole != PlayerRole.ADMINISTRATOR)
+            if(!player.PlayerRole.HasFlag(PlayerRole.Administrator))
             {
                 throw new Exception("Player is not administrator!");
             }

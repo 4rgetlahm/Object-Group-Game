@@ -16,7 +16,7 @@ namespace object_group_game
         public int PlayerID { get; set; }
         public string Name { get; private set; }
 
-        [DefaultValue(PlayerRole.DEFAULT)]
+        [DefaultValue(PlayerRole.Default)]
         public PlayerRole PlayerRole { get; private set; }
         public virtual Character Character { get; set; }
 

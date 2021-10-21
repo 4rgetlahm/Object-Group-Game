@@ -1,5 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using System.Configuration;
+using System.Text.Json;
 
 namespace object_group_game.Database
 {
@@ -41,6 +41,12 @@ namespace object_group_game.Database
 
 			modelBuilder.Entity<Player>().Property<string>("Password");
 			modelBuilder.Entity<Player>().Property<string>("Salt");
+
+			modelBuilder.Entity<Location>().Property(c => c.Coordinate)
+				.HasConversion(
+					v => JsonSerializer.Serialize(v, null),
+					v => JsonSerializer.Deserialize<Coordinate>(v, null)
+				);
 
 			base.OnModelCreating(modelBuilder);
         }

@@ -9,24 +9,22 @@ using System.Threading.Tasks;
 namespace object_group_game
 {
 	[Table("Locations")]
-	public class Location
+	public class Location : IEquatable<Location>
 	{
 		[Key]
 		public int LocationID { get; set; }
 		public string DisplayName { get; set; }
 		public LocationType LocationType { get; set; }
-		public double Latitude { get; set; }
-		public double Longtitude { get; set; }
+		public Coordinate Coordinate { get; set; }
 		public int Radius { get; set; }
-		public virtual List<Character> Characters {get;set;}
+		public virtual List<Character> Characters { get; set; }
 
 
 		public Location (string DisplayName, LocationType LocationType, double Latitude, double Longtitude, int Radius)
 		{
 			this.DisplayName = DisplayName;
 			this.LocationType = LocationType;
-			this.Latitude = Latitude;
-			this.Longtitude = Longtitude;
+			Coordinate = new Coordinate(Latitude, Longtitude);
 			this.Radius = Radius;
 		}
 
@@ -34,5 +32,15 @@ namespace object_group_game
         {
 
         }
-	}
+
+		//Locations are equal if their coordinates match
+        public bool Equals(Location other)
+        {
+			if(this.Coordinate.Latitude == other.Coordinate.Latitude && this.Coordinate.Longtitude == other.Coordinate.Longtitude)
+            {
+				return true;
+            }
+			return false;
+        }
+    }
 }

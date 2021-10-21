@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace object_group_game
 {
-    static class LocalData
+    static class Session
     {
         public static Player Player { get; set; }
 

@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
@@ -59,7 +60,7 @@ namespace object_group_game
                     }
 
                     string salt = (string) db.Entry(player).Property("Salt").CurrentValue;
-                    string hash = (string)db.Entry(player).Property("Password").CurrentValue;
+                    string hash = (string) db.Entry(player).Property("Password").CurrentValue;
                     byte[] generatedHash = GenerateSaltedHash(Encoding.UTF8.GetBytes(password), Convert.FromBase64String(salt));
 
                     if(hash.Equals(Convert.ToBase64String(generatedHash)))
@@ -81,6 +82,13 @@ namespace object_group_game
 
         public Tuple<int, Player> Register(string username, string password)
         {
+           
+            Regex regex = new Regex(@"^(?=.{4,20}$)(?![_.])(?!.*[_.]{2})[a-zA-Z0-9._]+(?<![_.])$");
+            if (!regex.IsMatch(username))
+            {
+                return new Tuple<int, Player>(-2, null);
+            }
+
             try
             {
                 using (var db = new DataContext())
