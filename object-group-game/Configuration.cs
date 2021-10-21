@@ -21,7 +21,7 @@ namespace object_group_game
             this.ReadConfig();
         }
 
-        public static Configuration GetInstance(string FilePath=@"config.cfg")
+        public static Configuration GetInstance(string FilePath = @"config.cfg")
         {
             if(_obj == null)
             {
@@ -40,9 +40,11 @@ namespace object_group_game
                     line = reader.ReadLine();
                     while (line != null)
                     {
-                       var keyValue = line.Split('=');
-                       Settings.Add(keyValue[0].Trim(), keyValue[1].Trim());    
-                       line = reader.ReadLine();
+                        int equalSignLocation = line.IndexOf('=');
+                        string key = line.Substring(0, equalSignLocation);
+                        string value = line.Substring(equalSignLocation + 1, line.Length - equalSignLocation - 1);
+                        Settings.Add(key, value);
+                        line = reader.ReadLine();
                     }
                 }
             }

@@ -26,19 +26,7 @@ namespace object_group_game
 
         }
 
-        public Character(int CharacterID, string name, double health, double experience, double mana, double gold, ICollection<Item> items, ICollection<Location> visitedLocations)
-        {
-            this.CharacterID = CharacterID;
-            this.Name = name;
-            this.Health = health;
-            this.Experience = experience;
-            this.Mana = mana;
-            this.Gold = gold;
-            this.Items = items;
-            this.VisitedLocations = visitedLocations;
-        }
-
-        public Character(string name, double health, double experience, double mana, double gold)
+        public Character(string name, double health = 100.0, double experience = 0.0, double mana = 100.0, double gold = 0.0)
         {
             this.Name = name;
             this.Health = health;
