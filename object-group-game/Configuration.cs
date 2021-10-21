@@ -9,26 +9,43 @@ using System.Threading.Tasks;
 
 namespace object_group_game
 {
-    class Settings
+    class Configuration
     {
-        Dictionary<string, string> allconfig = new Dictionary<string, string>();
-        public void ReadConfig(string path)
+        private static Configuration _obj;
+        public Dictionary<string, string> Settings = new Dictionary<string, string>();
+        private string FilePath { get; set; }
+
+        private Configuration(string FilePath)
+        {
+            this.FilePath = FilePath;
+            this.ReadConfig();
+        }
+
+        public static Configuration GetInstance(string FilePath=@"config.cfg")
+        {
+            if(_obj == null)
+            {
+                _obj = new Configuration(FilePath);
+            }
+            return _obj;
+        }
+
+        public void ReadConfig()
         {
             try
             {
-                using (var reader = new StreamReader(path))
+                using (var reader = new StreamReader(this.FilePath))
                 {
-                    string? line;
+                    string line;
                     line = reader.ReadLine();
                     while (line != null)
                     {
                        var keyValue = line.Split('=');
-                       allconfig.Add(keyValue[0].Trim(), keyValue[1].Trim());    
+                       Settings.Add(keyValue[0].Trim(), keyValue[1].Trim());    
                        line = reader.ReadLine();
                     }
                 }
             }
-
             catch (UnauthorizedAccessException ex)
             {
                 throw new Exception(string.Format("Access denied to read config.txt", ex.Message), ex);
