@@ -82,8 +82,7 @@ namespace object_group_game
 
         public Tuple<int, Player> Register(string username, string password)
         {
-           
-            Regex regex = new Regex(@"^(?=.{4,20}$)(?![_.])(?!.*[_.]{2})[a-zA-Z0-9._]+(?<![_.])$");
+            Regex regex = new Regex(Configuration.GetInstance().Settings["usernameregex"]);
             if (!regex.IsMatch(username))
             {
                 return new Tuple<int, Player>(-2, null);
@@ -103,7 +102,7 @@ namespace object_group_game
                     rngCSP.GetBytes(salt);
 
                     Player player = new Player(username);
-                    player.Character = new Character(username, 100.0, 0.0, 100.0, 0.0);
+                    player.Character = new Character(name: username, gold: 50.0);
                     db.Entry(player).Property("Salt").CurrentValue = Convert.ToBase64String(salt);
                     db.Entry(player).Property("Password").CurrentValue = Convert.ToBase64String(GenerateSaltedHash(Encoding.UTF8.GetBytes(password), salt));
                     db.Add(player);
