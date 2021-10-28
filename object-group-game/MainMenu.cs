@@ -24,6 +24,8 @@ namespace object_group_game
             experienceBar.ForeColor = Color.Yellow;
             manaBar.ForeColor = Color.Blue;
 
+            Session.Player.Character.CharacterUpdateEvent += this.OnCharacterUpdate;
+
             updateTimer.Start();
 
             updateBars();
@@ -80,7 +82,7 @@ namespace object_group_game
         private void logOutToolStripMenuItem_Click(object sender, EventArgs e)
         {
             var loginForm = Application.OpenForms.Cast<Form>().Where(form => form.Name == "LoginMenu").FirstOrDefault();
-            if(loginForm != null)
+            if (loginForm != null)
             {
                 Session.Clear();
                 loginForm.Show();
@@ -106,6 +108,17 @@ namespace object_group_game
             liveMap.Overlays.Add(markers);
         }
 
+        public void OnCharacterUpdate(CharacterEventArgs e)
+        {
+            updateBars();
+            using (var context = new DataContext())
+            {
+                var entry = context.Entry(Session.Player.Character);
+                entry.State = Microsoft.EntityFrameworkCore.EntityState.Modified;
+                context.SaveChanges();
+            }
+        }
+
         private void MainMenu_Load(object sender, EventArgs e)
         {
 
@@ -125,6 +138,11 @@ namespace object_group_game
         private void createNewLocationToolStripMenuItem_Click(object sender, EventArgs e)
         {
 
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            Session.Player.Character.Gold += 5;
         }
     }
 }
