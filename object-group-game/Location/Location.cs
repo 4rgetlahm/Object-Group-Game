@@ -12,12 +12,70 @@ namespace object_group_game
 	public class Location : IEquatable<Location>
 	{
 		[Key]
-		public int LocationID { get; set; }
-		public string DisplayName { get; set; }
-		public LocationType LocationType { get; set; }
-		public Coordinate Coordinate { get; set; }
-		public int Radius { get; set; }
+		private int _locationID;
+		public int LocationID {
+			get
+			{
+				return _locationID;
+			}
+			set
+			{
+				_locationID = value;
+				OnLocationEdited(new LocationEventArgs(this));
+			}
+		}
+		private string _displayName;
+		public string DisplayName {
+			get
+			{
+				return _displayName;
+			}
+			set
+			{
+				_displayName = value;
+				OnLocationEdited(new LocationEventArgs(this));
+			}
+		}
+		private LocationType _locationType;
+		public LocationType LocationType {
+			get
+			{
+				return _locationType;
+			}
+			set
+			{
+				_locationType = value;
+				OnLocationEdited(new LocationEventArgs(this));
+			}
+		}
+		private Coordinate _coordinate;
+		public Coordinate Coordinate {
+			get
+			{
+				return _coordinate;
+			}
+			set
+			{
+				_coordinate = value;
+				OnLocationEdited(new LocationEventArgs(this));
+			}
+		}
+		private int _radius;
+		public int Radius { 
+			get 
+			{
+				return _radius;
+			} 
+			set
+			{
+				_radius = value;
+				OnLocationEdited(new LocationEventArgs(this));
+			}
+		}
 		public virtual List<Character> Characters { get; set; }
+
+		public delegate void LocationUpdateEventHandler(LocationEventArgs args);
+		public event LocationUpdateEventHandler LocationUpdateEvent;
 
 
 		public Location (string DisplayName, LocationType LocationType, double Latitude, double Longtitude, int Radius)
@@ -41,6 +99,14 @@ namespace object_group_game
 				return true;
             }
 			return false;
+        }
+
+		protected virtual void OnLocationEdited(LocationEventArgs e)
+        {
+			if(LocationUpdateEvent != null)
+            {
+				LocationUpdateEvent(e);
+            }
         }
     }
 }
