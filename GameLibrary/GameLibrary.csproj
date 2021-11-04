@@ -5,7 +5,7 @@
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
-    <OutputPath>C:\Users\Arnas\source\repos\object-group-game\Server\lib\</OutputPath>
+    <OutputPath>$(SolutionDir)\Server\lib\</OutputPath>
   </PropertyGroup>
 
   <ItemGroup>
