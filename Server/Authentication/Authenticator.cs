@@ -1,4 +1,5 @@
-﻿using object_group_game.Database;
+﻿using GameLibrary.Database;
+using Server;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,7 +8,7 @@ using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
-namespace object_group_game
+namespace GameLibrary
 {
     class Authenticator
     {
@@ -46,7 +47,7 @@ namespace object_group_game
             return algorithm.ComputeHash(plainTextWithSaltBytes);
         }
 
-        public Tuple<int, Player> Login(string username, string password)
+        public Tuple<int, Session> Login(string username, string password)
         {
             try
             {
@@ -55,7 +56,12 @@ namespace object_group_game
                     Player player = db.Player.First(p => p.Name == username);
                     if (player == null) // if player doesn't exist
                     {
-                        return new Tuple<int, Player>(-1, null); // -1 = player doesn't exist
+                        return new Tuple<int, Session>(-1, null); // -1 = player doesn't exist
+                    }
+                    
+                    if (SessionManager.GetInstance().IsLoggedIn(player))
+                    {
+                        return new Tuple<int, Session>(-3, null); // -3 = player is logged in
                     }
 
                     string salt = (string) db.Entry(player).Property("Salt").CurrentValue;
@@ -67,7 +73,7 @@ namespace object_group_game
                         db.Entry(player).Reference(c => c.Character).Load();
                         db.Entry(player.Character).Collection(i => i.Items).Load();
                         db.Entry(player.Character).Collection(l => l.VisitedLocations).Load();
-                        return new Tuple<int, Player>(1, player); // login
+                        return new Tuple<int, Session>(1, SessionManager.GetInstance().CreateSession(player)); // login
                     }
                 }
             }
@@ -76,24 +82,25 @@ namespace object_group_game
                 Console.WriteLine(e.Message);
             }
 
-            return new Tuple<int, Player>(0, null);
+            return new Tuple<int, Session>(0, null);
         }
 
-        public Tuple<int, Player> Register(string username, string password)
+        public Tuple<int, Session> Register(string username, string password)
         {
             Regex regex = new Regex(Configuration.GetInstance().Settings["usernameregex"]);
             if (!regex.IsMatch(username))
             {
-                return new Tuple<int, Player>(-2, null);
+                return new Tuple<int, Session>(-2, null);
             }
 
             try
             {
                 using (var db = new DataContext())
                 {
+                    Console.WriteLine(username);
                     if (db.Player.Any(p => p.Name == username)) // if username already exists
                     {
-                        return new Tuple<int, Player>(-1, null);
+                        return new Tuple<int, Session>(-1, null);
                     }
 
                     RNGCryptoServiceProvider rngCSP = new RNGCryptoServiceProvider();
@@ -107,7 +114,7 @@ namespace object_group_game
                     db.Add(player);
                     db.SaveChanges();
 
-                    return new Tuple<int, Player>(1, player);
+                    return new Tuple<int, Session>(1, SessionManager.GetInstance().CreateSession(player));
                 }
 
             }
@@ -115,12 +122,17 @@ namespace object_group_game
             {
                 Console.WriteLine(e.Message);
             }
-            return new Tuple<int, Player>(0, null);
+            return new Tuple<int, Session>(0, null);
         }
 
-        public bool Logout(Player player)
+        public int Logout(Session session)
         {
-            return true;
+            if (SessionManager.GetInstance().DoesSessionExist(session))
+            {
+                SessionManager.GetInstance().RemoveSession(session);
+                return 1;
+            } 
+            return 0;
         }
     }
 }

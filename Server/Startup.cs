@@ -54,6 +54,8 @@ namespace Server
             {
                 endpoints.MapControllers();
             });
+
+            SessionManager.GetInstance(); // creates instance
         }
     }
 }

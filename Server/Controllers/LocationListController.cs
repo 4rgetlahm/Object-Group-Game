@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using object_group_game;
-using object_group_game.Database;
+using GameLibrary;
+using GameLibrary.Database;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,7 +15,6 @@ namespace Server.Controllers
         [HttpGet]
         public IEnumerable<Location> Get()
         {
-            Console.WriteLine(Configuration.GetInstance().Settings["server"]);
             using(var context = new DataContext())
             {
                 return context.Location.ToList();
