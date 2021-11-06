@@ -97,7 +97,6 @@ namespace GameLibrary
             {
                 using (var db = new DataContext())
                 {
-                    Console.WriteLine(username);
                     if (db.Player.Any(p => p.Name == username)) // if username already exists
                     {
                         return new Tuple<int, Session>(-1, null);
