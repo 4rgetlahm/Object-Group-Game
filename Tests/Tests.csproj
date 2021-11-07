@@ -8,6 +8,7 @@
 
   <ItemGroup>
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.9.4" />
+    <PackageReference Include="MySql.EntityFrameworkCore" Version="5.0.8" />
     <PackageReference Include="NUnit" Version="3.13.1" />
     <PackageReference Include="NUnit3TestAdapter" Version="3.17.0" />
     <PackageReference Include="coverlet.collector" Version="3.0.2" />
@@ -15,6 +16,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\GameLibrary\GameLibrary.csproj" />
+	<ProjectReference Include="..\Server\Server.csproj" />
   </ItemGroup>
 
 

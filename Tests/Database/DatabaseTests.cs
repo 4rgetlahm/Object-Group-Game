@@ -1,6 +1,6 @@
-﻿using NUnit.Framework;
-using object_group_game;
-using object_group_game.Database;
+﻿using GameLibrary;
+using GameLibrary.Database;
+using NUnit.Framework;
 using System.Collections.Generic;
 
 namespace Tests.Database

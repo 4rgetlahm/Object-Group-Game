@@ -12,9 +12,9 @@ namespace Server.Controllers
     public class RegisterController : Controller
     {
         [HttpPost]
-        public Tuple<int, Session> Post(string username, string password)
+        public Tuple<int, Session> Post([FromBody] PlayerAuth playerAuth)
         {
-            return Authenticator.GetAuthenticator().Register(username, password);
+            return Authenticator.GetAuthenticator().Register(playerAuth.Username, playerAuth.Password);
         }
     }
 }

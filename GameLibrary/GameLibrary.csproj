@@ -6,10 +6,8 @@
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
     <OutputPath>$(SolutionDir)\Server\lib\</OutputPath>
+    <OutputPath>$(SolutionDir)\Unity\Assets\Libraries\</OutputPath>
+    <ProduceReferenceAssembly>false</ProduceReferenceAssembly>
   </PropertyGroup>
-
-  <ItemGroup>
-    <PackageReference Include="MySql.EntityFrameworkCore" Version="5.0.8" />
-  </ItemGroup>
 
 </Project>

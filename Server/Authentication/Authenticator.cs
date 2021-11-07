@@ -61,7 +61,7 @@ namespace GameLibrary
                     
                     if (SessionManager.GetInstance().IsLoggedIn(player))
                     {
-                        return new Tuple<int, Session>(-3, null); // -3 = player is logged in
+                        return new Tuple<int, Session>(-2, null); // -2 = player is logged in
                     }
 
                     string salt = (string) db.Entry(player).Property("Salt").CurrentValue;
