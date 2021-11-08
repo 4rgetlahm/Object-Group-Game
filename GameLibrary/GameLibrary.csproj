@@ -5,9 +5,12 @@
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
-    <OutputPath>$(SolutionDir)\Server\lib\</OutputPath>
-    <OutputPath>$(SolutionDir)\Unity\Assets\Libraries\</OutputPath>
     <ProduceReferenceAssembly>false</ProduceReferenceAssembly>
   </PropertyGroup>
+
+  <Target Name="PostBuild" AfterTargets="PostBuildEvent">
+    <Exec Command="xcopy /e /y &quot;$(TargetPath)&quot; &quot;$(SolutionDir)Unity\Assets\Libraries\&quot;" />
+    <Exec Command="xcopy /e /y &quot;$(TargetPath)&quot; &quot;$(SolutionDir)Server\Libraries\&quot;" />
+  </Target>
 
 </Project>

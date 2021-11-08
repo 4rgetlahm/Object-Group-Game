@@ -20,7 +20,7 @@
 
   <ItemGroup>
      <Reference Include="GameLibrary">
-       <HintPath>lib/net5.0/GameLibrary.dll</HintPath>
+       <HintPath>Libraries/GameLibrary.dll</HintPath>
      </Reference>
   </ItemGroup>
 

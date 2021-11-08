@@ -53,9 +53,9 @@
     <UnityVersion>2020.3.22f1</UnityVersion>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="Assets\Scripts\Session\Session.cs" />
     <Compile Include="Assets\Scripts\Network\Network.cs" />
     <Compile Include="Assets\Scripts\Authentication\AuthenticationHandler.cs" />
-    <Compile Include="Assets\Scripts\Session\Session.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\TextMesh Pro\Shaders\TMPro.cginc" />
@@ -74,13 +74,13 @@
     <None Include="Assets\TextMesh Pro\Shaders\TMPro_Properties.cginc" />
     <None Include="Assets\TextMesh Pro\Shaders\TMPro_Surface.cginc" />
     <None Include="Assets\TextMesh Pro\Resources\LineBreaking Following Characters.txt" />
+    <None Include="Assets\Libraries\GameLibrary.dll" />
     <None Include="Assets\Libraries\RestSharp.xml" />
     <None Include="Assets\TextMesh Pro\Shaders\TMP_SDF-Mobile Masking.shader" />
     <None Include="Assets\TextMesh Pro\Shaders\TMP_SDF Overlay.shader" />
     <None Include="Assets\TextMesh Pro\Shaders\TMP_Bitmap-Mobile.shader" />
     <None Include="Assets\TextMesh Pro\Fonts\LiberationSans - OFL.txt" />
     <None Include="Assets\TextMesh Pro\Shaders\TMP_SDF-Mobile.shader" />
-    <None Include="Assets\Libraries\net5.0\GameLibrary.dll" />
     <None Include="Assets\TextMesh Pro\Shaders\TMP_Sprite.shader" />
   </ItemGroup>
   <ItemGroup>
@@ -306,11 +306,11 @@
     <Reference Include="UnityEditor.UnityConnectModule">
       <HintPath>E:\Unity\2020.3.22f1\Editor\Data\Managed\UnityEngine\UnityEditor.UnityConnectModule.dll</HintPath>
     </Reference>
+    <Reference Include="GameLibrary">
+      <HintPath>Assets\Libraries\GameLibrary.dll</HintPath>
+    </Reference>
     <Reference Include="Newtonsoft.Json">
       <HintPath>Library\PackageCache\com.unity.nuget.newtonsoft-json@2.0.0\Runtime\Newtonsoft.Json.dll</HintPath>
-    </Reference>
-    <Reference Include="GameLibrary">
-      <HintPath>Assets\Libraries\net5.0\GameLibrary.dll</HintPath>
     </Reference>
     <Reference Include="RestSharp">
       <HintPath>Assets\Libraries\RestSharp.dll</HintPath>
