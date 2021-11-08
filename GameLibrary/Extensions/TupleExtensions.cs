@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace object_group_game.Extensions
+namespace GameLibrary.Extensions
 {
     public static class TupleExtensions
     {

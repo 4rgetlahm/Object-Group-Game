@@ -6,12 +6,12 @@ using System.Threading.Tasks;
 
 namespace GameLibrary
 {
-    public class CharacterEventArgs
+    public class PlayerEventArgs
     {
-        public Character Character { get; set; }
-        public CharacterEventArgs(Character character)
+        public Player Player { get; set; }
+        public PlayerEventArgs(Player player)
         {
-            Character = character;
+            Player = player;
         }
     }
 }

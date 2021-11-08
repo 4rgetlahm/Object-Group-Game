@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Text;
 
-namespace object_group_game
+namespace GameLibrary
 {
 	[Table("Effects")]
 	public class Effect

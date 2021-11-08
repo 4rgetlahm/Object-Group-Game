@@ -1,7 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using System.Text.Json;
 
-namespace object_group_game.Database
+namespace GameLibrary.Database
 {
 	public class DataContext : DbContext
 	{

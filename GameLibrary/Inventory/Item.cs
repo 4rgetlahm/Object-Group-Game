@@ -5,7 +5,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
 
-namespace object_group_game
+namespace GameLibrary
 {
 	[Table("Items")]
 	public class Item : IComparable<Item>

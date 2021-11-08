@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace object_group_game
+namespace GameLibrary
 {
     public class LocationEventArgs : EventArgs
     {

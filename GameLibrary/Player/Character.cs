@@ -1,4 +1,4 @@
-﻿using object_group_game.Database;
+﻿using GameLibrary.Database;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -7,7 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace object_group_game
+namespace GameLibrary
 {
     [Table("Characters")]
     public class Character

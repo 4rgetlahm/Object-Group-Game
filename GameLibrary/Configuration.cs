@@ -7,7 +7,7 @@ using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace object_group_game
+namespace GameLibrary
 {
     public class Configuration
     {
