@@ -77,8 +77,8 @@ namespace GameLibrary
                 OnCharacterUpdate(new CharacterEventArgs(this));
             }
         }
-        public virtual ICollection<Item> Items { get; set; }
-        public virtual ICollection<Location> VisitedLocations { get; set; }
+        public List<Item> Items { get; set; }
+        public List<Location> VisitedLocations { get; set; }
 
         public delegate void CharacterUpdateEventHandler(CharacterEventArgs args);
         public event CharacterUpdateEventHandler CharacterUpdateEvent;
@@ -147,6 +147,16 @@ namespace GameLibrary
                 totalIntelligence += item.Intelligence;
             }
             return totalIntelligence;
+        }
+
+        public List<string> getItemNames()
+        {
+            List<string> names = new List<string>();
+            foreach(Item item in this.Items)
+            {
+                names.Add(item.DisplayName);
+            }
+            return names;
         }
 
         public void OnCharacterUpdate(CharacterEventArgs args)

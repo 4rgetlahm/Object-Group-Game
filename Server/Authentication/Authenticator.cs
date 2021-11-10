@@ -1,4 +1,5 @@
-﻿using GameLibrary.Database;
+﻿using GameLibrary;
+using GameLibrary.Database;
 using Server;
 using System;
 using System.Collections.Generic;
@@ -8,7 +9,7 @@ using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
-namespace GameLibrary
+namespace Server.Authentication
 {
     class Authenticator
     {

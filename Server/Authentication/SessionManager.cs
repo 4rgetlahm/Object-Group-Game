@@ -1,4 +1,5 @@
 ﻿using GameLibrary;
+using Server.Authentication;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -6,7 +7,7 @@ using System.Security.Cryptography;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace Server
+namespace Server.Authentication
 {
     public class SessionManager
     {
@@ -61,10 +62,13 @@ namespace Server
         {
             lock (this.LastRequest)
             {
-                if (LastRequest.ContainsKey(session))
-                {
+                var findSession = LastRequest.Keys.FirstOrDefault(key => key.SessionID.SequenceEqual(session.SessionID));
+                if(findSession != null){
                     LastRequest[session] = dateTime;
+                    return;
                 }
+                throw new BadSessionException("Session doesn't exist");
+
             }
         }
 

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -9,6 +10,7 @@ using System.Threading.Tasks;
 namespace GameLibrary
 {
 	[Table("Locations")]
+	[Serializable]
 	public class Location : IEquatable<Location>
 	{
 		[Key]
@@ -72,7 +74,8 @@ namespace GameLibrary
 				OnLocationEdited(new LocationEventArgs(this));
 			}
 		}
-		public virtual List<Character> Characters { get; set; }
+		[JsonIgnore]
+		public List<Character> Characters { get; set; }
 
 		public delegate void LocationUpdateEventHandler(LocationEventArgs args);
 		public event LocationUpdateEventHandler LocationUpdateEvent;

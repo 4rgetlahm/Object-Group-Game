@@ -15,3 +15,5 @@ services:
     environment:
       - MYSQL_ROOT_PASSWORD=sqlpassword
       - MYSQL_DATABASE=test
+    ports:
+      - 3306:3306

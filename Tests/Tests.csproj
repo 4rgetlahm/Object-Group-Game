@@ -15,8 +15,15 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\GameLibrary\GameLibrary.csproj" />
+
+     <Reference Include="GameLibrary">
+       <HintPath>Libraries/GameLibrary.dll</HintPath>
+     </Reference>
 	<ProjectReference Include="..\Server\Server.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Libraries\" />
   </ItemGroup>
 
 

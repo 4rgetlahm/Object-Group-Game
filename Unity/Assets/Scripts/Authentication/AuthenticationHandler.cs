@@ -5,11 +5,14 @@ using TMPro;
 using RestSharp;
 using Newtonsoft.Json;
 using System;
-
+using UnityEngine.SceneManagement;
+using GameLibrary.Exceptions;
+using GameLibrary;
+using System.Threading;
 
 class SessionResponse
 {
-    public string sessionID { get; set; }
+    public string SessionID { get; set; }
 }
 
 class RequestModel
@@ -35,7 +38,6 @@ public class AuthenticationHandler : MonoBehaviour
         string password = passwordInput.GetComponent<TMP_InputField>().text;
 
         var request = new RestRequest(apiURL, method);
-
         var body = new RequestModel(username, password);
 
         request.AddParameter("application/json; charset=utf-8", JsonConvert.SerializeObject(body, Formatting.Indented), ParameterType.RequestBody);
@@ -46,7 +48,11 @@ public class AuthenticationHandler : MonoBehaviour
 
     void OnLogin()
     {
+        var autoEvent = new AutoResetEvent(false);
+        var sessionUpdater = new SessionUpdater();
+        var updateTimer = new Timer(sessionUpdater.SendUpdate, autoEvent, 0, 30000);
 
+        SceneManager.LoadScene("Game");
     }
 
     public void Register()
@@ -63,8 +69,8 @@ public class AuthenticationHandler : MonoBehaviour
             switch (serverResponse.Item1)
             {
                 case 1:
-                    Session.sessionID = Convert.FromBase64String(serverResponse.Item2.sessionID);
-                    Debug.Log("Registered, status 1, session: " + serverResponse.Item2.sessionID);
+                    Session.SessionID = Convert.FromBase64String(serverResponse.Item2.SessionID);
+                    Debug.Log("Registered, status 1, session: " + serverResponse.Item2.SessionID);
                     OnLogin();
                     break;
                 case -1:
@@ -97,8 +103,8 @@ public class AuthenticationHandler : MonoBehaviour
             switch (serverResponse.Item1)
             {
                 case 1:
-                    Session.sessionID = Convert.FromBase64String(serverResponse.Item2.sessionID);
-                    Debug.Log("Logged in status 1, session: " + serverResponse.Item2.sessionID);
+                    Session.SessionID = Convert.FromBase64String(serverResponse.Item2.SessionID);
+                    Debug.Log("Logged in status 1, session: " + serverResponse.Item2.SessionID);
                     OnLogin();
                     break;
                 case -1:
