@@ -45,7 +45,7 @@ public class PlayerLoader : MonoBehaviour
     [SerializeField]
     private TMP_Text itemListLabel;
 
-    public class PlayerData
+    class PlayerData
     {
         public string Username { get; set; }
         public string CharacterName { get; set; }
@@ -78,6 +78,19 @@ public class PlayerLoader : MonoBehaviour
         itemListLabel.text = String.Join("\n", playerData.ItemNameList.ToArray());
     }
 
+    void ChangeLocalData(PlayerData playerData)
+    {
+        LocalPlayer.Instance.Username = playerData.CharacterName;
+        LocalPlayer.Instance.CharacterName = playerData.CharacterName;
+        LocalPlayer.Instance.Health = playerData.Health;
+        LocalPlayer.Instance.Mana = playerData.Mana;
+        LocalPlayer.Instance.Gold = playerData.Gold;
+        LocalPlayer.Instance.Dexterity = playerData.Dexterity;
+        LocalPlayer.Instance.Strength = playerData.Strength;
+        LocalPlayer.Instance.Intelligence = playerData.Intelligence;
+        LocalPlayer.Instance.ItemNameList = playerData.ItemNameList;
+    }
+
     void Start()
     {
         var request = new RestRequest("/session/player", Method.POST);
@@ -98,7 +111,7 @@ public class PlayerLoader : MonoBehaviour
             {
                 throw new BadResponseException("Returned player is null!");
             }
-
+            ChangeLocalData(playerData);
             updateLabels(playerData);
         }
         catch (BadResponseException e)
