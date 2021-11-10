@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -8,6 +9,7 @@ using System.Text;
 namespace GameLibrary
 {
 	[Table("Items")]
+	[Serializable]
 	public class Item : IComparable<Item>
 	{
 		[Key]
@@ -16,8 +18,10 @@ namespace GameLibrary
 		public int Strength { get; set; }
 		public int Dexterity { get; set; }
 		public int Intelligence { get; set; }
-		public virtual List<Effect> Effects { get; set; }
-		public virtual List<Character> Characters { get; set; }
+		[JsonIgnore]
+		public List<Effect> Effects { get; set; }
+		[JsonIgnore]
+		public List<Character> Characters { get; set; }
 
 		public Item(string DisplayName, int Strength = 0, int Dexterity = 0, int Intelligence = 0, List<Effect> Effects = null)
 		{

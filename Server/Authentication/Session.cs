@@ -9,10 +9,10 @@ namespace Server
 {
     public class Session
     {
-        public byte[] SessionID { get; set; }
+        public byte[] SessionID {get; set;}
         public Session(byte[] sessionID)
         {
-            SessionID = sessionID;
+            this.SessionID = sessionID;
         }
     }
 }

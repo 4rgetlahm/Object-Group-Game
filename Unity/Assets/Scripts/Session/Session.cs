@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Session
+public static class Session
 {
-    public static byte[] sessionID = null;
+    public static byte[] SessionID = null;
 }

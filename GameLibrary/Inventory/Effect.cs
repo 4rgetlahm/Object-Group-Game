@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -7,6 +8,7 @@ using System.Text;
 namespace GameLibrary
 {
 	[Table("Effects")]
+	[Serializable]
 	public class Effect
 	{
 		[Key]
@@ -14,7 +16,8 @@ namespace GameLibrary
 		public string StatusName { get; set; }
 		public string DisplayName { get; set; }
 		public int Value { get; set; }
-		public virtual ICollection<Item> Items { get; set; }
+		[JsonIgnore]
+		public List<Item> Items { get; set; }
 
 		public Effect(string statusName, string displayName, int value)
 		{

@@ -11,6 +11,11 @@
   <Target Name="PostBuild" AfterTargets="PostBuildEvent">
     <Exec Command="xcopy /e /y &quot;$(TargetPath)&quot; &quot;$(SolutionDir)Unity\Assets\Libraries\&quot;" />
     <Exec Command="xcopy /e /y &quot;$(TargetPath)&quot; &quot;$(SolutionDir)Server\Libraries\&quot;" />
+	<Exec Command="xcopy /e /y &quot;$(TargetPath)&quot; &quot;$(SolutionDir)Tests\Libraries\&quot;" />
   </Target>
+
+  <ItemGroup>
+    <PackageReference Include="Newtonsoft.Json" Version="12.0.1" />
+  </ItemGroup>
 
 </Project>
