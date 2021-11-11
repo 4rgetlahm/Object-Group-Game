@@ -9,8 +9,7 @@ Unity/[Tt]emp/
 Unity/[Oo]bj/
 Unity/[Bb]uild/
 Unity/[Bb]uilds/
-Unity/[Ll]ogs/
-Unity/[Uu]ser[Ss]ettings/
+Unity/Assets/AssetStoreTools*
 
 # User-specific files
 *.rsuser
