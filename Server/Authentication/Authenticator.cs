@@ -13,22 +13,21 @@ namespace Server.Authentication
 {
     class Authenticator
     {
-        private static Authenticator authenticator = null;
+        private static readonly Lazy<Authenticator> _instance =
+            new Lazy<Authenticator>(() => new Authenticator());
+
+        public static Authenticator Instance
+        {
+            get
+            {
+                return _instance.Value;
+            }
+        }
 
         private Authenticator()
         {
            
         }
-
-        public static Authenticator GetAuthenticator()
-        {
-            if (authenticator == null)
-            {
-                authenticator = new Authenticator();
-            }
-            return authenticator;
-        }
-
 
         static byte[] GenerateSaltedHash(byte[] plainText, byte[] salt)
         {
@@ -60,7 +59,7 @@ namespace Server.Authentication
                         return new Tuple<int, Session>(-1, null); // -1 = player doesn't exist
                     }
                     
-                    if (SessionManager.GetInstance().IsLoggedIn(player))
+                    if (SessionManager.Instance.IsLoggedIn(player))
                     {
                         return new Tuple<int, Session>(-2, null); // -2 = player is logged in
                     }
@@ -74,7 +73,7 @@ namespace Server.Authentication
                         db.Entry(player).Reference(c => c.Character).Load();
                         db.Entry(player.Character).Collection(i => i.Items).Load();
                         db.Entry(player.Character).Collection(l => l.VisitedLocations).Load();
-                        return new Tuple<int, Session>(1, SessionManager.GetInstance().CreateSession(player)); // login
+                        return new Tuple<int, Session>(1, SessionManager.Instance.CreateSession(player)); // login
                     }
                 }
             }
@@ -114,7 +113,7 @@ namespace Server.Authentication
                     db.Add(player);
                     db.SaveChanges();
 
-                    return new Tuple<int, Session>(1, SessionManager.GetInstance().CreateSession(player));
+                    return new Tuple<int, Session>(1, SessionManager.Instance.CreateSession(player));
                 }
 
             }
@@ -127,9 +126,9 @@ namespace Server.Authentication
 
         public int Logout(Session session)
         {
-            if (SessionManager.GetInstance().DoesSessionExist(session))
+            if (SessionManager.Instance.DoesSessionExist(session))
             {
-                SessionManager.GetInstance().RemoveSession(session);
+                SessionManager.Instance.RemoveSession(session);
                 return 1;
             } 
             return 0;

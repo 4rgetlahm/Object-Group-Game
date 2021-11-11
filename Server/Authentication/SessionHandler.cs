@@ -22,23 +22,23 @@ namespace Server.Authentication
         // Updates last request time by any changes
         public void OnPlayerUpdate(PlayerEventArgs args)
         {
-            SessionManager.GetInstance().UpdateLastRequest(args.Player, DateTime.Now);
+            SessionManager.Instance.UpdateLastRequest(args.Player, DateTime.Now);
         }
 
         public void ExpireSessions(Object stateInfo)
         {
-            lock (SessionManager.GetInstance().LastRequest)
+            lock (SessionManager.Instance.LastRequest)
             {
                 var timedOutSessions =
-                    from entry in SessionManager.GetInstance().LastRequest
+                    from entry in SessionManager.Instance.LastRequest
                     where (DateTime.Now - entry.Value).TotalMilliseconds >= expiryTime
                     select entry;
 
-                lock (SessionManager.GetInstance().Sessions)
+                lock (SessionManager.Instance.Sessions)
                 {
                     foreach (var pair in timedOutSessions)
                     {
-                        SessionManager.GetInstance().RemoveSession(pair.Key);
+                        SessionManager.Instance.RemoveSession(pair.Key);
                     }
                 }
             }

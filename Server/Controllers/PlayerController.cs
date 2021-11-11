@@ -35,9 +35,9 @@ namespace Server.Controllers
             if(body == null){
                 return null;
             }   
-            foreach(var session in SessionManager.GetInstance().Sessions){
+            foreach(var session in SessionManager.Instance.Sessions){
                 if(session.Key.SessionID.SequenceEqual(body.SessionID)){
-                    Player player = SessionManager.GetInstance().Sessions[session.Key];
+                    Player player = SessionManager.Instance.Sessions[session.Key];
                     PlayerData response = new PlayerData{
                         Username = player.Name,
                         CharacterName = player.Character.Name,
@@ -51,7 +51,7 @@ namespace Server.Controllers
                         ItemNameList = player.Character.getItemNames()
                     };
 
-                    /*var serialized = JsonConvert.SerializeObject(SessionManager.GetInstance().Sessions[session.Key]);
+                    /*var serialized = JsonConvert.SerializeObject(SessionManager.Instance.Sessions[session.Key]);
                     Console.WriteLine(serialized);
                     var deserialized = JsonConvert.DeserializeObject<Player>(serialized);
                     Console.WriteLine(deserialized.PlayerID);
@@ -62,15 +62,15 @@ namespace Server.Controllers
             }
             return null;
             /*
-            Session session = SessionManager.GetInstance().Sessions.Keys.Where(key => key.SessionID == body.SessionID).FirstOrDefault();
+            Session session = SessionManager.Instance.Sessions.Keys.Where(key => key.SessionID == body.SessionID).FirstOrDefault();
             if (session == null)
             {
                 Console.WriteLine("no session");
                 return null;
             }
-            Console.WriteLine(SessionManager.GetInstance().Sessions[session].Name);
-            Console.WriteLine(SessionManager.GetInstance().Sessions[session].Character.Gold);
-            return SessionManager.GetInstance().Sessions[session];
+            Console.WriteLine(SessionManager.Instance.Sessions[session].Name);
+            Console.WriteLine(SessionManager.Instance.Sessions[session].Character.Gold);
+            return SessionManager.Instance.Sessions[session];
             */
         }
     }

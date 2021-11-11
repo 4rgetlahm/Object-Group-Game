@@ -11,12 +11,26 @@ namespace Server.Authentication
 {
     public class SessionManager
     {
-        private static SessionManager instance;
+        private static readonly Lazy<SessionManager> _instance =
+            new Lazy<SessionManager>(() => new SessionManager());
+
+        public static SessionManager Instance
+        {
+            get
+            {
+                return _instance.Value;
+            }
+        }
 
         private Timer SessionHandlingTimer { get; set; }
         private Authentication.SessionHandler SessionHandler { get; set; }
         public Dictionary<Session, Player> Sessions { get; set; }
         public Dictionary<Session, DateTime> LastRequest { get; set; }
+
+        public void Init()
+        {
+
+        }
 
         private SessionManager()
         {
@@ -27,15 +41,6 @@ namespace Server.Authentication
             var autoEvent = new AutoResetEvent(false);
 
             SessionHandlingTimer = new Timer(SessionHandler.ExpireSessions, null, 0, Int64.Parse(Configuration.GetInstance().Settings["sessionexpirychecktime"]));
-        }
-
-        public static SessionManager GetInstance()
-        {
-            if(instance == null)
-            {
-                instance = new SessionManager();
-            }
-            return instance;
         }
 
         public Session CreateSession(Player player)

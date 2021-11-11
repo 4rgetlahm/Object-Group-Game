@@ -505,16 +505,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0fea3283e40942844832d3041169577e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  usernameLabel: {fileID: 557182215}
-  characterNameLabel: {fileID: 587752621}
-  healthLabel: {fileID: 1599514616}
-  manaLabel: {fileID: 1905632121}
-  expLabel: {fileID: 1737986014}
-  goldLabel: {fileID: 1682432357}
-  dexterityLabel: {fileID: 217698765}
-  strengthLabel: {fileID: 782823880}
-  intelligenceLabel: {fileID: 1172725921}
-  itemListLabel: {fileID: 985510543}
 --- !u!4 &291446152
 Transform:
   m_ObjectHideFlags: 0
@@ -1209,6 +1199,59 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 831592949}
   m_CullTransparentMesh: 1
+--- !u!1 &843274782
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 843274784}
+  - component: {fileID: 843274783}
+  m_Layer: 0
+  m_Name: DataLoader
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &843274783
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 843274782}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5cc1095c3ba174f4dafef06f9370a6bc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  usernameLabel: {fileID: 557182215}
+  characterNameLabel: {fileID: 587752621}
+  healthLabel: {fileID: 1599514616}
+  manaLabel: {fileID: 1905632121}
+  expLabel: {fileID: 1737986014}
+  goldLabel: {fileID: 1682432357}
+  dexterityLabel: {fileID: 217698765}
+  strengthLabel: {fileID: 782823880}
+  intelligenceLabel: {fileID: 1172725921}
+  itemListLabel: {fileID: 985510543}
+--- !u!4 &843274784
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 843274782}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 310.61343, y: 359.2158, z: -76.98814}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 6
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &972438286
 GameObject:
   m_ObjectHideFlags: 0
