@@ -45,7 +45,7 @@ public class LocalPlayer
             OnLocalPlayerUpdate(EventArgs.Empty);
         }
     }
-    private double _health = 0.0;
+    private double _health = 20.0;
     public double Health
     {
         get
@@ -58,7 +58,7 @@ public class LocalPlayer
             OnLocalPlayerUpdate(EventArgs.Empty);
         }
     }
-    private double _mana = 0.0;
+    private double _mana = 5.0;
     public double Mana
     {
         get
@@ -71,7 +71,7 @@ public class LocalPlayer
             OnLocalPlayerUpdate(EventArgs.Empty);
         }
     }
-    private double _experience = 0.0;
+    private double _experience = 10.0;
     public double Experience
     {
         get
@@ -84,7 +84,7 @@ public class LocalPlayer
             OnLocalPlayerUpdate(EventArgs.Empty);
         }
     }
-    private double _gold = 0.0;
+    private double _gold = 85.0;
     public double Gold
     {
         get
