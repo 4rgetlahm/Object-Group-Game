@@ -5,4 +5,5 @@
 [Bb]uild/
 Assets/AssetStoreTools*
 ![Pp]ackages
+!*.meta
 
