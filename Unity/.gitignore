@@ -3,6 +3,7 @@
 [Tt]emp/
 [Oo]bj/
 [Bb]uild/
+*.csproj
 Assets/AssetStoreTools*
 ![Pp]ackages
 !*.meta
