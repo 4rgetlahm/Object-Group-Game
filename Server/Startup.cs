@@ -61,7 +61,7 @@ namespace Server
                 endpoints.MapControllers();
             });
 
-            SessionManager.GetInstance(); // creates instance
+            //SessionManager.Instance.Init(); // creates instance
         }
     }
 }

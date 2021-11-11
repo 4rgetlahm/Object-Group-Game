@@ -16,21 +16,153 @@ public class LocalPlayer
             return _instance.Value;
         }
     }
-    public string Username { get; set; }
-    public string CharacterName { get; set; }
-    public double Health { get; set; }
-    public double Mana { get; set; }
-    public double Experience { get; set; }
-    public double Gold { get; set; }
-    public double Dexterity { get; set; }
-    public double Strength { get; set; }
-    public double Intelligence { get; set; }
 
-    public List<string> ItemNameList;
+    public delegate void LocalPlayerUpdateEventHandler(EventArgs args);
+    public event LocalPlayerUpdateEventHandler LocalPlayerUpdateEvent;
+
+    private string _username = "";
+    public string Username { 
+        get
+        {
+            return _username;
+        }
+        set
+        {
+            _username = value;
+            OnLocalPlayerUpdate(EventArgs.Empty);
+        }
+    }
+    private string _characterName = "";
+    public string CharacterName
+    {
+        get
+        {
+            return _characterName;
+        }
+        set
+        {
+            _characterName = value;
+            OnLocalPlayerUpdate(EventArgs.Empty);
+        }
+    }
+    private double _health = 0.0;
+    public double Health
+    {
+        get
+        {
+            return _health;
+        }
+        set
+        {
+            _health = value;
+            OnLocalPlayerUpdate(EventArgs.Empty);
+        }
+    }
+    private double _mana = 0.0;
+    public double Mana
+    {
+        get
+        {
+            return _mana;
+        }
+        set
+        {
+            _mana = value;
+            OnLocalPlayerUpdate(EventArgs.Empty);
+        }
+    }
+    private double _experience = 0.0;
+    public double Experience
+    {
+        get
+        {
+            return _experience;
+        }
+        set
+        {
+            _experience = value;
+            OnLocalPlayerUpdate(EventArgs.Empty);
+        }
+    }
+    private double _gold = 0.0;
+    public double Gold
+    {
+        get
+        {
+            return _gold;
+        }
+        set
+        {
+            _gold = value;
+            OnLocalPlayerUpdate(EventArgs.Empty);
+        }
+    }
+    private double _dexterity = 0.0;
+    public double Dexterity
+    {
+        get
+        {
+            return _dexterity;
+        }
+        set
+        {
+            _dexterity = value;
+            OnLocalPlayerUpdate(EventArgs.Empty);
+        }
+    }
+    private double _strength = 0.0;
+    public double Strength
+    {
+        get
+        {
+            return _strength;
+        }
+        set
+        {
+            _strength = value;
+            OnLocalPlayerUpdate(EventArgs.Empty);
+        }
+    }
+    private double _intelligence = 0.0;
+    public double Intelligence
+    {
+        get
+        {
+            return _intelligence;
+        }
+        set
+        {
+            _intelligence = value;
+            OnLocalPlayerUpdate(EventArgs.Empty);
+        }
+    }
+    private List<string> _itemNameList = new List<string>();
+
+    public List<string> ItemNameList
+    {
+        get
+        {
+            return _itemNameList;
+        }
+        set
+        {
+            _itemNameList = value;
+            OnLocalPlayerUpdate(EventArgs.Empty);
+        }
+    }
 
     private LocalPlayer()
     {
 
+    }
+
+
+    public void OnLocalPlayerUpdate(EventArgs args)
+    {
+        if(LocalPlayerUpdateEvent != null)
+        {
+            LocalPlayerUpdateEvent(args);
+        }
     }
 
 

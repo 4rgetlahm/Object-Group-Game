@@ -17,7 +17,7 @@ namespace Server.Controllers
         [HttpPost]
         public Tuple<int, Session> Post([FromBody] PlayerAuth playerAuth)
         {
-            return Authenticator.GetAuthenticator().Login(playerAuth.Username, playerAuth.Password);
+            return Authenticator.Instance.Login(playerAuth.Username, playerAuth.Password);
         }
     }
 }

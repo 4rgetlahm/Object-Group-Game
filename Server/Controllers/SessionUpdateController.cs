@@ -17,7 +17,7 @@ namespace Server.Controllers
         public IActionResult Post([FromBody] Session body)
         {
             try{
-                SessionManager.GetInstance().UpdateLastRequest(body, DateTime.Now);
+                SessionManager.Instance.UpdateLastRequest(body, DateTime.Now);
             } catch (BadSessionException e){
                 Console.WriteLine("Session doesn't exist! SessionID: " + Convert.ToBase64String(body.SessionID));
                 return BadRequest();

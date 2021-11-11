@@ -19,32 +19,6 @@ class SessionModel
 
 public class PlayerLoader : MonoBehaviour
 {
-    [SerializeField]
-    private TMP_Text usernameLabel;
-
-    [SerializeField]
-    private TMP_Text characterNameLabel;
-
-    [SerializeField]
-    private TMP_Text healthLabel;
-    [SerializeField]
-    private TMP_Text manaLabel;
-    [SerializeField]
-    private TMP_Text expLabel;
-
-    [SerializeField]
-    private TMP_Text goldLabel;
-
-    [SerializeField]
-    private TMP_Text dexterityLabel;
-    [SerializeField]
-    private TMP_Text strengthLabel;
-    [SerializeField]
-    private TMP_Text intelligenceLabel;
-
-    [SerializeField]
-    private TMP_Text itemListLabel;
-
     class PlayerData
     {
         public string Username { get; set; }
@@ -58,24 +32,6 @@ public class PlayerLoader : MonoBehaviour
         public double Intelligence { get; set; }
 
         public List<string> ItemNameList;
-    }
-
-
-    void updateLabels(PlayerData playerData)
-    {
-        usernameLabel.text = playerData.Username;
-        characterNameLabel.text = playerData.CharacterName;
-
-        healthLabel.text = "Health: " + playerData.Health;
-        manaLabel.text = "Mana: " + playerData.Mana;
-        expLabel.text = "Experience: " + playerData.Experience;
-
-        goldLabel.text = "Gold: " + playerData.Gold;
-
-        dexterityLabel.text = "Dexterity: " + playerData.Dexterity;
-        strengthLabel.text = "Strength: " + playerData.Strength;
-        intelligenceLabel.text = "Intelligence: " + playerData.Intelligence;
-        itemListLabel.text = String.Join("\n", playerData.ItemNameList.ToArray());
     }
 
     void ChangeLocalData(PlayerData playerData)
@@ -112,7 +68,6 @@ public class PlayerLoader : MonoBehaviour
                 throw new BadResponseException("Returned player is null!");
             }
             ChangeLocalData(playerData);
-            updateLabels(playerData);
         }
         catch (BadResponseException e)
         {
