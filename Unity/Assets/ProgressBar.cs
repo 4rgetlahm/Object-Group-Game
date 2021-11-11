@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 
 [ExecuteInEditMode()]
 public class ProgressBar : MonoBehaviour
@@ -9,6 +10,9 @@ public class ProgressBar : MonoBehaviour
     public double maximum;
     public double current;
     public Image mask;
+
+    public Text HealthText;
+    [SerializeField] TextMeshProUGUI m_Object;
 
     void Start()
     {
@@ -18,6 +22,8 @@ public class ProgressBar : MonoBehaviour
    void Update()
     {
         GetCurrentFill();
+
+        m_Object.text = current + " / " + maximum;
     }
 
     void GetCurrentFill()
