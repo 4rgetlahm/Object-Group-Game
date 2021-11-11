@@ -71,7 +71,7 @@ public class LocalPlayer
             OnLocalPlayerUpdate(EventArgs.Empty);
         }
     }
-    private double _experience = 10.0;
+    private double _experience = 78.0;
     public double Experience
     {
         get

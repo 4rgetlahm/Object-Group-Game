@@ -5,13 +5,12 @@ using UnityEngine.UI;
 using TMPro;
 
 [ExecuteInEditMode()]
-public class ProgressBar : MonoBehaviour
+public class ManaBar : MonoBehaviour
 {
     public double maximum;
     public double current;
     public Image mask;
 
-    public Text HealthText;
     [SerializeField] TextMeshProUGUI m_Object;
 
     void Start()
@@ -19,7 +18,7 @@ public class ProgressBar : MonoBehaviour
 
     }
 
-   void Update()
+    void Update()
     {
         GetCurrentFill();
 
@@ -28,7 +27,7 @@ public class ProgressBar : MonoBehaviour
 
     void GetCurrentFill()
     {
-        current = LocalPlayer.Instance.Health;
+        current = LocalPlayer.Instance.Mana;
         float fillAmount = (float)current / (float)maximum;
         mask.fillAmount = fillAmount;
     }
