@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using UnityEngine;
 using TMPro;
+using UnityEngine.UI;
 
 namespace Assets.Scripts.Player
 {
@@ -37,6 +38,9 @@ namespace Assets.Scripts.Player
         [SerializeField]
         private TMP_Text itemListLabel;
 
+        [SerializeField]
+        private Button adminButton;
+
         public DataLoader()
         {
             LocalPlayer.Instance.LocalPlayerUpdateEvent += this.updateLabels;
@@ -61,7 +65,14 @@ namespace Assets.Scripts.Player
             dexterityLabel.text = "Dexterity: " + LocalPlayer.Instance.Dexterity;
             strengthLabel.text = "Strength: " + LocalPlayer.Instance.Strength;
             intelligenceLabel.text = "Intelligence: " + LocalPlayer.Instance.Intelligence;
+            Debug.Log(LocalPlayer.Instance.Username);
+            if (LocalPlayer.Instance.ItemNameList == null)
+            {
+                LocalPlayer.Instance.ItemNameList.Add("No items!");
+            }
             itemListLabel.text = String.Join("\n", LocalPlayer.Instance.ItemNameList.ToArray());
+
+            adminButton.gameObject.SetActive(LocalPlayer.Instance.PlayerRole == PlayerRole.Administrator ? true : false);
         }
     }
 }

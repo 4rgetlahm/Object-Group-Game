@@ -1,5 +1,4 @@
-﻿using GameLibrary;
-using GameLibrary.Database;
+﻿using GameLibrary.Database;
 using Server;
 using System;
 using System.Collections.Generic;
@@ -9,7 +8,7 @@ using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
-namespace Server.Authentication
+namespace GameLibrary
 {
     class Authenticator
     {
@@ -24,10 +23,12 @@ namespace Server.Authentication
             }
         }
 
+
         private Authenticator()
         {
-           
+
         }
+
 
         static byte[] GenerateSaltedHash(byte[] plainText, byte[] salt)
         {

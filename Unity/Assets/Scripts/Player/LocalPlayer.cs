@@ -1,4 +1,3 @@
-using GameLibrary;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -136,8 +135,22 @@ public class LocalPlayer
             OnLocalPlayerUpdate(EventArgs.Empty);
         }
     }
-    private List<string> _itemNameList = new List<string>();
 
+    private PlayerRole _playerRole = PlayerRole.Default;
+    public PlayerRole PlayerRole
+    {
+        get
+        {
+            return _playerRole;
+        }
+        set
+        {
+            _playerRole = value;
+            OnLocalPlayerUpdate(EventArgs.Empty);
+        }
+    }
+
+    private List<string> _itemNameList = new List<string>();
     public List<string> ItemNameList
     {
         get
@@ -153,7 +166,7 @@ public class LocalPlayer
 
     private LocalPlayer()
     {
-
+        
     }
 
 

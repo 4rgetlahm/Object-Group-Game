@@ -10,7 +10,6 @@ using System.Threading.Tasks;
 namespace GameLibrary
 {
 	[Table("Locations")]
-	[Serializable]
 	public class Location : IEquatable<Location>
 	{
 		[Key]

@@ -6,7 +6,6 @@ using RestSharp;
 using Newtonsoft.Json;
 using System;
 using GameLibrary.Exceptions;
-using GameLibrary;
 
 class SessionModel
 {
@@ -17,22 +16,24 @@ class SessionModel
     }
 }
 
+public class PlayerData
+{
+    public string Username { get; set; }
+    public string CharacterName { get; set; }
+    public double Health { get; set; }
+    public double Mana { get; set; }
+    public double Experience { get; set; }
+    public double Gold { get; set; }
+    public double Dexterity { get; set; }
+    public double Strength { get; set; }
+    public double Intelligence { get; set; }
+    public PlayerRole PlayerRole { get; set; }
+
+    public List<string> ItemNameList;
+}
+
 public class PlayerLoader : MonoBehaviour
 {
-    class PlayerData
-    {
-        public string Username { get; set; }
-        public string CharacterName { get; set; }
-        public double Health { get; set; }
-        public double Mana { get;  set; }
-        public double Experience { get; set; }
-        public double Gold { get; set; }
-        public double Dexterity { get; set; }
-        public double Strength { get; set; }
-        public double Intelligence { get; set; }
-
-        public List<string> ItemNameList;
-    }
 
     void ChangeLocalData(PlayerData playerData)
     {
@@ -45,6 +46,7 @@ public class PlayerLoader : MonoBehaviour
         LocalPlayer.Instance.Strength = playerData.Strength;
         LocalPlayer.Instance.Intelligence = playerData.Intelligence;
         LocalPlayer.Instance.ItemNameList = playerData.ItemNameList;
+        LocalPlayer.Instance.PlayerRole = playerData.PlayerRole;
     }
 
     void Start()

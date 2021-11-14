@@ -1,5 +1,4 @@
 ﻿using GameLibrary;
-using Server.Authentication;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,7 +6,7 @@ using System.Security.Cryptography;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace Server.Authentication
+namespace Server
 {
     public class SessionManager
     {
@@ -26,11 +25,6 @@ namespace Server.Authentication
         private Authentication.SessionHandler SessionHandler { get; set; }
         public Dictionary<Session, Player> Sessions { get; set; }
         public Dictionary<Session, DateTime> LastRequest { get; set; }
-
-        public void Init()
-        {
-
-        }
 
         private SessionManager()
         {
@@ -67,13 +61,10 @@ namespace Server.Authentication
         {
             lock (this.LastRequest)
             {
-                var findSession = LastRequest.Keys.FirstOrDefault(key => key.SessionID.SequenceEqual(session.SessionID));
-                if(findSession != null){
+                if (LastRequest.ContainsKey(session))
+                {
                     LastRequest[session] = dateTime;
-                    return;
                 }
-                throw new BadSessionException("Session doesn't exist");
-
             }
         }
 

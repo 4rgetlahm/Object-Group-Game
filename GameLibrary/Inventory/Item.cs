@@ -9,7 +9,6 @@ using System.Text;
 namespace GameLibrary
 {
 	[Table("Items")]
-	[Serializable]
 	public class Item : IComparable<Item>
 	{
 		[Key]
@@ -18,7 +17,6 @@ namespace GameLibrary
 		public int Strength { get; set; }
 		public int Dexterity { get; set; }
 		public int Intelligence { get; set; }
-		[JsonIgnore]
 		public List<Effect> Effects { get; set; }
 		[JsonIgnore]
 		public List<Character> Characters { get; set; }
