@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Server.Authentication;
 
 namespace Server.Controllers
 {
@@ -11,10 +12,16 @@ namespace Server.Controllers
     [Route("[controller]")]
     public class RegisterController : Controller
     {
+        private readonly IAuthenticator _authenticator;
+        public RegisterController(IAuthenticator authenticator)
+        {
+            _authenticator = authenticator;
+        }
+
         [HttpPost]
         public Tuple<int, Session> Post([FromBody] PlayerAuth playerAuth)
         {
-            return Authenticator.Instance.Register(playerAuth.Username, playerAuth.Password);
+            return _authenticator.Register(playerAuth.Username, playerAuth.Password);
         }
     }
 }

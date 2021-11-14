@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Server.Authentication;
 
 namespace Server.Controllers
 {
@@ -12,11 +13,16 @@ namespace Server.Controllers
     [Route("[controller]")]
     public class LoginController : ControllerBase
     {
+        private readonly IAuthenticator _authenticator;
+        public LoginController(IAuthenticator authenticator)
+        {
+            _authenticator = authenticator;
+        }
 
         [HttpPost]
         public Tuple<int, Session> Post([FromBody] PlayerAuth playerAuth)
         {
-            return Authenticator.Instance.Login(playerAuth.Username, playerAuth.Password);
+            return _authenticator.Login(playerAuth.Username, playerAuth.Password);
         }
     }
 }

@@ -1,5 +1,7 @@
-﻿using GameLibrary.Database;
+﻿using GameLibrary;
+using GameLibrary.Database;
 using Server;
+using Server.Authentication;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,28 +10,10 @@ using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
-namespace GameLibrary
+namespace Server.Authentication
 {
-    class Authenticator
+    public class Authenticator : IAuthenticator
     {
-        private static readonly Lazy<Authenticator> _instance =
-            new Lazy<Authenticator>(() => new Authenticator());
-
-        public static Authenticator Instance
-        {
-            get
-            {
-                return _instance.Value;
-            }
-        }
-
-
-        private Authenticator()
-        {
-
-        }
-
-
         static byte[] GenerateSaltedHash(byte[] plainText, byte[] salt)
         {
             HashAlgorithm algorithm = new SHA256Managed();

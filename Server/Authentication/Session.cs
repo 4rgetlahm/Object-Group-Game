@@ -5,7 +5,7 @@ using System.Linq;
 using System.Security.Cryptography;
 using System.Threading.Tasks;
 
-namespace Server
+namespace Server.Authentication
 {
     public class Session
     {

@@ -19,11 +19,13 @@ namespace Server.Controllers
             try{
                 SessionManager.Instance.UpdateLastRequest(body, DateTime.Now);
             } catch (BadSessionException e){
-                Console.WriteLine("Session doesn't exist! SessionID: " + Convert.ToBase64String(body.SessionID));
+                Console.WriteLine("Session doesn't exist! SessionID: " + Convert.ToBase64String(body.SessionID) 
+                    + "\nException: " + e.StackTrace);
                 return BadRequest();
             } 
             catch (Exception e){
-                Console.WriteLine("Caught exception while updating state, sessionID: " + Convert.ToBase64String(body.SessionID));
+                Console.WriteLine("Caught exception while updating state, sessionID: " + Convert.ToBase64String(body.SessionID) 
+                    + "\nException: " + e.StackTrace);
                 return BadRequest();
             }
             return Ok();

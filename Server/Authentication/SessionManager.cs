@@ -6,7 +6,7 @@ using System.Security.Cryptography;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace Server
+namespace Server.Authentication
 {
     public class SessionManager
     {
@@ -31,7 +31,7 @@ namespace Server
             Sessions = new Dictionary<Session, Player>();
             LastRequest = new Dictionary<Session, DateTime>();
 
-            SessionHandler = new Authentication.SessionHandler(Int64.Parse(Configuration.GetInstance().Settings["sessionexpirytime"]));
+            SessionHandler = new SessionHandler(Int64.Parse(Configuration.GetInstance().Settings["sessionexpirytime"]));
             var autoEvent = new AutoResetEvent(false);
 
             SessionHandlingTimer = new Timer(SessionHandler.ExpireSessions, null, 0, Int64.Parse(Configuration.GetInstance().Settings["sessionexpirychecktime"]));
