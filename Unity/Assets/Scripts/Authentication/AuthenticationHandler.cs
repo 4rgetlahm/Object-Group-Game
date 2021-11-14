@@ -59,7 +59,7 @@ public class AuthenticationHandler : MonoBehaviour
     {
         try
         {
-            var response = Network.GetInstance().restClient.Execute(FormatAuthRequest("/register", Method.POST));
+            var response = Network.Instance.restClient.Execute(FormatAuthRequest("/register", Method.POST));
             if (!response.IsSuccessful)
             {
                 Debug.Log("Error authenticating");
@@ -93,7 +93,7 @@ public class AuthenticationHandler : MonoBehaviour
     public void Login(){
         try
         {
-            var response = Network.GetInstance().restClient.Execute(FormatAuthRequest("/login", Method.POST));
+            var response = Network.Instance.restClient.Execute(FormatAuthRequest("/login", Method.POST));
             if (!response.IsSuccessful)
             {
                 Debug.Log("Error authenticating");

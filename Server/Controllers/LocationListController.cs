@@ -20,16 +20,5 @@ namespace Server.Controllers
                 return context.Location.ToList();
             }
         }
-
-        [HttpPost]
-        public IEnumerable<Location> Post(){
-            using(var context = new DataContext())
-            {
-                Location location = new Location("Church", LocationType.LAKE, 12.45646, 67.1576, 4);
-                context.Add(location);
-                context.SaveChanges();
-                return context.Location.ToList();
-            }
-        }
     }
 }

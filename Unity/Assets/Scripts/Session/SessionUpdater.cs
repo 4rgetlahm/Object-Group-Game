@@ -32,7 +32,7 @@ public class SessionUpdater
         try
         {
             Console.WriteLine(body);
-            var response = Network.GetInstance().restClient.Execute(request);
+            var response = Network.Instance.restClient.Execute(request);
             if (!response.IsSuccessful)
             {
                 throw new SessionUpdateFailException("Response was not successful.");

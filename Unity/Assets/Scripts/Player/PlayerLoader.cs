@@ -59,7 +59,7 @@ public class PlayerLoader : MonoBehaviour
 
         try
         {
-            var response = Network.GetInstance().restClient.Execute(request);
+            var response = Network.Instance.restClient.Execute(request);
             if (!response.IsSuccessful)
             {
                 throw new BadResponseException("Player data was not received successfully");

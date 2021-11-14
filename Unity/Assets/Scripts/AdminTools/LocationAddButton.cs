@@ -2,8 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
-using GameLibrary;
 using System;
+using GameLibrary;
 
 public class LocationAddButton : MonoBehaviour
 {
@@ -37,7 +37,7 @@ public class LocationAddButton : MonoBehaviour
         int radius = int.Parse(radiusText.text);
         LocationType type = (LocationType)Enum.Parse(typeof(LocationType), typeText.options[typeText.value].text);
 
-        new Location(name, type, latitude, longtitude, radius);
+        new Location(name, (GameLibrary.LocationType)type, latitude, longtitude, radius);
         // insert into database
     }
 }

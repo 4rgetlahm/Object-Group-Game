@@ -8097,7 +8097,7 @@ GameObject:
   - component: {fileID: 1383510882}
   - component: {fileID: 1383510881}
   - component: {fileID: 1383510880}
-  - component: {fileID: 1383510879}
+  - component: {fileID: 1383510883}
   m_Layer: 0
   m_Name: Map
   m_TagString: Untagged
@@ -8105,22 +8105,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &1383510879
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1383510878}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: dcf32ea2cc0514b569329f6b6b68f9b4, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _map: {fileID: 1383510881}
-  _locationStrings: []
-  _spawnScale: 10
-  _markerPrefab: {fileID: 1839187062704024, guid: 9b5b1b761a8994c07affd0a05396633b, type: 3}
 --- !u!114 &1383510880
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8152,8 +8136,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _options:
     locationOptions:
-      latitudeLongitude: 37.7648, -122.463
-      zoom: 5.5
+      latitudeLongitude: 54.68333, 25.28333
+      zoom: 13
     extentOptions:
       extentType: 0
       defaultExtents:
@@ -8282,6 +8266,21 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1383510883
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1383510878}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 48989bf1d4e209f4681f9a591ecce232, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _map: {fileID: 1383510881}
+  _spawnScale: 20
+  _markerPrefab: {fileID: 1839187062704024, guid: 9b5b1b761a8994c07affd0a05396633b, type: 3}
 --- !u!1 &1407898539
 GameObject:
   m_ObjectHideFlags: 0
