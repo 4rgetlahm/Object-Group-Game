@@ -56,10 +56,6 @@ namespace Assets.Scripts.Player
             usernameLabel.text = LocalPlayer.Instance.Username;
             characterNameLabel.text = LocalPlayer.Instance.CharacterName;
 
-            healthLabel.text = "Health: " + LocalPlayer.Instance.Health;
-            manaLabel.text = "Mana: " + LocalPlayer.Instance.Mana;
-            expLabel.text = "Experience: " + LocalPlayer.Instance.Experience;
-
             goldLabel.text = "Gold: " + LocalPlayer.Instance.Gold;
 
             dexterityLabel.text = "Dexterity: " + LocalPlayer.Instance.Dexterity;
