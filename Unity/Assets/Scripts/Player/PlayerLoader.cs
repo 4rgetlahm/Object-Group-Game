@@ -7,31 +7,6 @@ using Newtonsoft.Json;
 using System;
 using GameLibrary.Exceptions;
 
-class SessionModel
-{
-    public byte[] SessionID { get; set; }
-    public SessionModel(byte[] SessionID)
-    {
-        this.SessionID = SessionID;
-    }
-}
-
-public class PlayerData
-{
-    public string Username { get; set; }
-    public string CharacterName { get; set; }
-    public double Health { get; set; }
-    public double Mana { get; set; }
-    public double Experience { get; set; }
-    public double Gold { get; set; }
-    public double Dexterity { get; set; }
-    public double Strength { get; set; }
-    public double Intelligence { get; set; }
-    public PlayerRole PlayerRole { get; set; }
-
-    public List<string> ItemNameList;
-}
-
 public class PlayerLoader : MonoBehaviour
 {
 

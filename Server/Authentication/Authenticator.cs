@@ -111,11 +111,20 @@ namespace Server.Authentication
 
         public int Logout(Session session)
         {
-            if (SessionManager.Instance.DoesSessionExist(session))
+            try
             {
-                SessionManager.Instance.RemoveSession(session);
-                return 1;
-            } 
+                Session realSession = SessionManager.Instance.GetRealSession(session);
+                if(realSession != null)
+                {
+                    SessionManager.Instance.Sessions.Remove(realSession);
+                    return 1;
+                }
+                throw new BadSessionException("Session " + Convert.ToBase64String(session.SessionID) + " doesn't exist!");
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine("Exception on logout: " + e.StackTrace);
+            }
             return 0;
         }
     }
