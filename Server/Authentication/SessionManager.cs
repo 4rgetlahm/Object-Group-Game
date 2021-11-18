@@ -85,11 +85,41 @@ namespace Server.Authentication
             }
         }
 
-        public bool DoesSessionExist(Session session)
+        public Session GetRealSession(Session session)
+        {
+            lock (this.Sessions)
+            { 
+                Session realSession = this.Sessions.Keys.FirstOrDefault(
+                    delegate (Session currentSession)
+                    {
+                        if (currentSession.SessionID.SequenceEqual(session.SessionID))
+                        {
+                            return true;
+                        }
+                        return false;
+                    }
+                );
+
+                return realSession;
+            }
+        }
+
+        public Session GetRealSession(byte[] session)
         {
             lock (this.Sessions)
             {
-                return this.Sessions.ContainsKey(session);
+                Session realSession = this.Sessions.Keys.FirstOrDefault(
+                    delegate (Session currentSession)
+                    {
+                        if (currentSession.SessionID.SequenceEqual(session))
+                        {
+                            return true;
+                        }
+                        return false;
+                    }
+                );
+
+                return realSession;
             }
         }
 
