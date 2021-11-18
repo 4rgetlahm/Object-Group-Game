@@ -47,11 +47,7 @@ public class AuthenticationHandler : MonoBehaviour
     }
 
     void OnLogin()
-    {
-        var autoEvent = new AutoResetEvent(false);
-        var sessionUpdater = new SessionUpdater();
-        var updateTimer = new Timer(sessionUpdater.SendUpdate, autoEvent, 0, 30000);
-
+    { 
         SceneManager.LoadScene("Game");
     }
 
