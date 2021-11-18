@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Server.Authentication;
 
 namespace Server.Controllers
 {
@@ -13,12 +14,24 @@ namespace Server.Controllers
     public class LocationListController : ControllerBase
     {
         [HttpGet]
-        public IEnumerable<Location> Get()
+        public IEnumerable<Location> Get(string sessionid)
         {
-            using(var context = new DataContext())
+            Session session = SessionManager.Instance.GetRealSession(Convert.FromBase64String(sessionid));
+            if (session != null)
             {
-                return context.Location.ToList();
+                try
+                {
+                    using (var context = new DataContext())
+                    {
+                        return context.Location.ToList().FindAll(loc => !SessionManager.Instance.Sessions[session].Character.VisitedLocations.Contains(loc));
+                    }
+                }
+                catch (Exception e)
+                {
+                    Console.WriteLine("Caught exception while trying to fetch locations: " + e.Message);
+                }
             }
+            return null;
         }
     }
 }

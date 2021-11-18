@@ -61,7 +61,6 @@ namespace Assets.Scripts.Player
             dexterityLabel.text = "Dexterity: " + LocalPlayer.Instance.Dexterity;
             strengthLabel.text = "Strength: " + LocalPlayer.Instance.Strength;
             intelligenceLabel.text = "Intelligence: " + LocalPlayer.Instance.Intelligence;
-            Debug.Log(LocalPlayer.Instance.Username);
             if (LocalPlayer.Instance.ItemNameList == null)
             {
                 LocalPlayer.Instance.ItemNameList.Add("No items!");

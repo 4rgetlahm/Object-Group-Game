@@ -44,7 +44,7 @@ public class MapLoader : MonoBehaviour
 	void Start()
 	{
 		Locations = new List<LocationModel>();
-		var request = new RestRequest("/locationlist", Method.GET);
+		var request = new RestRequest("/locationlist?sessionid=" + Uri.EscapeDataString(Convert.ToBase64String(Session.SessionID)), Method.GET);
 		try
 		{
 			var response = Network.Instance.restClient.Execute(request);
