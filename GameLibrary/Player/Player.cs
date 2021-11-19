@@ -11,7 +11,6 @@ using System.Threading.Tasks;
 namespace GameLibrary
 {
     [Table("Players")]
-    [Serializable]
     public class Player : IEquatable<Player>
     {
         public delegate void PlayerUpdateEventHandler(PlayerEventArgs args);
@@ -19,10 +18,10 @@ namespace GameLibrary
 
         [Key]
         public int PlayerID { get; set; }
-        public string Name { get; set; }
+        public string Name { get; private set; }
 
         [DefaultValue(PlayerRole.Default)]
-        public PlayerRole PlayerRole { get; set; }
+        public PlayerRole PlayerRole { get; private set; }
         public Character Character { get; set; }
 
         protected Player()

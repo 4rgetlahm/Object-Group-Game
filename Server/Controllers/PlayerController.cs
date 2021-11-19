@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace Server.Controllers
 {
-        public class PlayerData
+    public class PlayerData
     {
         public string Username { get; set; }
         public string CharacterName { get; set; }
@@ -21,6 +21,7 @@ namespace Server.Controllers
         public double Strength { get; set; }
         public double Intelligence { get; set; }
 
+        public PlayerRole PlayerRole { get; set; }
         public List<string> ItemNameList;
     }
 
@@ -48,6 +49,7 @@ namespace Server.Controllers
                         Strength = player.Character.GetStrength(),
                         Dexterity = player.Character.GetDexterity(),
                         Intelligence = player.Character.GetIntelligence(),
+                        PlayerRole = player.PlayerRole,
                         ItemNameList = player.Character.getItemNames()
                     };
 

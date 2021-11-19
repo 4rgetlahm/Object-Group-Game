@@ -1,5 +1,4 @@
 ﻿using GameLibrary;
-using Server.Authentication;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -27,17 +26,12 @@ namespace Server.Authentication
         public Dictionary<Session, Player> Sessions { get; set; }
         public Dictionary<Session, DateTime> LastRequest { get; set; }
 
-        public void Init()
-        {
-
-        }
-
         private SessionManager()
         {
             Sessions = new Dictionary<Session, Player>();
             LastRequest = new Dictionary<Session, DateTime>();
 
-            SessionHandler = new Authentication.SessionHandler(Int64.Parse(Configuration.GetInstance().Settings["sessionexpirytime"]));
+            SessionHandler = new SessionHandler(Int64.Parse(Configuration.GetInstance().Settings["sessionexpirytime"]));
             var autoEvent = new AutoResetEvent(false);
 
             SessionHandlingTimer = new Timer(SessionHandler.ExpireSessions, null, 0, Int64.Parse(Configuration.GetInstance().Settings["sessionexpirychecktime"]));
@@ -67,13 +61,10 @@ namespace Server.Authentication
         {
             lock (this.LastRequest)
             {
-                var findSession = LastRequest.Keys.FirstOrDefault(key => key.SessionID.SequenceEqual(session.SessionID));
-                if(findSession != null){
+                if (LastRequest.ContainsKey(session))
+                {
                     LastRequest[session] = dateTime;
-                    return;
                 }
-                throw new BadSessionException("Session doesn't exist");
-
             }
         }
 
@@ -94,11 +85,41 @@ namespace Server.Authentication
             }
         }
 
-        public bool DoesSessionExist(Session session)
+        public Session GetRealSession(Session session)
+        {
+            lock (this.Sessions)
+            { 
+                Session realSession = this.Sessions.Keys.FirstOrDefault(
+                    delegate (Session currentSession)
+                    {
+                        if (currentSession.SessionID.SequenceEqual(session.SessionID))
+                        {
+                            return true;
+                        }
+                        return false;
+                    }
+                );
+
+                return realSession;
+            }
+        }
+
+        public Session GetRealSession(byte[] session)
         {
             lock (this.Sessions)
             {
-                return this.Sessions.ContainsKey(session);
+                Session realSession = this.Sessions.Keys.FirstOrDefault(
+                    delegate (Session currentSession)
+                    {
+                        if (currentSession.SessionID.SequenceEqual(session))
+                        {
+                            return true;
+                        }
+                        return false;
+                    }
+                );
+
+                return realSession;
             }
         }
 

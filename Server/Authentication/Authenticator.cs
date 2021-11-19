@@ -1,6 +1,7 @@
 ﻿using GameLibrary;
 using GameLibrary.Database;
 using Server;
+using Server.Authentication;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,24 +12,8 @@ using System.Threading.Tasks;
 
 namespace Server.Authentication
 {
-    class Authenticator
+    public class Authenticator : IAuthenticator
     {
-        private static readonly Lazy<Authenticator> _instance =
-            new Lazy<Authenticator>(() => new Authenticator());
-
-        public static Authenticator Instance
-        {
-            get
-            {
-                return _instance.Value;
-            }
-        }
-
-        private Authenticator()
-        {
-           
-        }
-
         static byte[] GenerateSaltedHash(byte[] plainText, byte[] salt)
         {
             HashAlgorithm algorithm = new SHA256Managed();
@@ -126,11 +111,20 @@ namespace Server.Authentication
 
         public int Logout(Session session)
         {
-            if (SessionManager.Instance.DoesSessionExist(session))
+            try
             {
-                SessionManager.Instance.RemoveSession(session);
-                return 1;
-            } 
+                Session realSession = SessionManager.Instance.GetRealSession(session);
+                if(realSession != null)
+                {
+                    SessionManager.Instance.Sessions.Remove(realSession);
+                    return 1;
+                }
+                throw new BadSessionException("Session " + Convert.ToBase64String(session.SessionID) + " doesn't exist!");
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine("Exception on logout: " + e.StackTrace);
+            }
             return 0;
         }
     }

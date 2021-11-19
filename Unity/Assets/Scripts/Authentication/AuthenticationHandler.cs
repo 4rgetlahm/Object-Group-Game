@@ -47,11 +47,7 @@ public class AuthenticationHandler : MonoBehaviour
     }
 
     void OnLogin()
-    {
-        var autoEvent = new AutoResetEvent(false);
-        var sessionUpdater = new SessionUpdater();
-        var updateTimer = new Timer(sessionUpdater.SendUpdate, autoEvent, 0, 30000);
-
+    { 
         SceneManager.LoadScene("Game");
     }
 
@@ -59,7 +55,7 @@ public class AuthenticationHandler : MonoBehaviour
     {
         try
         {
-            var response = Network.GetInstance().restClient.Execute(FormatAuthRequest("/register", Method.POST));
+            var response = Network.Instance.restClient.Execute(FormatAuthRequest("/register", Method.POST));
             if (!response.IsSuccessful)
             {
                 Debug.Log("Error authenticating");
@@ -93,7 +89,7 @@ public class AuthenticationHandler : MonoBehaviour
     public void Login(){
         try
         {
-            var response = Network.GetInstance().restClient.Execute(FormatAuthRequest("/login", Method.POST));
+            var response = Network.Instance.restClient.Execute(FormatAuthRequest("/login", Method.POST));
             if (!response.IsSuccessful)
             {
                 Debug.Log("Error authenticating");

@@ -8,7 +8,6 @@ using System.Text;
 namespace GameLibrary
 {
 	[Table("Effects")]
-	[Serializable]
 	public class Effect
 	{
 		[Key]
