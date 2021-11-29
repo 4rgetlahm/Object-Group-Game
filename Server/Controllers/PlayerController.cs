@@ -14,12 +14,13 @@ namespace Server.Controllers
         public string Username { get; set; }
         public string CharacterName { get; set; }
         public double Health { get; set; }
-        public double Mana { get;  set; }
-        public double Experience { get; set; }
-        public double Gold { get; set; }
-        public double Dexterity { get; set; }
-        public double Strength { get; set; }
-        public double Intelligence { get; set; }
+        public double Stamina { get;  set; }
+        public int Gold { get; set; }
+        public int Dexterity { get; set; }
+        public int Strength { get; set; }
+        public int Intelligence { get; set; }
+        public int Constitution { get; set; }
+        public int Endurance { get; set; }
 
         public PlayerRole PlayerRole { get; set; }
         public List<string> ItemNameList;
@@ -43,12 +44,13 @@ namespace Server.Controllers
                         Username = player.Name,
                         CharacterName = player.Character.Name,
                         Health = player.Character.Health,
-                        Mana = player.Character.Mana,
-                        Experience = player.Character.Experience,
+                        Stamina = player.Character.Stamina,
                         Gold = player.Character.Gold,
                         Strength = player.Character.GetStrength(),
                         Dexterity = player.Character.GetDexterity(),
                         Intelligence = player.Character.GetIntelligence(),
+                        Endurance = player.Character.GetEndurance(),
+                        Constitution = player.Character.GetConstitution(),
                         PlayerRole = player.PlayerRole,
                         ItemNameList = player.Character.getItemNames()
                     };

@@ -15,7 +15,6 @@ namespace GameLibrary.Database
 		public DbSet<Character> Character { get; set; }
 		public DbSet<Location> Location { get; set; }
 		public DbSet<Item> Item { get; set; }
-		public DbSet<Effect> Effect { get; set; }
 		public DbSet<Player> Player { get; set; }
 
 		protected override void OnConfiguring (DbContextOptionsBuilder optionsBuilder)
@@ -40,10 +39,6 @@ namespace GameLibrary.Database
 
 			modelBuilder.Entity<Character>().HasMany(l => l.VisitedLocations);
 			modelBuilder.Entity<Location>().HasMany(c => c.Characters);
-
-
-			modelBuilder.Entity<Item>().HasMany(e => e.Effects);
-			modelBuilder.Entity<Effect>().HasMany(i => i.Items);
 
 			modelBuilder.Entity<Player>().Property<string>("Password");
 			modelBuilder.Entity<Player>().Property<string>("Salt");

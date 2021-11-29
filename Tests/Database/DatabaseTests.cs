@@ -40,25 +40,10 @@ namespace Tests.Database
         {
             using (var db = new DataContext())
             {
-                var character = new Character("Test Character", 50.0, 999999.0, 80.0, 3333333.4);
+                var character = new Character("Test Character", 50);
                 db.Add(character);
                 db.SaveChanges();
                 db.Remove(character);
-                db.SaveChanges();
-            }
-            Assert.Pass();
-        }
-
-        [Test]
-        public void Add_Remove_Effects()
-        {
-            using (var db = new DataContext())
-            {
-                Effect effect = new Effect("coolstatus", "cooler name", 5);
-
-                db.Add(effect);
-                db.SaveChanges();
-                db.Remove(effect);
                 db.SaveChanges();
             }
             Assert.Pass();
@@ -68,11 +53,7 @@ namespace Tests.Database
         {
             using (var db = new DataContext())
             {
-                List<Effect> effects = new List<Effect>();
-                effects.Add(new Effect("coolstatus", "cooler name", 5));
-                effects.Add(new Effect("shiny", "shiny name", 0));
-
-                Item item = new Item("Thunderfury", 999, 100, 0, effects);
+                Item item = new Item("Thunderfury", 999, 100, 0, 5, 420);
 
                 db.Add(item);
                 db.SaveChanges();

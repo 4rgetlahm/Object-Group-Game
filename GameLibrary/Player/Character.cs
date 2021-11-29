@@ -39,34 +39,19 @@ namespace GameLibrary
                 OnCharacterUpdate(new CharacterEventArgs(this));
             }
         }
-        private double _experience;
-        public double Experience
+        private double _stamina;
+        public double Stamina
         {
-            get
-            {
-                return _experience;
+            get {
+                return _stamina;
             }
-            set
-            {
-                _experience = value;
+            set {
+                _stamina = value;
                 OnCharacterUpdate(new CharacterEventArgs(this));
             }
         }
-        private double _mana;
-        public double Mana
-        {
-            get
-            {
-                return _mana;
-            }
-            set
-            {
-                _mana = value;
-                OnCharacterUpdate(new CharacterEventArgs(this));
-            }
-        }
-        private double _gold;
-        public double Gold { 
+        private int _gold;
+        public int Gold { 
             get 
             {
                 return _gold;    
@@ -88,22 +73,24 @@ namespace GameLibrary
 
         }
 
-        public Character(string name, double health = 100.0, double experience = 0.0, double mana = 100.0, double gold = 0.0)
+        public Character(string name, int gold = 0)
         {
             this.Name = name;
-            this.Health = health;
-            this.Experience = experience;
-            this.Mana = mana;
             this.Gold = gold;
+
+            UpdateStamina();
+            UpdateHealth();
         }
 
-        public void SetStats(double health = 0, double experience = 0, double mana = 0, double gold = 0)
+        private void UpdateStamina()
         {
-            this.Health = health;
-            this.Experience = experience;
-            this.Mana = mana;
-            this.Gold = gold;
-        }
+            this.Stamina = this.GetEndurance() + 1;
+		}
+
+        private void UpdateHealth()
+        {
+            this.Health = this.GetConstitution() + 1;
+		}
 
         public int GetStrength()
         {
@@ -149,6 +136,34 @@ namespace GameLibrary
             return totalIntelligence;
         }
 
+        public int GetEndurance()
+        {
+            if (Items == null)
+            {
+                return 0;
+            }
+            int totalEndurance = 0;
+            foreach (Item item in Items)
+            {
+                totalEndurance += item.Endurance;
+            }
+            return totalEndurance;
+        }
+
+        public int GetConstitution()
+        {
+            if (Items == null)
+            {
+                return 0;
+            }
+            int totalConstitution = 0;
+            foreach (Item item in Items)
+            {
+                totalConstitution += item.Constitution;
+            }
+            return totalConstitution;
+        }
+
         public List<string> getItemNames()
         {
             List<string> names = new List<string>();
@@ -166,6 +181,5 @@ namespace GameLibrary
                 CharacterUpdateEvent(args);
             }
         }
-
     }
 }
