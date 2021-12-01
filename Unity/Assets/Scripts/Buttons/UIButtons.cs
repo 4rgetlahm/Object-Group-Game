@@ -5,20 +5,34 @@ using UnityEngine.SceneManagement;
 using TMPro;
 using UnityEngine.UI;
 
-public class GameButtons : MonoBehaviour
+public class UIButtons : MonoBehaviour
 {
     [SerializeField]
     private GameObject adminTools;
     [SerializeField]
     private List<GameObject> UI;
-    public void OnAdminToolsEnter()
+    [SerializeField]
+    private GameObject InventoryUI;
+
+    private void HideGameUI()
     {
         UI.ForEach(obj => obj.SetActive(false));
+    }
+
+    public void EnterAdminTools()
+    {
+        HideGameUI();
         adminTools.SetActive(true);
     }
-    public void OnAdminToolsExit()
+    public void ExitAdminTools()
     {
-        UI.ForEach(obj => obj.SetActive(true));
+        HideGameUI();
         adminTools.SetActive(false);
+    }
+
+    public void EnterInventory()
+    {
+        HideGameUI();
+        InventoryUI.SetActive(true);
     }
 }

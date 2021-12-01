@@ -1,4 +1,5 @@
-﻿using System;
+﻿using GameLibrary.Inventory;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -77,76 +78,59 @@ namespace GameLibrary
                 OnCharacterUpdate(new CharacterEventArgs(this));
             }
         }
+
+        private CharacterType _characterType;
+        public CharacterType CharacterType
+        {
+            get
+            {
+                return _characterType;
+            }
+            set
+            {
+                _characterType = value;
+                OnCharacterTypeChange(new CharacterEventArgs(this));
+                //OnCharacterUpdate(new CharacterEventArgs(this));
+            }
+        }
+
         public List<Item> Items { get; set; }
+        public virtual Equipment Equipment { get; set; }
         public List<Location> VisitedLocations { get; set; }
 
         public delegate void CharacterUpdateEventHandler(CharacterEventArgs args);
         public event CharacterUpdateEventHandler CharacterUpdateEvent;
+
+        public delegate void CharacterTypeChangedHandler(CharacterEventArgs args);
+        public event CharacterTypeChangedHandler CharacterTypeChangeEvent;
 
         protected Character()
         {
 
         }
 
-        public Character(string name, double health = 100.0, double experience = 0.0, double mana = 100.0, double gold = 0.0)
+        public Character(string name, CharacterType characterType, double health, double mana, double experience, 
+            double gold, List<Item> itemList, List<Location> visitedLocations, Equipment equipment)
         {
             this.Name = name;
+            this.CharacterType = characterType;
             this.Health = health;
-            this.Experience = experience;
             this.Mana = mana;
+            this.Experience = experience;
             this.Gold = gold;
+            this.Items = itemList;
+            this.VisitedLocations = visitedLocations;
+            this.Equipment = equipment;
         }
 
-        public void SetStats(double health = 0, double experience = 0, double mana = 0, double gold = 0)
+        public Character(string name, double health = 100.0, double mana = 100.0)
         {
+            this.Name = name;
+            this.Equipment = new Equipment();
+            this.VisitedLocations = new List<Location>();
+            this.Items = new List<Item>();
             this.Health = health;
-            this.Experience = experience;
             this.Mana = mana;
-            this.Gold = gold;
-        }
-
-        public int GetStrength()
-        {
-            if(Items == null)
-            {
-                return 0;
-            }
-
-            int totalStrength = 0;
-            foreach(Item item in Items)
-            {
-                totalStrength += item.Strength;
-            }
-            return totalStrength;
-        }
-
-        public int GetDexterity()
-        {
-            if (Items == null)
-            {
-                return 0;
-            }
-
-            int totalDexterity = 0;
-            foreach (Item item in Items)
-            {
-                totalDexterity += item.Dexterity;
-            }
-            return totalDexterity;
-        }
-
-        public int GetIntelligence()
-        {
-            if (Items == null)
-            {
-                return 0;
-            }
-            int totalIntelligence = 0;
-            foreach(Item item in Items)
-            {
-                totalIntelligence += item.Intelligence;
-            }
-            return totalIntelligence;
         }
 
         public List<string> getItemNames()
@@ -154,7 +138,7 @@ namespace GameLibrary
             List<string> names = new List<string>();
             foreach(Item item in this.Items)
             {
-                names.Add(item.DisplayName);
+                names.Add(item.Name);
             }
             return names;
         }
@@ -164,6 +148,14 @@ namespace GameLibrary
             if (CharacterUpdateEvent != null)
             {
                 CharacterUpdateEvent(args);
+            }
+        }
+
+        public void OnCharacterTypeChange(CharacterEventArgs args) { 
+            if(CharacterTypeChangeEvent != null)
+            {
+                CharacterTypeChangeEvent(args);
+                OnCharacterUpdate(args);
             }
         }
 

@@ -34,7 +34,7 @@ public class ItemAddButton : MonoBehaviour
         int dexterity = int.Parse(dexterityText.text);
         int intelligence = int.Parse(intelligenceText.text);
 
-        new Item(name, strength, dexterity, intelligence);
+        //new Item(name, strength, dexterity, intelligence);
         // insert into database
     }
 }

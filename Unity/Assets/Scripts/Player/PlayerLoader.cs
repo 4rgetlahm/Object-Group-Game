@@ -6,23 +6,10 @@ using RestSharp;
 using Newtonsoft.Json;
 using System;
 using GameLibrary.Exceptions;
+using GameLibrary;
 
 public class PlayerLoader : MonoBehaviour
 {
-
-    void ChangeLocalData(PlayerData playerData)
-    {
-        LocalPlayer.Instance.Username = playerData.CharacterName;
-        LocalPlayer.Instance.CharacterName = playerData.CharacterName;
-        LocalPlayer.Instance.Health = playerData.Health;
-        LocalPlayer.Instance.Mana = playerData.Mana;
-        LocalPlayer.Instance.Gold = playerData.Gold;
-        LocalPlayer.Instance.Dexterity = playerData.Dexterity;
-        LocalPlayer.Instance.Strength = playerData.Strength;
-        LocalPlayer.Instance.Intelligence = playerData.Intelligence;
-        LocalPlayer.Instance.ItemNameList = playerData.ItemNameList;
-        LocalPlayer.Instance.PlayerRole = playerData.PlayerRole;
-    }
 
     void Start()
     {
@@ -39,12 +26,15 @@ public class PlayerLoader : MonoBehaviour
             {
                 throw new BadResponseException("Player data was not received successfully");
             }
-            PlayerData playerData = JsonConvert.DeserializeObject<PlayerData>(response.Content);
-            if(playerData == null)
+
+            Player player = JsonConvert.DeserializeObject<Player>(response.Content);
+
+            if(player == null)
             {
                 throw new BadResponseException("Returned player is null!");
             }
-            ChangeLocalData(playerData);
+            LocalPlayer.Instance.Player = player;
+            //ChangeLocalData(player);
         }
         catch (BadResponseException e)
         {

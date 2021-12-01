@@ -10,6 +10,7 @@ using RestSharp;
 using Mapbox.Json;
 using System;
 using GameLibrary.Exceptions;
+using GameLibrary;
 
 public class MapLoader : MonoBehaviour
 {

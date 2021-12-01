@@ -11,7 +11,7 @@ namespace GameLibrary
         public Player Player { get; set; }
         public PlayerEventArgs(Player player)
         {
-            Player = player;
+            this.Player = player;
         }
     }
 }

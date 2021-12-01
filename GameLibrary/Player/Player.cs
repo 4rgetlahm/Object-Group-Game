@@ -26,7 +26,7 @@ namespace GameLibrary
 
         protected Player()
         {
-
+            
         }
 
         public Player(string name)
@@ -34,7 +34,7 @@ namespace GameLibrary
             this.Name = name;
         }
 
-        public Player(int PlayerID, string name)
+        public Player(int PlayerID, string name) : base()
         {
             this.PlayerID = PlayerID;
             this.Name = name;

@@ -1,4 +1,6 @@
+using GameLibrary;
 using GameLibrary.Exceptions;
+using GameLibrary.Inventory;
 using Newtonsoft.Json;
 using RestSharp;
 using System;
@@ -17,7 +19,7 @@ public class SessionModel
     }
 }
 
-public class PlayerData
+/*public class PlayerData
 {
     public string Username { get; set; }
     public string CharacterName { get; set; }
@@ -29,9 +31,14 @@ public class PlayerData
     public double Strength { get; set; }
     public double Intelligence { get; set; }
     public PlayerRole PlayerRole { get; set; }
+    public CharacterType CharacterType { get; set; }
 
-    public List<string> ItemNameList;
-}
+    public List<Item> Items;
+
+    public List<Location> VisitedLocations;
+
+    public Equipment Equipment;
+}*/
 
 public class LocalPlayer
 {
@@ -49,149 +56,22 @@ public class LocalPlayer
     public delegate void LocalPlayerUpdateEventHandler(EventArgs args);
     public event LocalPlayerUpdateEventHandler LocalPlayerUpdateEvent;
 
-    private Timer sessionUpdater;
+    private Timer SessionUpdater;
 
-    private string _username = "";
-    public string Username { 
+    private Player _player = null;
+    public Player Player {
         get
         {
-            return _username;
+            return _player;
         }
         set
         {
-            _username = value;
-            OnLocalPlayerUpdate(EventArgs.Empty);
-        }
-    }
-    private string _characterName = "";
-    public string CharacterName
-    {
-        get
-        {
-            return _characterName;
-        }
-        set
-        {
-            _characterName = value;
-            OnLocalPlayerUpdate(EventArgs.Empty);
-        }
-    }
-    private double _health = 0.0;
-    public double Health
-    {
-        get
-        {
-            return _health;
-        }
-        set
-        {
-            _health = value;
-            OnLocalPlayerUpdate(EventArgs.Empty);
-        }
-    }
-    private double _mana = 0.0;
-    public double Mana
-    {
-        get
-        {
-            return _mana;
-        }
-        set
-        {
-            _mana = value;
-            OnLocalPlayerUpdate(EventArgs.Empty);
-        }
-    }
-    private double _experience = 0.0;
-    public double Experience
-    {
-        get
-        {
-            return _experience;
-        }
-        set
-        {
-            _experience = value;
-            OnLocalPlayerUpdate(EventArgs.Empty);
-        }
-    }
-    private double _gold = 0.0;
-    public double Gold
-    {
-        get
-        {
-            return _gold;
-        }
-        set
-        {
-            _gold = value;
-            OnLocalPlayerUpdate(EventArgs.Empty);
-        }
-    }
-    private double _dexterity = 0.0;
-    public double Dexterity
-    {
-        get
-        {
-            return _dexterity;
-        }
-        set
-        {
-            _dexterity = value;
-            OnLocalPlayerUpdate(EventArgs.Empty);
-        }
-    }
-    private double _strength = 0.0;
-    public double Strength
-    {
-        get
-        {
-            return _strength;
-        }
-        set
-        {
-            _strength = value;
-            OnLocalPlayerUpdate(EventArgs.Empty);
-        }
-    }
-    private double _intelligence = 0.0;
-    public double Intelligence
-    {
-        get
-        {
-            return _intelligence;
-        }
-        set
-        {
-            _intelligence = value;
-            OnLocalPlayerUpdate(EventArgs.Empty);
-        }
-    }
-
-    private PlayerRole _playerRole = PlayerRole.Default;
-    public PlayerRole PlayerRole
-    {
-        get
-        {
-            return _playerRole;
-        }
-        set
-        {
-            _playerRole = value;
-            OnLocalPlayerUpdate(EventArgs.Empty);
-        }
-    }
-
-    private List<string> _itemNameList = new List<string>();
-    public List<string> ItemNameList
-    {
-        get
-        {
-            return _itemNameList;
-        }
-        set
-        {
-            _itemNameList = value;
+            if (this._player != null)
+            {
+                this._player.PlayerUpdateEvent -= this.OnPlayerUpdate; // if the player changes, stop tracking it
+            }
+            _player = value;
+            this._player.PlayerUpdateEvent += this.OnPlayerUpdate; // reassign tracking to new player
             OnLocalPlayerUpdate(EventArgs.Empty);
         }
     }
@@ -200,8 +80,13 @@ public class LocalPlayer
     {
         var autoEvent = new AutoResetEvent(false);
         var sessionUpdater = new SessionUpdater();
-        this.sessionUpdater = new Timer(sessionUpdater.SendUpdate, autoEvent, 0, 30000);
+        this.SessionUpdater = new Timer(sessionUpdater.SendUpdate, autoEvent, 0, 30000);
         Application.quitting += OnApplicationQuit;
+    }
+
+    public void OnPlayerUpdate(PlayerEventArgs args)
+    {
+        OnLocalPlayerUpdate(EventArgs.Empty);
     }
 
 
@@ -237,7 +122,7 @@ public class LocalPlayer
 
     void OnApplicationQuit()
     {
-        sessionUpdater.Dispose();
+        SessionUpdater.Dispose();
         SendLogoutRequest();
     }
 

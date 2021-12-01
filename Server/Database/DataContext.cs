@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using GameLibrary.Inventory;
+using Microsoft.EntityFrameworkCore;
 using System.Text.Json;
 
 namespace GameLibrary.Database
@@ -10,6 +11,7 @@ namespace GameLibrary.Database
 			//use when want to add tables
 			//Database.EnsureDeleted();
 			Database.EnsureCreated();
+			this.ChangeTracker.LazyLoadingEnabled = true;
 		}
 
 		public DbSet<Character> Character { get; set; }
@@ -41,6 +43,7 @@ namespace GameLibrary.Database
 			modelBuilder.Entity<Character>().HasMany(l => l.VisitedLocations);
 			modelBuilder.Entity<Location>().HasMany(c => c.Characters);
 
+			modelBuilder.Entity<Character>().HasOne(e => e.Equipment);
 
 			modelBuilder.Entity<Item>().HasMany(e => e.Effects);
 			modelBuilder.Entity<Effect>().HasMany(i => i.Items);
