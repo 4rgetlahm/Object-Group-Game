@@ -56,13 +56,13 @@ MonoBehaviour:
     itemSprite: {fileID: 21300000, guid: 0e325ae155d6d1d428b9d723cff3865b, type: 3}
   - itemModel: 6
     itemSprite: {fileID: 21300000, guid: 66f9c1385dc1bfb4d8098a8a5e09ccb9, type: 3}
-  - itemModel: 6
+  - itemModel: 7
     itemSprite: {fileID: 21300000, guid: a1d1b2fe012bb5e449a1729a9236ba62, type: 3}
   - itemModel: 8
     itemSprite: {fileID: 21300000, guid: aa54ab12fcc31b44d89eaad5e70ca29b, type: 3}
   - itemModel: 9
     itemSprite: {fileID: 21300000, guid: a5d86fdbd6e3b9045868f69cfc5555ff, type: 3}
   - itemModel: 10
-    itemSprite: {fileID: 21300000, guid: a1d1b2fe012bb5e449a1729a9236ba62, type: 3}
+    itemSprite: {fileID: 21300000, guid: e45d1c2f82111c543a606ad915dfdd76, type: 3}
   - itemModel: 1
     itemSprite: {fileID: 21300000, guid: 63f074ee1a00dd548997b7a6314b6902, type: 3}
