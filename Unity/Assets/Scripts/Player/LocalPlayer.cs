@@ -22,14 +22,15 @@ public class PlayerData
     public string Username { get; set; }
     public string CharacterName { get; set; }
     public double Health { get; set; }
-    public double Mana { get; set; }
-    public double Experience { get; set; }
-    public double Gold { get; set; }
-    public double Dexterity { get; set; }
-    public double Strength { get; set; }
-    public double Intelligence { get; set; }
-    public PlayerRole PlayerRole { get; set; }
+    public double Stamina { get; set; }
+    public int Gold { get; set; }
+    public int Dexterity { get; set; }
+    public int Strength { get; set; }
+    public int Intelligence { get; set; }
+    public int Constitution { get; set; }
+    public int Endurance { get; set; }
 
+    public PlayerRole PlayerRole { get; set; }
     public List<string> ItemNameList;
 }
 
@@ -89,34 +90,21 @@ public class LocalPlayer
             OnLocalPlayerUpdate(EventArgs.Empty);
         }
     }
-    private double _mana = 0.0;
-    public double Mana
+    private double _stamina = 0.0;
+    public double Stamina
     {
         get
         {
-            return _mana;
+            return _stamina;
         }
         set
         {
-            _mana = value;
+            _stamina = value;
             OnLocalPlayerUpdate(EventArgs.Empty);
         }
     }
-    private double _experience = 0.0;
-    public double Experience
-    {
-        get
-        {
-            return _experience;
-        }
-        set
-        {
-            _experience = value;
-            OnLocalPlayerUpdate(EventArgs.Empty);
-        }
-    }
-    private double _gold = 0.0;
-    public double Gold
+    private int _gold = 0;
+    public int Gold
     {
         get
         {
@@ -128,8 +116,8 @@ public class LocalPlayer
             OnLocalPlayerUpdate(EventArgs.Empty);
         }
     }
-    private double _dexterity = 0.0;
-    public double Dexterity
+    private int _dexterity = 0;
+    public int Dexterity
     {
         get
         {
@@ -141,8 +129,8 @@ public class LocalPlayer
             OnLocalPlayerUpdate(EventArgs.Empty);
         }
     }
-    private double _strength = 0.0;
-    public double Strength
+    private int _strength = 0;
+    public int Strength
     {
         get
         {
@@ -154,8 +142,8 @@ public class LocalPlayer
             OnLocalPlayerUpdate(EventArgs.Empty);
         }
     }
-    private double _intelligence = 0.0;
-    public double Intelligence
+    private int _intelligence = 0;
+    public int Intelligence
     {
         get
         {
@@ -164,6 +152,28 @@ public class LocalPlayer
         set
         {
             _intelligence = value;
+            OnLocalPlayerUpdate(EventArgs.Empty);
+        }
+    }
+    private int _constitution = 0;
+    public int Constitution
+    {
+        get {
+            return _constitution;
+        }
+        set {
+            _constitution = value;
+            OnLocalPlayerUpdate(EventArgs.Empty);
+        }
+    }
+    private int _endurance = 0;
+    public int Endurance
+    {
+        get {
+            return _endurance;
+        }
+        set {
+            _endurance = value;
             OnLocalPlayerUpdate(EventArgs.Empty);
         }
     }

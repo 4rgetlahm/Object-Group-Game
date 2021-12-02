@@ -15,11 +15,13 @@ public class PlayerLoader : MonoBehaviour
         LocalPlayer.Instance.Username = playerData.CharacterName;
         LocalPlayer.Instance.CharacterName = playerData.CharacterName;
         LocalPlayer.Instance.Health = playerData.Health;
-        LocalPlayer.Instance.Mana = playerData.Mana;
+        LocalPlayer.Instance.Stamina = playerData.Stamina;
         LocalPlayer.Instance.Gold = playerData.Gold;
         LocalPlayer.Instance.Dexterity = playerData.Dexterity;
         LocalPlayer.Instance.Strength = playerData.Strength;
         LocalPlayer.Instance.Intelligence = playerData.Intelligence;
+        LocalPlayer.Instance.Endurance = playerData.Endurance;
+        LocalPlayer.Instance.Constitution = playerData.Constitution;
         LocalPlayer.Instance.ItemNameList = playerData.ItemNameList;
         LocalPlayer.Instance.PlayerRole = playerData.PlayerRole;
     }
@@ -57,5 +59,4 @@ public class PlayerLoader : MonoBehaviour
             Debug.Log("Caught exception: " + e.Message + "\n" + e.StackTrace + "\n" + e.Source);
         }
     }
-
 }
