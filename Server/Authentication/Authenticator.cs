@@ -65,13 +65,13 @@ namespace Server.Authentication
             }
             catch (Exception e)
             {
-                Console.WriteLine(e.Message);
+                Console.WriteLine(e.Message + " " + e.StackTrace);
             }
 
             return new Tuple<int, Session>(0, null);
         }
 
-        public Tuple<int, Session> Register(string username, string password)
+        public Tuple<int, Session> Register(string username, string password, CharacterType characterType = CharacterType.MODEL_MALE_1)
         {
             Regex regex = new Regex(Configuration.GetInstance().Settings["usernameregex"]);
             if (!regex.IsMatch(username))
@@ -93,7 +93,7 @@ namespace Server.Authentication
                     rngCSP.GetBytes(salt);
 
                     Player player = new Player(username);
-                    player.Character = new Character(username);
+                    player.Character = new Character(username, characterType);
                     db.Entry(player).Property("Salt").CurrentValue = Convert.ToBase64String(salt);
                     db.Entry(player).Property("Password").CurrentValue = Convert.ToBase64String(GenerateSaltedHash(Encoding.UTF8.GetBytes(password), salt));
                     db.Add(player);

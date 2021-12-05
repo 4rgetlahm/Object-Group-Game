@@ -8,6 +8,14 @@ using Server.Authentication;
 
 namespace Server.Controllers
 {
+
+    public class PlayerRegisterRequest
+    {
+        public string Username { get; set; }
+        public string Password { get; set; }
+        public int CharacterType { get; set; }
+    }
+
     [ApiController]
     [Route("[controller]")]
     public class RegisterController : Controller
@@ -19,9 +27,9 @@ namespace Server.Controllers
         }
 
         [HttpPost]
-        public Tuple<int, Session> Post([FromBody] PlayerAuth playerAuth)
+        public Tuple<int, Session> Post([FromBody] PlayerRegisterRequest playerRegisterRequest)
         {
-            return _authenticator.Register(playerAuth.Username, playerAuth.Password);
+            return _authenticator.Register(playerRegisterRequest.Username, playerRegisterRequest.Password, (CharacterType) playerRegisterRequest.CharacterType);
         }
     }
 }

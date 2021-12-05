@@ -72,6 +72,7 @@ public class LocalPlayer
             }
             _player = value;
             this._player.PlayerUpdateEvent += this.OnPlayerUpdate; // reassign tracking to new player
+            this._player.Character.CharacterUpdateEvent += this.OnCharacterUpdate;
             OnLocalPlayerUpdate(EventArgs.Empty);
         }
     }
@@ -82,6 +83,11 @@ public class LocalPlayer
         var sessionUpdater = new SessionUpdater();
         this.SessionUpdater = new Timer(sessionUpdater.SendUpdate, autoEvent, 0, 30000);
         Application.quitting += OnApplicationQuit;
+    }
+
+    public void OnCharacterUpdate(CharacterEventArgs args)
+    {
+        OnLocalPlayerUpdate(EventArgs.Empty);
     }
 
     public void OnPlayerUpdate(PlayerEventArgs args)

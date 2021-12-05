@@ -14,10 +14,17 @@ public class PlayerInventoryLoader : MonoBehaviour
     private float GAP_SIZE_Y;
     [SerializeField]
     private RectTransform BackgroundRectTransform;
-    // Start is called before the first frame update
+
+    private List<GameObject> inventoryItems = new List<GameObject>();
     void OnEnable()
     {
         LoadInventoryItems();
+        LocalPlayer.Instance.Player.Character.CharacterEquipmentChangeEvent += this.OnCharacterEquipmentUpdate;
+    }
+
+    void OnCharacterEquipmentUpdate(CharacterEventArgs args)
+    {
+        ReloadInventoryItems();
     }
     
     private int GetItemsPerRow()
@@ -49,6 +56,21 @@ public class PlayerInventoryLoader : MonoBehaviour
         return columnCount;
     }
 
+    public void ReloadInventoryItems()
+    {
+        ClearInventory();
+        LoadInventoryItems();
+    }
+
+    public void ClearInventory()
+    {
+        foreach(GameObject gameObject in inventoryItems)
+        {
+            gameObject.Destroy();
+        }
+        inventoryItems.Clear();
+    }
+
     public void LoadInventoryItems()
     {
         int rowCount = GetRowCount();
@@ -75,7 +97,7 @@ public class PlayerInventoryLoader : MonoBehaviour
                     );
                 instantiatedItem.GetComponent<ItemRenderer>().Item = LocalPlayer.Instance.Player.Character.Items[currentItem];
                 currentItem++;
-                Debug.Log(currentItem);
+                inventoryItems.Add(instantiatedItem);
             }
         }
         InventoryItemTemplate.SetActive(false);

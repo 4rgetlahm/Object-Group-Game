@@ -21,7 +21,7 @@ public class MapLoader : MonoBehaviour
 	}
 	class LocationModel
     {
-		public string DisplayName { get; set; }
+		public string Name { get; set; }
 		public LocationType LocationType { get; set; }
 
 		public Coordinate Coordinate;
@@ -66,7 +66,7 @@ public class MapLoader : MonoBehaviour
 		{
 			var instance = Instantiate(_markerPrefab);
 			instance.GetComponent<MaterialSetter>().Set(location.LocationType);
-			instance.GetComponent<LabelSetter>().Set(location.DisplayName);
+			instance.GetComponent<LabelSetter>().Set(location.Name);
 			instance.transform.localPosition = _map.GeoToWorldPosition(new Vector2d(location.Coordinate.Latitude, location.Coordinate.Longtitude), true);
 			instance.transform.localScale = new Vector3(_spawnScale, _spawnScale, _spawnScale);
 			SpawnedObjects.Add(location, instance);

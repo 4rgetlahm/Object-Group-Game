@@ -5,29 +5,23 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using GameLibrary;
 
 public class ItemLoader : MonoBehaviour
 {
     [SerializeField]
     private Image ItemImage;
     [SerializeField]
-    private ItemType ItemType;
+    public ItemType ItemType;
     [SerializeField]
     private ItemMapper ItemMapper;
     [SerializeField]
     private TMP_Text ItemNameLabel;
 
-    public void Start()
-    {
-        LocalPlayer.Instance.LocalPlayerUpdateEvent += OnLocalPlayerUpdated;
-    }
-
     public void OnEnable()
     {
-        if(LocalPlayer.Instance.Player != null)
-        {
-            OnLocalPlayerUpdated(EventArgs.Empty);
-        }
+        this.OnEquipmentChange(new CharacterEventArgs(LocalPlayer.Instance.Player.Character));
+        LocalPlayer.Instance.Player.Character.CharacterEquipmentChangeEvent += OnEquipmentChange;
     }
 
     private void SetNoItem()
@@ -36,7 +30,7 @@ public class ItemLoader : MonoBehaviour
         ItemNameLabel.text = "Nothing";
     }
 
-    public void OnLocalPlayerUpdated(EventArgs eventArgs)
+    public void OnEquipmentChange(CharacterEventArgs eventArgs)
     {
         switch (this.ItemType)
         {

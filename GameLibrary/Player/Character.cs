@@ -95,7 +95,22 @@ namespace GameLibrary
         }
 
         public List<Item> Items { get; set; }
-        public virtual Equipment Equipment { get; set; }
+
+        private Equipment _equipment;
+        public Equipment Equipment { 
+            get {
+                return _equipment;
+            }
+            set {
+                if (_equipment != null)
+                {
+                    _equipment.EquipmentChangeEvent -= this.OnEquipmentChange;
+                }
+                _equipment = value;
+                _equipment.EquipmentChangeEvent += this.OnEquipmentChange;
+                OnCharacterEquipmentChange(new CharacterEventArgs(this));
+            }
+        }
         public List<Location> VisitedLocations { get; set; }
 
         public delegate void CharacterUpdateEventHandler(CharacterEventArgs args);
@@ -115,7 +130,7 @@ namespace GameLibrary
 
         protected Character()
         {
-            this.Equipment.EquipmentChangeEvent += this.OnEquipmentChange;
+            //this.Equipment.EquipmentChangeEvent += this.OnEquipmentChange;
         }
 
         public Character(string name, CharacterType characterType, double health, double mana, double experience, 
