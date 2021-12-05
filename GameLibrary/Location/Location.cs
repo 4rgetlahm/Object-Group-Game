@@ -73,6 +73,20 @@ namespace GameLibrary
 				OnLocationEdited(new LocationEventArgs(this));
 			}
 		}
+
+		private int _level;
+		public int Level
+        {
+            get
+            {
+				return _level;
+            }
+            set
+            {
+				_level = value;
+				OnLocationEdited(new LocationEventArgs(this));
+            }
+        }
 		[JsonIgnore]
 		public List<Character> Characters { get; set; }
 

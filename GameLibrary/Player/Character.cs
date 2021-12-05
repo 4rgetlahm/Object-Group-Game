@@ -104,13 +104,22 @@ namespace GameLibrary
         public delegate void CharacterTypeChangedHandler(CharacterEventArgs args);
         public event CharacterTypeChangedHandler CharacterTypeChangeEvent;
 
+        public delegate void CharacterEquipmentChangedHandler(CharacterEventArgs args);
+        public event CharacterTypeChangedHandler CharacterEquipmentChangeEvent;
+
+
+        public void OnEquipmentChange(EquipmentEventArgs args)
+        {
+            OnCharacterEquipmentChange(new CharacterEventArgs(this));
+        }
+
         protected Character()
         {
-
+            this.Equipment.EquipmentChangeEvent += this.OnEquipmentChange;
         }
 
         public Character(string name, CharacterType characterType, double health, double mana, double experience, 
-            double gold, List<Item> itemList, List<Location> visitedLocations, Equipment equipment)
+            double gold, List<Item> itemList, List<Location> visitedLocations, Equipment equipment) : base()
         {
             this.Name = name;
             this.CharacterType = characterType;
@@ -123,9 +132,10 @@ namespace GameLibrary
             this.Equipment = equipment;
         }
 
-        public Character(string name, double health = 100.0, double mana = 100.0)
+        public Character(string name, CharacterType characterType, double health = 100.0, double mana = 100.0) : base()
         {
             this.Name = name;
+            this.CharacterType = characterType;
             this.Equipment = new Equipment();
             this.VisitedLocations = new List<Location>();
             this.Items = new List<Item>();
@@ -155,6 +165,15 @@ namespace GameLibrary
             if(CharacterTypeChangeEvent != null)
             {
                 CharacterTypeChangeEvent(args);
+                OnCharacterUpdate(args);
+            }
+        }
+
+        public void OnCharacterEquipmentChange(CharacterEventArgs args)
+        {
+            if(CharacterEquipmentChangeEvent != null)
+            {
+                CharacterEquipmentChangeEvent(args);
                 OnCharacterUpdate(args);
             }
         }
