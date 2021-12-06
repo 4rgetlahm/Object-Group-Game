@@ -1,5 +1,6 @@
 ﻿using GameLibrary;
 using GameLibrary.Database;
+using GameLibrary.Inventory;
 using NUnit.Framework;
 using System.Collections.Generic;
 
@@ -40,7 +41,7 @@ namespace Tests.Database
         {
             using (var db = new DataContext())
             {
-                var character = new Character("Test Character", 50.0, 999999.0, 80.0, 3333333.4);
+                var character = new Character("Test Character", CharacterType.MODEL_MALE_1, 100, 200);
                 db.Add(character);
                 db.SaveChanges();
                 db.Remove(character);
@@ -54,7 +55,7 @@ namespace Tests.Database
         {
             using (var db = new DataContext())
             {
-                Effect effect = new Effect("coolstatus", "cooler name", 5);
+                Effect effect = new Effect("coolstatus", EffectType.LIFE_STEAL);
 
                 db.Add(effect);
                 db.SaveChanges();
@@ -69,10 +70,10 @@ namespace Tests.Database
             using (var db = new DataContext())
             {
                 List<Effect> effects = new List<Effect>();
-                effects.Add(new Effect("coolstatus", "cooler name", 5));
-                effects.Add(new Effect("shiny", "shiny name", 0));
+                effects.Add(new Effect("coolstatus", EffectType.AOE_LIGHTNING));
+                effects.Add(new Effect("shiny", EffectType.DOUBLE_ATTACK));
 
-                Item item = new Item("Thunderfury", 999, 100, 0, effects);
+                Item item = new Item("Thunderfury", ItemType.WEAPON, 999, 100, 0, effects);
 
                 db.Add(item);
                 db.SaveChanges();
@@ -91,8 +92,8 @@ namespace Tests.Database
 
                 db.Add(location);
                 db.SaveChanges();
-                db.Remove(location);
-                db.SaveChanges();
+                //db.Remove(location);
+                //db.SaveChanges();
             }
             Assert.Pass();
         }

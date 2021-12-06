@@ -1,11 +1,10 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using GameLibrary;
+﻿using GameLibrary;
 using GameLibrary.Database;
+using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Server.Authentication;
 
 namespace Server.Controllers
 {
@@ -14,23 +13,20 @@ namespace Server.Controllers
     public class LocationListController : ControllerBase
     {
         [HttpGet]
-        public IEnumerable<Location> Get(string sessionid)
+        public List<Location> Get()
         {
-            Session session = SessionManager.Instance.GetRealSession(Convert.FromBase64String(sessionid));
-            if (session != null)
+            try
             {
-                try
+                using (var context = new DataContext())
                 {
-                    using (var context = new DataContext())
-                    {
-                        return context.Location.ToList().FindAll(loc => !SessionManager.Instance.Sessions[session].Character.VisitedLocations.Contains(loc));
-                    }
-                }
-                catch (Exception e)
-                {
-                    Console.WriteLine("Caught exception while trying to fetch locations: " + e.Message);
+                    return context.Location.ToList();
                 }
             }
+            catch (Exception e)
+            {
+                Console.WriteLine("Caught exception while trying to fetch locations: " + e.Message);
+            }
+
             return null;
         }
     }

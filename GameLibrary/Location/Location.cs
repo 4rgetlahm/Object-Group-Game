@@ -94,9 +94,18 @@ namespace GameLibrary
 		public event LocationUpdateEventHandler LocationUpdateEvent;
 
 
-		public Location (string DisplayName, LocationType LocationType, double Latitude, double Longtitude, int Radius)
+		public Location (string Name, LocationType LocationType, double Latitude, double Longtitude, int Radius)
 		{
-			this.Name = DisplayName;
+			this.Name = Name;
+			this.LocationType = LocationType;
+			Coordinate = new Coordinate(Latitude, Longtitude);
+			this.Radius = Radius;
+		}
+
+		public Location(int locationID, string Name, LocationType LocationType, double Latitude, double Longtitude, int Radius)
+		{
+			this.LocationID = locationID;
+			this.Name = Name;
 			this.LocationType = LocationType;
 			Coordinate = new Coordinate(Latitude, Longtitude);
 			this.Radius = Radius;

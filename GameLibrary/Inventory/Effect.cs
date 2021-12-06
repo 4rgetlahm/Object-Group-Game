@@ -14,13 +14,14 @@ namespace GameLibrary.Inventory
 		public int ID { get; set; }
 		public string Name { get; set; }
 
-		public EffectType effectType { get; set; }
+		public EffectType EffectType { get; set; }
 		[JsonIgnore]
 		public List<Item> Items { get; set; }
 
-		public Effect(string displayName)
+		public Effect(string name, EffectType effectType)
 		{
-			this.Name = displayName;
+			this.Name = name;
+			this.EffectType = effectType;
 		}
 
 		protected Effect()
