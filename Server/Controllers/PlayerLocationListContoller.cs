@@ -16,13 +16,11 @@ namespace Server.Controllers
         [HttpGet]
         public List<Location> Get(string sessionid)
         {
-            Console.WriteLine("OK");
             Session session = SessionManager.Instance.GetRealSession(Convert.FromBase64String(sessionid));
             if (session != null)
             {
                 try
                 {
-                    Console.WriteLine("TRY");
                     using (var context = new DataContext())
                     {
                         return context.Location.ToList().FindAll(loc => !SessionManager.Instance.Sessions[session].Character.VisitedLocations.Contains(loc));

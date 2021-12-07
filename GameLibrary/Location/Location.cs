@@ -87,6 +87,21 @@ namespace GameLibrary
 				OnLocationEdited(new LocationEventArgs(this));
             }
         }
+
+		public List<Mission> _missions;
+		public List<Mission> Missions
+        {
+            get
+            {
+				return _missions;
+            }
+            set
+            {
+				_missions = value;
+				OnLocationEdited(new LocationEventArgs(this));
+            }
+        }
+
 		[JsonIgnore]
 		public List<Character> Characters { get; set; }
 

@@ -15,6 +15,7 @@ namespace GameLibrary.Inventory
         WEAPON,
         RING,
         EARRINGS,
-        NECKLACE
+        NECKLACE,
+        GOLD
     }
 }
