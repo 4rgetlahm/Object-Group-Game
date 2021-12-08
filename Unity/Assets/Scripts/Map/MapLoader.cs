@@ -29,6 +29,8 @@ public class MapLoader : MonoBehaviour
 
 		public Coordinate Coordinate;
 
+		public List<Mission> Missions { get; set; }
+
 		public bool Equals(LocationModel other)
         {
             if(this.LocationID == other.LocationID)
@@ -73,11 +75,12 @@ public class MapLoader : MonoBehaviour
 			VisitedLocations = JsonConvert.DeserializeObject<List<LocationModel>>(response.Content);
 
 			var allLocationsResponse = Network.Instance.restClient.Execute(requestAllLocations);
-			if (response.StatusCode != System.Net.HttpStatusCode.OK)
+			if (allLocationsResponse.StatusCode != System.Net.HttpStatusCode.OK)
 			{
 				throw new BadResponseException("Request failed!");
 			}
-			AllLocations = JsonConvert.DeserializeObject<List<LocationModel>>(response.Content);
+			AllLocations = JsonConvert.DeserializeObject<List<LocationModel>>(allLocationsResponse.Content);
+			Debug.Log(allLocationsResponse.Content);
 		}
 		catch(Exception e)
         {
@@ -92,7 +95,7 @@ public class MapLoader : MonoBehaviour
 			instance.GetComponent<ColorSetter>().Set(location.LocationType);
 			instance.GetComponent<LabelSetter>().Set(location.Name);
 			//instance.GetComponent<RadiusRenderer>().SetRadius(location.Radius);
-			instance.GetComponent<LocationInfoHolder>().Location = new Location(location.LocationID, location.Name, location.LocationType, location.Coordinate.Latitude, location.Coordinate.Longtitude, location.Radius);
+			instance.GetComponent<LocationInfoHolder>().Location = new Location(location.LocationID, location.Name, location.LocationType, location.Coordinate.Latitude, location.Coordinate.Longtitude, location.Radius, location.Missions);
 			instance.GetComponent<LocationInfoHolder>().Visited = false;
 			if (VisitedLocations.Contains(location))
             {

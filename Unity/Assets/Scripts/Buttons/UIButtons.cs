@@ -13,10 +13,17 @@ public class UIButtons : MonoBehaviour
     private List<GameObject> UI;
     [SerializeField]
     private GameObject InventoryUI;
+    [SerializeField]
+    private GameObject MissionsUI;
 
     private void HideGameUI()
     {
         UI.ForEach(obj => obj.SetActive(false));
+    }
+
+    private void ShowGameUI()
+    {
+        UI.ForEach(obj => obj.SetActive(true));
     }
 
     public void EnterAdminTools()
@@ -35,4 +42,17 @@ public class UIButtons : MonoBehaviour
         HideGameUI();
         InventoryUI.SetActive(true);
     }
+
+    public void ExitInventory()
+    {
+        ShowGameUI();
+        InventoryUI.SetActive(false);
+    }
+
+    public void ExitMissions()
+    {
+        ShowGameUI();
+        MissionsUI.SetActive(false);
+    }
+
 }

@@ -187,8 +187,9 @@ GameObject:
   - component: {fileID: 4936519322476758}
   - component: {fileID: 6846429280331973941}
   - component: {fileID: 696635724677038225}
-  - component: {fileID: 5028493391740111531}
   - component: {fileID: 7507267982873469165}
+  - component: {fileID: 1767349620412904}
+  - component: {fileID: 6470799934931184167}
   m_Layer: 10
   m_Name: CustomMarkerPrefab
   m_TagString: Untagged
@@ -250,18 +251,6 @@ MonoBehaviour:
   parkColor: {r: 0.99618566, g: 0.4009434, b: 1, a: 0}
   miscColor: {r: 1, g: 0, b: 0, a: 0}
   meshRenderer: {fileID: 5782911830088302083}
---- !u!114 &5028493391740111531
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1839187062704024}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3a2ebf0bb446383459342409500c0f82, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &7507267982873469165
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -274,6 +263,32 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a7021249ebd0d6744a1a503039a8c412, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &1767349620412904
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1839187062704024}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 43109c1301db20949b7c9fad55ffbf2c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  locationInfoHolder: {fileID: 7507267982873469165}
+--- !u!65 &6470799934931184167
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1839187062704024}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1.4992863, y: 0.7224798, z: 0.5118753}
+  m_Center: {x: 0.006969869, y: 0.13876009, z: 0.24406236}
 --- !u!1 &7436804982635998256
 GameObject:
   m_ObjectHideFlags: 0

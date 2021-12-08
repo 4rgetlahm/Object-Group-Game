@@ -18,7 +18,6 @@ namespace GameLibrary
 		public int Strength { get; set; }
 		public int Dexterity { get; set; }
 		public int Intelligence { get; set; }
-
 		public int LevelRequirement { get; set; }
 		public ItemType ItemType { get; set; }
 		public ItemModel ItemModel { get; set; }
@@ -26,10 +25,11 @@ namespace GameLibrary
 		[JsonIgnore]
 		public List<Character> Characters { get; set; }
 
-		public Item(string Name, ItemType ItemType, int Strength = 0, int Dexterity = 0, int Intelligence = 0, List<Effect> Effects = null)
+		public Item(string Name, ItemType ItemType, ItemModel itemModel, int Strength = 0, int Dexterity = 0, int Intelligence = 0, List<Effect> Effects = null)
 		{
 			this.Name = Name;
 			this.ItemType = ItemType;
+			this.ItemModel = itemModel;
 			this.Strength = Strength;
 			this.Dexterity = Dexterity;
 			this.Intelligence = Intelligence;

@@ -88,8 +88,8 @@ namespace GameLibrary
             }
         }
 
-		public List<Mission> _missions;
-		public List<Mission> Missions
+		private List<Mission> _missions;
+		public virtual List<Mission> Missions
         {
             get
             {
@@ -115,15 +115,17 @@ namespace GameLibrary
 			this.LocationType = LocationType;
 			Coordinate = new Coordinate(Latitude, Longtitude);
 			this.Radius = Radius;
+			this.Missions = new List<Mission>();
 		}
 
-		public Location(int locationID, string Name, LocationType LocationType, double Latitude, double Longtitude, int Radius)
+		public Location(int locationID, string Name, LocationType LocationType, double Latitude, double Longtitude, int Radius, List<Mission> missions)
 		{
 			this.LocationID = locationID;
 			this.Name = Name;
 			this.LocationType = LocationType;
 			Coordinate = new Coordinate(Latitude, Longtitude);
 			this.Radius = Radius;
+			this.Missions = missions;
 		}
 
 		protected Location()

@@ -2,6 +2,7 @@
 using GameLibrary.Database;
 using GameLibrary.Inventory;
 using NUnit.Framework;
+using System;
 using System.Collections.Generic;
 
 namespace Tests.Database
@@ -73,7 +74,7 @@ namespace Tests.Database
                 effects.Add(new Effect("coolstatus", EffectType.AOE_LIGHTNING));
                 effects.Add(new Effect("shiny", EffectType.DOUBLE_ATTACK));
 
-                Item item = new Item("Thunderfury", ItemType.WEAPON, 999, 100, 0, effects);
+                Item item = new Item("Thunderfury", ItemType.WEAPON, ItemModel.HOLY_SWORD, 999, 100, 0, effects);
 
                 db.Add(item);
                 db.SaveChanges();
@@ -92,8 +93,32 @@ namespace Tests.Database
 
                 db.Add(location);
                 db.SaveChanges();
-                //db.Remove(location);
-                //db.SaveChanges();
+                db.Remove(location);
+                db.SaveChanges();
+            }
+            Assert.Pass();
+        }
+
+        [Test]
+        public void Add_Remove_Mission()
+        {
+            using(var db = new DataContext())
+            {
+                List<DropItem> drops = new List<DropItem>();
+                drops.Add(new DropItem(new Item("Sword", ItemType.WEAPON, ItemModel.HOLY_SWORD), 0.5f));
+                drops.Add(new DropItem(new Gold(100.0), 1));
+
+                List<DropItem> gatherDrops = new List<DropItem>();
+                gatherDrops.Add(new DropItem(new Gold(50.0), 1));
+                gatherDrops.Add(new DropItem(new Gold(20.0), 0.5f));
+
+                Location location = new Location("Vilnius Cathedral", LocationType.HOLY, 54.685851681232435, 25.2877395627063, 3);
+                Mission mission = new Mission("Eliminate Dark Beings", "There are numerous Dark beings surrounding Cathedral.\nHelp eliminate them!", MissionType.FIGHT, new TimeSpan(0, 5, 0), new TimeSpan(0, 10, 0), drops);
+                Mission mission2 = new Mission("Collect Holy Herbs", "Area around Cathedral have a lot of holy herbs that are used in potions.\nGather those herbs for a reward!", MissionType.GATHER, new TimeSpan(0, 2, 0), new TimeSpan(0, 5, 0), gatherDrops);
+                location.Missions.Add(mission);
+                location.Missions.Add(mission2);
+                db.Add(location);
+                db.SaveChanges();
             }
             Assert.Pass();
         }

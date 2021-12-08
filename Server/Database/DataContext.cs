@@ -1,5 +1,6 @@
 ﻿using GameLibrary.Inventory;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using System.Text.Json;
 
 namespace GameLibrary.Database
@@ -19,6 +20,8 @@ namespace GameLibrary.Database
 		public DbSet<Item> Item { get; set; }
 		public DbSet<Effect> Effect { get; set; }
 		public DbSet<Player> Player { get; set; }
+		public DbSet<Mission> Mission { get; set; }
+		public DbSet<Expedition> Expedition { get; set; }
 
 		protected override void OnConfiguring (DbContextOptionsBuilder optionsBuilder)
 		{
@@ -56,6 +59,12 @@ namespace GameLibrary.Database
 					v => JsonSerializer.Serialize(v, null),
 					v => JsonSerializer.Deserialize<Coordinate>(v, null)
 				);
+			modelBuilder.Entity<Location>().HasMany(m => m.Missions);
+
+			modelBuilder.Entity<Mission>().Property(m => m.MinDuration).HasConversion(new TimeSpanToTicksConverter());
+			modelBuilder.Entity<Mission>().Property(m => m.MaxDuration).HasConversion(new TimeSpanToTicksConverter());
+
+			modelBuilder.Entity<Expedition>().Property(d => d.Duration).HasConversion(new TimeSpanToTicksConverter());
 
 			base.OnModelCreating(modelBuilder);
         }

@@ -6,10 +6,14 @@ namespace GameLibrary.Inventory
 {
     public class Gold : Item
     {
-        public int Amount { get; set; }
-        public Gold(int amount) : base("Gold", ItemType.GOLD)
+        public double Amount { get; set; }
+        public Gold(double amount) : base("Gold", ItemType.GOLD, ItemModel.NONE)
         {
             this.Amount = amount;
+        }
+        protected Gold()
+        {
+
         }
     }
 }

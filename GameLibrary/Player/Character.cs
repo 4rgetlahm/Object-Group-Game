@@ -111,6 +111,20 @@ namespace GameLibrary
                 OnCharacterEquipmentChange(new CharacterEventArgs(this));
             }
         }
+
+        public Expedition _expedition;
+        public Expedition Expedition
+        {
+            get
+            {
+                return _expedition;
+            }
+            set
+            {
+                _expedition = value;
+                OnCharacterUpdate(new CharacterEventArgs(this));
+            }
+        }
         public List<Location> VisitedLocations { get; set; }
 
         public delegate void CharacterUpdateEventHandler(CharacterEventArgs args);

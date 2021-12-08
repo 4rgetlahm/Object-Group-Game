@@ -1,6 +1,8 @@
 ﻿using GameLibrary;
 using GameLibrary.Database;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -19,7 +21,17 @@ namespace Server.Controllers
             {
                 using (var context = new DataContext())
                 {
-                    return context.Location.ToList();
+                    //Console.WriteLine(JsonConvert.SerializeObject(context.Location.Include(m => m.Missions).ToList()));
+                    //context.Location.Include(m => m.Missions);
+                    /*foreach(Location loc in context.Location.Include(m => m.Missions).ToList())
+                    {
+                        foreach(Mission m in loc.Missions)
+                        {
+                            Console.WriteLine(m.Title);
+                        }
+                    }*/
+                    Console.WriteLine(JsonConvert.SerializeObject(context.Location.Include(m => m.Missions).ToList()));
+                    return context.Location.Include(m => m.Missions).ToList();
                 }
             }
             catch (Exception e)
