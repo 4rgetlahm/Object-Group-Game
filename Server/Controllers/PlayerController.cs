@@ -1,4 +1,5 @@
 ﻿using GameLibrary;
+using GameLibrary.Database;
 using GameLibrary.Inventory;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
@@ -19,14 +20,9 @@ namespace Server.Controllers
         {
             if(body == null){
                 return null;
-            }   
-            foreach(var session in SessionManager.Instance.Sessions){
-                if(session.Key.SessionID.SequenceEqual(body.SessionID)){
-                    Player player = SessionManager.Instance.Sessions[session.Key];
-                    return player;
-                }
             }
-            return null;
+            Player player = SessionManager.Instance.Sessions[SessionManager.Instance.GetRealSession(body.SessionID)];
+            return player;
         }
     }
 }

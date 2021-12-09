@@ -2,6 +2,7 @@
 using GameLibrary.Database;
 using GameLibrary.Inventory;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Server.Authentication;
 using System;
 using System.Collections.Generic;
@@ -30,26 +31,34 @@ namespace Server.Controllers
             {
                 try
                 {
-                    switch (itemUnequipRequest.ItemType)
+                    Player player = SessionManager.Instance.Sessions[session];
+                    using (var context = new DataContext())
                     {
-                        case ItemType.HELMET:
-                            SessionManager.Instance.Sessions[session].Character.Equipment.Helmet = null;
-                            break;
-                        case ItemType.BODY:
-                            SessionManager.Instance.Sessions[session].Character.Equipment.BodyItem = null;
-                            break;
-                        case ItemType.LEGS:
-                            SessionManager.Instance.Sessions[session].Character.Equipment.LegItem = null;
-                            break;
-                        case ItemType.BOOTS:
-                            SessionManager.Instance.Sessions[session].Character.Equipment.Boots = null;
-                            break;
-                        case ItemType.WEAPON:
-                            SessionManager.Instance.Sessions[session].Character.Equipment.Weapon = null;
-                            break;
+                        //context.Attach(player);
+                        switch (itemUnequipRequest.ItemType)
+                        {
+                            case ItemType.HELMET:
+                                player.Character.Equipment.Helmet = null;
+                                break;
+                            case ItemType.BODY:
+                                player.Character.Equipment.BodyItem = null;
+                                break;
+                            case ItemType.LEGS:
+                                player.Character.Equipment.LegItem = null;
+                                break;
+                            case ItemType.BOOTS:
+                                player.Character.Equipment.Boots = null;
+                                break;
+                            case ItemType.WEAPON:
+                                player.Character.Equipment.Weapon = null;
+                                break;
 
+                        }
+                        context.Entry(player).State = EntityState.Modified;
+                        context.SaveChanges();
+                        //context.Entry(player).State = Microsoft.EntityFrameworkCore.EntityState.Detached;
                     }
-                    return SessionManager.Instance.Sessions[session].Character.Equipment;
+                    return player.Character.Equipment;
 
                 }
                 catch (Exception e)

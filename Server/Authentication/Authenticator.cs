@@ -59,6 +59,11 @@ namespace Server.Authentication
                         db.Entry(player.Character).Collection(i => i.Items).Load();
                         db.Entry(player.Character).Collection(l => l.VisitedLocations).Load();
                         db.Entry(player.Character).Reference(e => e.Equipment).Load();
+                        db.Entry(player.Character).Reference(e => e.Expedition).Load();
+                        if (player.Character.Expedition != null)
+                        {
+                            db.Entry(player.Character.Expedition).Reference(m => m.Mission).Load();
+                        }
                         return new Tuple<int, Session>(1, SessionManager.Instance.CreateSession(player)); // login
                     }
                 }

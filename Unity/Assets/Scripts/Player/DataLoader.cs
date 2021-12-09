@@ -37,6 +37,13 @@ namespace Assets.Scripts.Player
         private List<TMP_Text> intelligenceLabel;
 
         [SerializeField]
+        private GameObject expeditionDataObject;
+        [SerializeField]
+        private List<TMP_Text> expeditionLocationLabels;
+        [SerializeField]
+        private List<TMP_Text> expeditionTitleLabels;
+
+        [SerializeField]
         private Button adminButton;
 
         public DataLoader()
@@ -61,6 +68,17 @@ namespace Assets.Scripts.Player
             intelligenceLabel.ForEach(t => t.text = "Intelligence: " + LocalPlayer.Instance.Player.Character.Equipment.GetIntelligence());
 
             adminButton.gameObject.SetActive(LocalPlayer.Instance.Player.PlayerRole.HasFlag(PlayerRole.Administrator) ? true : false);
+            Debug.Log(LocalPlayer.Instance.Player.Character.Expedition);
+            if(LocalPlayer.Instance.Player.Character.Expedition != null)
+            {
+                expeditionDataObject.SetActive(true);
+                expeditionTitleLabels.ForEach(t => t.text = LocalPlayer.Instance.Player.Character.Expedition.Mission.Title);
+                //expeditionLocationLabels.ForEach(t => t.text = LocalPlayer.Instance.Player.Character.Expedition.Mission.Title);
+            }
+            else
+            {
+                expeditionDataObject.SetActive(false);
+            }
         }
     }
 }

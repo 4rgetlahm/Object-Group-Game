@@ -7,16 +7,16 @@ using UnityEngine;
 public class MissionRenderer : MonoBehaviour
 {
     [SerializeField]
-    private GameObject MissionTemplate;
+    private GameObject missionTemplate;
     [SerializeField]
-    private TMP_Text TemplateTitle;
+    private TMP_Text templateTitle;
     [SerializeField]
-    private TMP_Text TemplateDescription;
+    private TMP_Text templateDescription;
     [SerializeField]
-    private TMP_Text TemplateType;
+    private TMP_Text templateType;
 
     [SerializeField]
-    private RectTransform MissionSelectorBackgroundTransform;
+    private RectTransform missionSelectorBackgroundTransform;
     [SerializeField]
     private float GAP_SIZE_Y;
 
@@ -38,9 +38,9 @@ public class MissionRenderer : MonoBehaviour
     private int GetRowCount()
     {
         int columnCount = 0;
-        float increment = MissionTemplate.GetComponent<RectTransform>().sizeDelta.y + GAP_SIZE_Y;
+        float increment = missionTemplate.GetComponent<RectTransform>().sizeDelta.y + GAP_SIZE_Y;
         float positionY = 0;
-        while (MissionSelectorBackgroundTransform.sizeDelta.y - increment - positionY > 0)
+        while (missionSelectorBackgroundTransform.sizeDelta.y - increment - positionY > 0)
         {
             columnCount++;
             positionY += increment;
@@ -60,23 +60,25 @@ public class MissionRenderer : MonoBehaviour
     private void LoadMissions()
     {
         int rowCount = GetRowCount();
-        MissionTemplate.SetActive(true);
+        missionTemplate.SetActive(true);
         int count = 0;
         foreach(Mission mission in Location.Missions)
         {
             // first change values, then instantiate
-            TemplateTitle.text = mission.Title;
-            TemplateDescription.text = mission.Description;
-            TemplateType.text = mission.MissionType.ToString();
-            GameObject instantiatedItem = Instantiate(MissionTemplate, MissionSelectorBackgroundTransform.transform);
+            templateTitle.text = mission.Title;
+            templateDescription.text = mission.Description;
+            templateType.text = mission.MissionType.ToString();
+
+            GameObject instantiatedItem = Instantiate(missionTemplate, missionSelectorBackgroundTransform.transform);
             instantiatedItem.transform.localPosition = new Vector3(
-                    MissionTemplate.GetComponent<RectTransform>().localPosition.x,
-                    MissionTemplate.GetComponent<RectTransform>().localPosition.y - (count * (MissionTemplate.GetComponent<RectTransform>().sizeDelta.y + GAP_SIZE_Y)),
+                    missionTemplate.GetComponent<RectTransform>().localPosition.x,
+                    missionTemplate.GetComponent<RectTransform>().localPosition.y - (count * (missionTemplate.GetComponent<RectTransform>().sizeDelta.y + GAP_SIZE_Y)),
                     0
                 );
+            instantiatedItem.GetComponent<MissionConfirmDialog>().Mission = mission;
             missionItems.Add(instantiatedItem);
             count++;
         }
-        MissionTemplate.SetActive(false);
+        missionTemplate.SetActive(false);
     }
 }
