@@ -33,7 +33,7 @@ public class InventoryRequestHandler : MonoBehaviour
         request.AddParameter("application/json; charset=utf-8", JsonConvert.SerializeObject(body, Formatting.Indented), ParameterType.RequestBody);
         request.RequestFormat = DataFormat.Json;
 
-        Debug.Log(request);
+        Debug.Log(JsonConvert.SerializeObject(body, Formatting.Indented));
 
         try
         {
@@ -44,6 +44,7 @@ public class InventoryRequestHandler : MonoBehaviour
                 return;
             }
             Equipment serverResponse = JsonConvert.DeserializeObject<Equipment>(response.Content);
+            Debug.Log(response.Content);
             if(serverResponse != null)
             {
                 LocalPlayer.Instance.Player.Character.Equipment = serverResponse;

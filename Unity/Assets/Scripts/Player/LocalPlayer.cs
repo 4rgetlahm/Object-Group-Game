@@ -92,6 +92,7 @@ public class LocalPlayer
 
     public void OnPlayerUpdate(PlayerEventArgs args)
     {
+        this._player.Character.CharacterUpdateEvent += this.OnCharacterUpdate;
         OnLocalPlayerUpdate(EventArgs.Empty);
     }
 

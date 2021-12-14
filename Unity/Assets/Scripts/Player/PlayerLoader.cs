@@ -26,7 +26,7 @@ public class PlayerLoader : MonoBehaviour
             {
                 throw new BadResponseException("Player data was not received successfully");
             }
-
+            Debug.Log(response.Content);
             Player player = JsonConvert.DeserializeObject<Player>(response.Content);
 
             if(player == null)

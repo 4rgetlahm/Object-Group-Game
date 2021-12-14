@@ -44,6 +44,9 @@ namespace Assets.Scripts.Player
         private List<TMP_Text> expeditionTitleLabels;
 
         [SerializeField]
+        private List<TMP_Text> expeditionTimeLabels;
+
+        [SerializeField]
         private Button adminButton;
 
         public DataLoader()
@@ -61,7 +64,7 @@ namespace Assets.Scripts.Player
             usernameLabel.ForEach(t => t.text = LocalPlayer.Instance.Player.Name);
             characterNameLabel.ForEach(t => t.text = LocalPlayer.Instance.Player.Character.Name);
 
-            goldLabel.ForEach(t => t.text = "Gold: " + LocalPlayer.Instance.Player.Character.Gold);
+            goldLabel.ForEach(t => t.text = "" + LocalPlayer.Instance.Player.Character.Gold);
 
             dexterityLabel.ForEach(t => t.text = "Dexterity: " + LocalPlayer.Instance.Player.Character.Equipment.GetDexterity());
             strengthLabel.ForEach(t => t.text = "Strength: " + LocalPlayer.Instance.Player.Character.Equipment.GetStrength());
@@ -73,6 +76,10 @@ namespace Assets.Scripts.Player
             {
                 expeditionDataObject.SetActive(true);
                 expeditionTitleLabels.ForEach(t => t.text = LocalPlayer.Instance.Player.Character.Expedition.Mission.Title);
+                expeditionTimeLabels.ForEach(t => t.text = (
+                LocalPlayer.Instance.Player.Character.Expedition.StartTime.ToLocalTime() +
+                LocalPlayer.Instance.Player.Character.Expedition.Duration)
+                .ToString());
                 //expeditionLocationLabels.ForEach(t => t.text = LocalPlayer.Instance.Player.Character.Expedition.Mission.Title);
             }
             else
