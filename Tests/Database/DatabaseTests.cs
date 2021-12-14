@@ -106,15 +106,14 @@ namespace Tests.Database
             {
                 List<DropItem> drops = new List<DropItem>();
                 drops.Add(new DropItem(new Item("Sword", ItemType.WEAPON, ItemModel.HOLY_SWORD), 0.5f));
-                drops.Add(new DropItem(new Gold(100.0), 1));
 
                 List<DropItem> gatherDrops = new List<DropItem>();
-                gatherDrops.Add(new DropItem(new Gold(50.0), 1));
-                gatherDrops.Add(new DropItem(new Gold(20.0), 0.5f));
+                gatherDrops.Add(new DropItem( new Item("Bow", ItemType.WEAPON, ItemModel.DARK_BOW), 1.0f));
+                gatherDrops.Add(new DropItem(new Item("White Socks", ItemType.BOOTS, ItemModel.STEEL_BOOTS), 0.5f));
 
                 Location location = new Location("Vilnius Cathedral", LocationType.HOLY, 54.685851681232435, 25.2877395627063, 3);
-                Mission mission = new Mission("Eliminate Dark Beings", "There are numerous Dark beings surrounding Cathedral.\nHelp eliminate them!", MissionType.FIGHT, new TimeSpan(0, 5, 0), new TimeSpan(0, 10, 0), drops);
-                Mission mission2 = new Mission("Collect Holy Herbs", "Area around Cathedral have a lot of holy herbs that are used in potions.\nGather those herbs for a reward!", MissionType.GATHER, new TimeSpan(0, 2, 0), new TimeSpan(0, 5, 0), gatherDrops);
+                Mission mission = new Mission("Eliminate Dark Beings", "There are numerous Dark beings surrounding Cathedral.\nHelp eliminate them!", MissionType.FIGHT, new TimeSpan(0, 5, 0), new TimeSpan(0, 10, 0), drops, 100.0, 50.0);
+                Mission mission2 = new Mission("Collect Holy Herbs", "Area around Cathedral have a lot of holy herbs that are used in potions.\nGather those herbs for a reward!", MissionType.GATHER, new TimeSpan(0, 2, 0), new TimeSpan(0, 5, 0), gatherDrops, 200.0, 10.0);
                 location.Missions.Add(mission);
                 location.Missions.Add(mission2);
                 db.Add(location);
