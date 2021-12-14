@@ -5,10 +5,12 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
 using Newtonsoft.Json.Serialization;
 using Server.Authentication;
+using Server.Logging;
+using Server.Middleware;
+using Server.Services;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -29,6 +31,8 @@ namespace Server
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddSingleton<IAuthenticator, Authenticator>();
+            services.AddSingleton<ILogger>(new Logger("Logs/log.txt"));
+            services.AddScoped<IExpeditionService, ExpeditionService>();
 
             services.AddControllersWithViews().AddNewtonsoftJson(options =>
                 options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore)
@@ -60,6 +64,10 @@ namespace Server
             {
                 endpoints.MapControllers();
             });
+
+            //app.UseMiddleware<RequestBodyReadingMiddleware>();
+
+            app.UseRequestBodyReadingMiddleware();
         }
 
     }
