@@ -89,17 +89,7 @@ namespace Server.Authentication
         {
             lock (this.Sessions)
             { 
-                Session realSession = this.Sessions.Keys.FirstOrDefault(
-                    delegate (Session currentSession)
-                    {
-                        if (currentSession.SessionID.SequenceEqual(session.SessionID))
-                        {
-                            return true;
-                        }
-                        return false;
-                    }
-                );
-
+                Session realSession = this.Sessions.Keys.FirstOrDefault(s => s.SessionID.SequenceEqual(session.SessionID));
                 return realSession;
             }
         }
@@ -108,17 +98,7 @@ namespace Server.Authentication
         {
             lock (this.Sessions)
             {
-                Session realSession = this.Sessions.Keys.FirstOrDefault(
-                    delegate (Session currentSession)
-                    {
-                        if (currentSession.SessionID.SequenceEqual(session))
-                        {
-                            return true;
-                        }
-                        return false;
-                    }
-                );
-
+                Session realSession = this.Sessions.Keys.FirstOrDefault(s => s.SessionID.SequenceEqual(session));
                 return realSession;
             }
         }
