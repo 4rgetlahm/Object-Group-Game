@@ -30,47 +30,64 @@ namespace Server.Controllers
             {
                 try
                 {
-                    if(itemEquipRequest.Item == null)
+                    if (itemEquipRequest.Item == null)
                     {
+                        Console.WriteLine("itemequiprequestnull");
                         return null;
                     }
                     // check if player has the item
-                    if(SessionManager.Instance.Sessions[session].Character.Items.Find(i => i.ItemID == itemEquipRequest.Item.ItemID) == null)
-                    {
-                        return null;
-                    }
-                    Player player = SessionManager.Instance.Sessions[session];
                     using (var context = new DataContext())
                     {
-                        Item dbItem = context.Item.Where(i => i.ItemID == itemEquipRequest.Item.ItemID).FirstOrDefault();
-                        if(dbItem == null)
+                        // get player by sessionid
+                        Player player = SessionManager.Instance.Sessions[session];
+                        //get character by player via db
+                        Character realCharacter = context.Character
+                            .Include(i => i.Items)
+                            .Include(e => e.Equipment)
+                            .Where(c => c.CharacterID == player.Character.CharacterID).FirstOrDefault();
+                        if (realCharacter == null)
                         {
+                            Console.WriteLine("no char");
                             return null;
                         }
-                        switch (itemEquipRequest.Item.ItemType)
+
+                        Item dbItem = context.Item.Where(i => i.ItemID == itemEquipRequest.Item.ItemID).FirstOrDefault();
+                        if (dbItem == null)
+                        {
+                            Console.WriteLine("no item");
+                            return null;
+                        }
+
+                        if (realCharacter.Items.Find(i => i.ItemID == itemEquipRequest.Item.ItemID) == null)
+                        {
+                            Console.WriteLine("char no item");
+                            return null;
+                        }
+                        switch (dbItem.ItemType)
                         {
                             case ItemType.HELMET:
-                                player.Character.Equipment.Helmet = itemEquipRequest.Item;
+                                realCharacter.Equipment.Helmet = dbItem;
                                 break;
                             case ItemType.BODY:
-                                player.Character.Equipment.BodyItem = itemEquipRequest.Item;
+                                realCharacter.Equipment.BodyItem = dbItem;
                                 break;
                             case ItemType.LEGS:
-                                player.Character.Equipment.LegItem = itemEquipRequest.Item;
+                                realCharacter.Equipment.LegItem = dbItem;
                                 break;
                             case ItemType.BOOTS:
-                                player.Character.Equipment.Boots = itemEquipRequest.Item;
+                                realCharacter.Equipment.Boots = dbItem;
                                 break;
                             case ItemType.WEAPON:
-                                player.Character.Equipment.Weapon = itemEquipRequest.Item;
+                                realCharacter.Equipment.Weapon = dbItem;
                                 break;
                         }
                         context.Entry(player).State = EntityState.Modified;
                         context.SaveChanges();
+                        player.Character = realCharacter;
                         //context.Entry(player).State = Microsoft.EntityFrameworkCore.EntityState.Detached;
-                        return SessionManager.Instance.Sessions[session].Character.Equipment;
+                        return realCharacter.Equipment;
                     }
-                  
+
                 }
                 catch (Exception e)
                 {

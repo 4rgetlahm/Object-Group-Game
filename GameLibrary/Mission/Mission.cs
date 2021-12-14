@@ -15,8 +15,11 @@ namespace GameLibrary
         public TimeSpan MinDuration { get; set; }
         public TimeSpan MaxDuration { get; set; }
         public List<DropItem> Drops { get; set; }
+        public double GoldReward { get; set; }
 
-        public Mission(string title, string description, MissionType missionType, TimeSpan min, TimeSpan max, List<DropItem> drops)
+        public double ExperienceReward { get; set; }
+
+        public Mission(string title, string description, MissionType missionType, TimeSpan min, TimeSpan max, List<DropItem> drops, double experienceReward = 0, double goldReward = 0)
         {
             this.Title = title;
             this.Description = description;
@@ -24,6 +27,8 @@ namespace GameLibrary
             this.MinDuration = min;
             this.MaxDuration = max;
             this.Drops = drops;
+            this.GoldReward = goldReward;
+            this.ExperienceReward = experienceReward;
         }
 
         protected Mission()

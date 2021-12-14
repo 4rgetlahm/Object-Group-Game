@@ -35,10 +35,17 @@ namespace Server.Controllers
                     return null;
                 }
                 Random random = new Random();
-                Expedition expedition = new Expedition(body.Mission, DateTime.Now, new TimeSpan(LongRandom(body.Mission.MinDuration.Ticks, body.Mission.MaxDuration.Ticks, random)));
+                Mission mission = context.Mission.Include(d => d.Drops).SingleOrDefault(m => m.MissionID == body.Mission.MissionID);
+                if(mission == null)
+                {
+                    return null;
+                }
+                Expedition expedition = new Expedition(mission, DateTime.Now, new TimeSpan(LongRandom(mission.MinDuration.Ticks, mission.MaxDuration.Ticks, random)));
                 //context.Player.Attach(player);
-                player.Character.Expedition = expedition;
-                context.Entry(player).State = EntityState.Modified;
+                character.Expedition = expedition;
+                Console.WriteLine("save?");
+                Console.WriteLine(character.Expedition.Mission.Title);
+                context.Entry(character).State = EntityState.Modified;
                 context.SaveChanges();
                 //context.Entry(player).State = Microsoft.EntityFrameworkCore.EntityState.Detached;
                 return expedition;

@@ -112,7 +112,7 @@ namespace GameLibrary
             }
         }
 
-        public Expedition _expedition;
+        private Expedition _expedition;
         public Expedition Expedition
         {
             get

@@ -9,6 +9,9 @@ namespace GameLibrary
     public enum CharacterType
     {
         MODEL_MALE_1,
-        MODEL_FEMALE_1
+        MODEL_FEMALE_1,
+        MODEL_MALE_2,
+        MODEL_FEMALE_2,
+        MODEL_FEMALE_3
     }
 }

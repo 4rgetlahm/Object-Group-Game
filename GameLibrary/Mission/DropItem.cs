@@ -10,9 +10,9 @@ namespace GameLibrary
         [Key]
         public int DropItemID { get; set; }
         public Item Item { get; set; }
-        public float DropRate { get; set; }
+        public double DropRate { get; set; }
 
-        public DropItem(Item item, float dropRate)
+        public DropItem(Item item, double dropRate)
         {
             this.Item = item;
             this.DropRate = dropRate;

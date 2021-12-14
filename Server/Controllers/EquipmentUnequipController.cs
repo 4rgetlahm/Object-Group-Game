@@ -31,34 +31,46 @@ namespace Server.Controllers
             {
                 try
                 {
-                    Player player = SessionManager.Instance.Sessions[session];
                     using (var context = new DataContext())
                     {
-                        //context.Attach(player);
+                        // get player by sessionid
+                        Player player = SessionManager.Instance.Sessions[session];
+                        //get character by player via db
+                        Character realCharacter = context.Character
+                            .Include(i => i.Items)
+                            .Include(e => e.Equipment)
+                            .Where(c => c.CharacterID == player.Character.CharacterID).FirstOrDefault();
+                        if (realCharacter == null)
+                        {
+                            Console.WriteLine("no char");
+                            return null;
+                        }
+
                         switch (itemUnequipRequest.ItemType)
                         {
                             case ItemType.HELMET:
-                                player.Character.Equipment.Helmet = null;
+                                realCharacter.Equipment.Helmet = null;
                                 break;
                             case ItemType.BODY:
-                                player.Character.Equipment.BodyItem = null;
+                                realCharacter.Equipment.BodyItem = null;
                                 break;
                             case ItemType.LEGS:
-                                player.Character.Equipment.LegItem = null;
+                                realCharacter.Equipment.LegItem = null;
                                 break;
                             case ItemType.BOOTS:
-                                player.Character.Equipment.Boots = null;
+                                realCharacter.Equipment.Boots = null;
                                 break;
                             case ItemType.WEAPON:
-                                player.Character.Equipment.Weapon = null;
+                                realCharacter.Equipment.Weapon = null;
                                 break;
 
                         }
                         context.Entry(player).State = EntityState.Modified;
                         context.SaveChanges();
                         //context.Entry(player).State = Microsoft.EntityFrameworkCore.EntityState.Detached;
+                        player.Character = realCharacter;
+                        return realCharacter.Equipment;
                     }
-                    return player.Character.Equipment;
 
                 }
                 catch (Exception e)
