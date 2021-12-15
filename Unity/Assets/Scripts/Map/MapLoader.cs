@@ -57,6 +57,10 @@ public class MapLoader : MonoBehaviour
 	[SerializeField]
 	GameObject _markerPrefab;
 
+	private GameObject playerMarker;
+
+
+
 	Dictionary<LocationModel, GameObject> SpawnedObjects;
 
 	void Start()
@@ -116,6 +120,16 @@ public class MapLoader : MonoBehaviour
 			//location.Value.transform.localScale = new Vector3(_spawnScale, _spawnScale, _spawnScale);
 			//Debug.Log(1 / _map.Zoom);
 			//location.Value.GetComponent<RadiusRenderer>().ChangeZoomLevel(_map.Zoom);
+		}
+		if (GPS.Instance.isLocationServiceActive)
+		{
+			if(playerMarker == null)
+            {
+				playerMarker = Instantiate(_markerPrefab);
+				playerMarker.GetComponent<ColorSetter>().Set(LocationType.DARK);
+				playerMarker.GetComponent<LabelSetter>().Set("PLAYER");
+			}
+			playerMarker.transform.localPosition = _map.GeoToWorldPosition(new Vector2d(GPS.Instance.Latitude, GPS.Instance.Longtitude), true);
 		}
 	}
 }
