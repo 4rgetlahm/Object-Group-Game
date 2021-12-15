@@ -43,8 +43,6 @@ namespace Server.Controllers
                 Expedition expedition = new Expedition(mission, DateTime.Now, new TimeSpan(LongRandom(mission.MinDuration.Ticks, mission.MaxDuration.Ticks, random)));
                 //context.Player.Attach(player);
                 character.Expedition = expedition;
-                Console.WriteLine("save?");
-                Console.WriteLine(character.Expedition.Mission.Title);
                 context.Entry(character).State = EntityState.Modified;
                 context.SaveChanges();
                 //context.Entry(player).State = Microsoft.EntityFrameworkCore.EntityState.Detached;

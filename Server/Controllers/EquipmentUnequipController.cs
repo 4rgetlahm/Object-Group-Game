@@ -42,7 +42,6 @@ namespace Server.Controllers
                             .Where(c => c.CharacterID == player.Character.CharacterID).FirstOrDefault();
                         if (realCharacter == null)
                         {
-                            Console.WriteLine("no char");
                             return null;
                         }
 

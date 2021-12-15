@@ -4,10 +4,11 @@ using GameLibrary.Inventory;
 using NUnit.Framework;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Tests.Database
 {
-    class DatabaseTests
+    class ModelCreationTests
     {
         [SetUp]
         public void Setup()
@@ -100,7 +101,7 @@ namespace Tests.Database
         }
 
         [Test]
-        public void Add_Remove_Mission()
+        public void Create_Location_Add_Missions()
         {
             using(var db = new DataContext())
             {
@@ -116,10 +117,15 @@ namespace Tests.Database
                 Mission mission2 = new Mission("Collect Holy Herbs", "Area around Cathedral have a lot of holy herbs that are used in potions.\nGather those herbs for a reward!", MissionType.GATHER, new TimeSpan(0, 2, 0), new TimeSpan(0, 5, 0), gatherDrops, 200.0, 10.0);
                 location.Missions.Add(mission);
                 location.Missions.Add(mission2);
-                db.Add(location);
-                db.SaveChanges();
+
+                Assert.Multiple(() =>
+                    {
+                        Assert.NotNull(db.Location.Where(l => l.Name == location.Name).FirstOrDefault());
+                        Assert.NotNull(db.Mission.Where(m => m.Title == mission.Title).FirstOrDefault());
+                        Assert.NotNull(db.Mission.Where(m => m.Title == mission2.Title).FirstOrDefault());
+                    }
+                );
             }
-            Assert.Pass();
         }
     }
 }

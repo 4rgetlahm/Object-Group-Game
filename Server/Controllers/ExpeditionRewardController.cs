@@ -24,9 +24,7 @@ namespace Server.Controllers
         [HttpPost]
         public Tuple<int,Character> Post([FromBody] Expedition expedition)
         {
-            Console.WriteLine("post");
             int expeditionState = _expeditionService.CheckIfExpeditionCompleted(expedition);
-            Console.WriteLine(expeditionState);
             if(expeditionState != 1)
             {
                 return new Tuple<int, Character>(expeditionState, null);

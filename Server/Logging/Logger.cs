@@ -21,7 +21,12 @@ namespace Server.Logging
             {
                 File.Create(path);
             }
-            //streamWriter = new StreamWriter(path, true);
+            streamWriter = new StreamWriter(path, true);
+        }
+
+        public Logger()
+        {
+            streamWriter = null;
         }
 
         public void Log<T>(T log)
@@ -41,7 +46,13 @@ namespace Server.Logging
                 message = JsonConvert.SerializeObject(log);
             }
 
-
+            if (streamWriter != null)
+            {
+                lock (streamWriter)
+                {
+                    streamWriter.WriteLine(message);
+                }
+            }
             Console.WriteLine(message);
 
         }

@@ -25,7 +25,7 @@ namespace Server.Authentication
             SessionManager.Instance.UpdateLastRequest(args.Player, DateTime.Now);
         }
 
-        public void ExpireSessions(Object stateInfo)
+        public void ExpireSessions()
         {
             lock (SessionManager.Instance.LastRequest)
             {
@@ -42,6 +42,11 @@ namespace Server.Authentication
                     }
                 }
             }
+        }
+
+        public void ExpireSessionsTick(Object stateInfo)
+        {
+            this.ExpireSessions();
         } 
     }
 }

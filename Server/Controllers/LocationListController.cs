@@ -21,16 +21,6 @@ namespace Server.Controllers
             {
                 using (var context = new DataContext())
                 {
-                    //Console.WriteLine(JsonConvert.SerializeObject(context.Location.Include(m => m.Missions).ToList()));
-                    //context.Location.Include(m => m.Missions);
-                    /*foreach(Location loc in context.Location.Include(m => m.Missions).ToList())
-                    {
-                        foreach(Mission m in loc.Missions)
-                        {
-                            Console.WriteLine(m.Title);
-                        }
-                    }*/
-                    Console.WriteLine(JsonConvert.SerializeObject(context.Location.Include(m => m.Missions).ToList()));
                     return context.Location.Include(m => m.Missions).ToList();
                 }
             }

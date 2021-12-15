@@ -31,8 +31,10 @@ namespace Server
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddSingleton<IAuthenticator, Authenticator>();
-            services.AddSingleton<ILogger>(new Logger("Logs/log.txt"));
+            services.AddSingleton<ILogger>(new Logger());
             services.AddScoped<IExpeditionService, ExpeditionService>();
+            services.AddScoped<IItemService, ItemService>();
+            services.AddScoped<IEquipmentService, EquipmentService>();
 
             services.AddControllersWithViews().AddNewtonsoftJson(options =>
                 options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore)
@@ -54,6 +56,8 @@ namespace Server
                 app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "Server v1"));
             }
 
+            app.UseRequestLoggingMiddleware();
+
             app.UseHttpsRedirection();
 
             app.UseRouting();
@@ -65,9 +69,6 @@ namespace Server
                 endpoints.MapControllers();
             });
 
-            //app.UseMiddleware<RequestBodyReadingMiddleware>();
-
-            app.UseRequestBodyReadingMiddleware();
         }
 
     }

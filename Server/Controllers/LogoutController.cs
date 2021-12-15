@@ -26,8 +26,6 @@ namespace Server.Controllers
             if(_authenticator.Logout(body) == 1){
                 return Ok();
             }
-
-
             return BadRequest();
         }
     }

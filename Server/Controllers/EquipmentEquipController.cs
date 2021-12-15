@@ -3,7 +3,9 @@ using GameLibrary.Database;
 using GameLibrary.Inventory;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Newtonsoft.Json;
 using Server.Authentication;
+using Server.Services;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -22,6 +24,35 @@ namespace Server.Controllers
     [Route("equipment/equip")]
     public class EquipmentEquipController : Controller
     {
+        private readonly IEquipmentService _equipmentService;
+
+        public EquipmentEquipController(IEquipmentService equipmentService)
+        {
+            _equipmentService = equipmentService;
+        }
+
+        /*[HttpPost]
+        public Equipment Post([FromBody] ItemEquipRequest itemEquipRequest)
+        {
+            Session session = SessionManager.Instance.GetRealSession(Convert.FromBase64String(itemEquipRequest.SessionID));
+            if (session != null)
+            {
+                _equipmentService.EquipItem(Convert.FromBase64String(itemEquipRequest.SessionID), itemEquipRequest.Item);
+                using(var context = new DataContext())
+                {
+                    //context.Entry()
+                    Character realCharacter = context.Character
+                            .Include(i => i.Items)
+                            .Include(e => e.Equipment)
+                            .Where(c => c.CharacterID == SessionManager.Instance.Sessions[session].Character.CharacterID).FirstOrDefault();
+
+                    context.Entry(realCharacter).Reference(c => c.Equipment).Load();
+                    Console.WriteLine(JsonConvert.SerializeObject(realCharacter));
+                    return realCharacter.Equipment;
+                }
+            }
+            return null;
+        }*/
         [HttpPost]
         public Equipment Post([FromBody] ItemEquipRequest itemEquipRequest)
         {
@@ -32,7 +63,6 @@ namespace Server.Controllers
                 {
                     if (itemEquipRequest.Item == null)
                     {
-                        Console.WriteLine("itemequiprequestnull");
                         return null;
                     }
                     // check if player has the item
@@ -47,20 +77,17 @@ namespace Server.Controllers
                             .Where(c => c.CharacterID == player.Character.CharacterID).FirstOrDefault();
                         if (realCharacter == null)
                         {
-                            Console.WriteLine("no char");
                             return null;
                         }
 
                         Item dbItem = context.Item.Where(i => i.ItemID == itemEquipRequest.Item.ItemID).FirstOrDefault();
                         if (dbItem == null)
                         {
-                            Console.WriteLine("no item");
                             return null;
                         }
 
                         if (realCharacter.Items.Find(i => i.ItemID == itemEquipRequest.Item.ItemID) == null)
                         {
-                            Console.WriteLine("char no item");
                             return null;
                         }
                         switch (dbItem.ItemType)

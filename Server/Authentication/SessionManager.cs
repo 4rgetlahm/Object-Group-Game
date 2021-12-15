@@ -22,7 +22,7 @@ namespace Server.Authentication
         }
 
         private Timer SessionHandlingTimer { get; set; }
-        private Authentication.SessionHandler SessionHandler { get; set; }
+        public Authentication.SessionHandler SessionHandler { get; set; }
         public Dictionary<Session, Player> Sessions { get; set; }
         public Dictionary<Session, DateTime> LastRequest { get; set; }
 
@@ -34,7 +34,7 @@ namespace Server.Authentication
             SessionHandler = new SessionHandler(Int64.Parse(Configuration.GetInstance().Settings["sessionexpirytime"]));
             var autoEvent = new AutoResetEvent(false);
 
-            SessionHandlingTimer = new Timer(SessionHandler.ExpireSessions, null, 0, Int64.Parse(Configuration.GetInstance().Settings["sessionexpirychecktime"]));
+            SessionHandlingTimer = new Timer(SessionHandler.ExpireSessionsTick, null, 0, Int64.Parse(Configuration.GetInstance().Settings["sessionexpirychecktime"]));
         }
 
         public Session CreateSession(Player player)
