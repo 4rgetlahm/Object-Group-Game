@@ -19,35 +19,52 @@ namespace Server.Services
                 //context.Entry(player).State = EntityState.Detached;
                 Player truePlayer = 
                     context.Player.Include(c => c.Character)
-                    .ThenInclude(e => e.Expedition)
+                        .ThenInclude(e => e.Expedition)
+                    .Include(c => c.Character)
+                        .ThenInclude(e => e.Items)
                     .SingleOrDefault(p => p.PlayerID == localPlayer.PlayerID);
-
-                Console.WriteLine(JsonConvert.SerializeObject(localPlayer));
-
-                Console.WriteLine("\n" + JsonConvert.SerializeObject(truePlayer));
 
                 if (truePlayer == null)
                 {
-                    Console.WriteLine("null");
                     return;
                 }
-                Console.WriteLine(truePlayer.Character.Mana);
 
                 truePlayer.Character.Gold = localPlayer.Character.Gold;
                 truePlayer.Character.VisitedLocations = localPlayer.Character.VisitedLocations;
                 truePlayer.Character.Mana = localPlayer.Character.Mana;
                 truePlayer.Character.Health = localPlayer.Character.Health;
+                truePlayer.Character.Experience = localPlayer.Character.Experience;
 
-                if(truePlayer.Character.Expedition != null && localPlayer.Character.Expedition == null)
+                truePlayer.Character.Items.Clear();
+                foreach(Item item in GetTrackedItems(context, localPlayer.Character.Items))
                 {
-                    context.Remove(truePlayer.Character.Expedition);
+                    truePlayer.Character.Items.Add(item);
                 }
 
-                context.SaveChanges();
+                SaveEquipment(localPlayer);
+                SaveExpedition(truePlayer, localPlayer);
+
+                try
+                {
+                    context.SaveChanges();
+                }
+                catch(Exception e)
+                {
+                    Console.WriteLine(e.Message + " " + e.StackTrace);
+                }
                 context.Entry(truePlayer).State = EntityState.Detached;
             }
-            SaveEquipment(localPlayer);
-            SaveExpedition(localPlayer);
+        }
+
+        public List<Item> GetTrackedItems(DataContext context, List<Item> items)
+        {
+
+            List<Item> trackedItems = new List<Item>();
+            foreach (Item item in items)
+            {
+                trackedItems.Add(context.Item.Find(item.ItemID));
+            }
+            return trackedItems;
         }
 
         public void SaveEquipment(Player localPlayer)
@@ -61,36 +78,118 @@ namespace Server.Services
                     .Include(b => b.Boots)
                     .Include(w => w.Weapon)
                     .SingleOrDefault(e => e.EquipmentID == localPlayer.Character.Equipment.EquipmentID);
+
                 Equipment newEquipment = localPlayer.Character.Equipment;
-                dbEquipment.Helmet = newEquipment.Helmet;
-                dbEquipment.BodyItem = newEquipment.BodyItem;
-                dbEquipment.LegItem = newEquipment.LegItem;
-                dbEquipment.Boots = newEquipment.Boots;
-                dbEquipment.Weapon = newEquipment.Weapon;
-                context.SaveChanges();
-                context.Entry(dbEquipment).State = EntityState.Detached;
+
+                if (dbEquipment.Helmet != newEquipment.Helmet)
+                {
+                    if (newEquipment.Helmet != null)
+                    {
+                        var currentItem = context.Item.Find(newEquipment.Helmet.ItemID);
+                        dbEquipment.Helmet = currentItem;
+                    }
+                    else
+                    {
+                        dbEquipment.Helmet = null;
+                    }
+                }
+
+                if (dbEquipment.BodyItem != newEquipment.BodyItem)
+                {
+                    if (newEquipment.BodyItem != null)
+                    {
+                        var currentItem = context.Item.Find(newEquipment.BodyItem.ItemID);
+                        dbEquipment.BodyItem = currentItem;
+                    }
+                    else
+                    {
+                        dbEquipment.BodyItem = null;
+                    }
+                }
+
+                if (dbEquipment.LegItem != newEquipment.LegItem)
+                {
+                    if (newEquipment.LegItem != null)
+                    {
+                        var currentItem = context.Item.Find(newEquipment.LegItem.ItemID);
+                        dbEquipment.LegItem = currentItem;
+                    }
+                    else
+                    {
+                        dbEquipment.LegItem = null;
+                    }
+                }
+
+                if (dbEquipment.Boots != newEquipment.Boots)
+                {
+                    if (newEquipment.Boots != null)
+                    {
+                        var currentItem = context.Item.Find(newEquipment.Boots.ItemID);
+                        dbEquipment.Boots = currentItem;
+                    }
+                    else
+                    {
+                        dbEquipment.Boots = null;
+                    }
+                }
+
+                if (dbEquipment.Weapon != newEquipment.Weapon)
+                {
+                    if(newEquipment.Weapon != null)
+                    {
+                        var currentItem = context.Item.Find(newEquipment.Weapon.ItemID);
+                        dbEquipment.Weapon = currentItem;
+                    }
+                    else
+                    {
+                        dbEquipment.Weapon = null;
+                    }
+                }
+
+                try
+                {
+                    context.SaveChanges();
+                }
+                catch(Exception e)
+                {
+                    Console.WriteLine(e.Message + " " + e.StackTrace);
+                }
             } 
         }
 
-        public void SaveExpedition(Player localPlayer)
+        private void ChangeEquipmentItem(ref Item item, Item newItem)
         {
-            if(localPlayer.Character.Expedition == null)
+            if (item != newItem)
             {
-                return;
+                if (newItem != null)
+                {
+                    using (var context = new DataContext())
+                    {
+                        var currentItem = context.Item.Find(item.ItemID);
+                        item = currentItem;
+                    }
+                }
+                else
+                {
+                    item = null;
+                }
             }
+        }
 
+        public void SaveExpedition(Player dbPlayer, Player localPlayer)
+        {
             using (var context = new DataContext())
             {
-                Expedition dbExpedition = context.Expedition
-                    .Include(m => m.Mission)
-                    .SingleOrDefault(e => e.ExpeditionID == localPlayer.Character.Expedition.ExpeditionID);
-                Expedition newExpedition = localPlayer.Character.Expedition;
-
-                dbExpedition = newExpedition;
-                dbExpedition.StartTime = newExpedition.StartTime.ToUniversalTime();
-
-                context.SaveChanges();
-                context.Entry(dbExpedition).State = EntityState.Detached;
+                if (dbPlayer.Character.Expedition != null && localPlayer.Character.Expedition == null)
+                {
+                    Console.WriteLine(dbPlayer.Character.Expedition.ExpeditionID);
+                    context.Expedition.Remove(dbPlayer.Character.Expedition);
+                    dbPlayer.Character.Expedition = null;
+                }
+                else if (dbPlayer.Character.Expedition?.ExpeditionID != localPlayer.Character.Expedition?.ExpeditionID)
+                {
+                    dbPlayer.Character.Expedition = localPlayer.Character.Expedition;
+                }
             }
 
         }

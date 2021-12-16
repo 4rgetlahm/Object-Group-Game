@@ -9,6 +9,6 @@ namespace Server.Services
     public interface ISavingService
     {
         void Save(Player player);
-        void SaveEquipment(Player player);
+        //void SaveEquipment(Player player);
     }
 }

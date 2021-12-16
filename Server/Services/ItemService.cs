@@ -56,6 +56,12 @@ namespace Server.Services
             }
         }
 
+        public List<Item> AddItems(Player player, List<Item> items)
+        {
+            GiveItems(player, items);
+            return player.Character.Items;
+        }
+
         public bool CheckIfPlayerHasItem(Player player, Item item)
         {
             if(item == null)

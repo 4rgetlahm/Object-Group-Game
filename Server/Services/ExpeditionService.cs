@@ -13,18 +13,51 @@ namespace Server.Services
 {
     public class ExpeditionService : IExpeditionService
     {
+        public Tuple<int, Character> ProcessExpedition(Expedition expedition)
+        {
+            Expedition realExpedition = GetRealExpedition(expedition);
+
+            int expeditionState = CheckIfExpeditionCompleted(realExpedition);
+            if (expeditionState != 1)
+            {
+                return new Tuple<int, Character>(expeditionState, null);
+            }
+            List<Item> rewards = GenerateExpeditionRewards(realExpedition);
+            Player player = GetPlayerFromExpedition(realExpedition);
+
+            if (rewards != null)
+            {
+                player.Character.Items = new ItemService().AddItems(player, rewards);
+            }
+
+            player.Character.Gold += realExpedition.Mission.GoldReward;
+            player.Character.Experience += realExpedition.Mission.ExperienceReward;
+
+            RemovePlayerExpedition(player);
+
+            return new Tuple<int, Character>(1, player.Character);
+        }
+
+        public Expedition GetRealExpedition(Expedition expedition)
+        {
+            using(var context = new DataContext())
+            {
+                Expedition realExpedition = context.Expedition
+                     .Include(e => e.Mission)
+                     .ThenInclude(m => m.Drops)
+                     .ThenInclude(i => i.Item)
+                     .Where(e => e.ExpeditionID == expedition.ExpeditionID)
+                     .FirstOrDefault();
+                return realExpedition;
+            }
+        }
+
         public List<Item> GenerateExpeditionRewards(Expedition expedition)
         {
             using (var context = new DataContext()) {
-                Expedition realExpedition = context.Expedition
-                    .Include(e => e.Mission)
-                    .ThenInclude(m => m.Drops)
-                    .ThenInclude(i => i.Item)
-                    .Where(e => e.ExpeditionID == expedition.ExpeditionID)
-                    .FirstOrDefault();
                 Random random = new Random();
                 List<Item> rewards = new List<Item>();
-                foreach (DropItem dropItem in realExpedition.Mission.Drops)
+                foreach (DropItem dropItem in expedition.Mission.Drops)
                 {
                     if (random.NextDouble() <= dropItem.DropRate)
                     {
@@ -57,42 +90,15 @@ namespace Server.Services
             }
         }
 
-        public void ApplyRewards(Expedition expedition, List<Item> rewards)
-        {
-            using (var context = new DataContext())
-            {
-                /*Character expeditionCharacter = context.Character
-                    .Include(e => e.Expedition)
-                    .Include(i => i.Items)
-                    .Where(c => c.Expedition.ExpeditionID == expedition.ExpeditionID)
-                    .FirstOrDefault();*/
-                Expedition realExpedition = context.Expedition.Include(e => e.Mission).Where(e => e.ExpeditionID == expedition.ExpeditionID).FirstOrDefault();
-                var expeditionCharacter = context.Character.Include(e => e.Expedition).Include(i => i.Items).SingleOrDefault(c => c.Expedition.ExpeditionID == expedition.ExpeditionID);
-                if (expeditionCharacter == null || realExpedition == null)
-                {
-                    return;
-                }
-                context.Entry(expeditionCharacter).State = EntityState.Detached;
-                context.Character.Attach(expeditionCharacter);
-                expeditionCharacter.Gold += realExpedition.Mission.GoldReward;
-                expeditionCharacter.Experience += realExpedition.Mission.ExperienceReward;
-                foreach(Item item in rewards){
-                    if(expeditionCharacter.Items.Where(i => i.ItemID == item.ItemID).FirstOrDefault() == null){
-                        Console.WriteLine(item.Name);
-                        expeditionCharacter.Items.Add(item);
-                        context.Entry(item).State = EntityState.Modified;
-                    }
-                }
-                
-                //context.Entry(expeditionCharacter).State = EntityState.Modified;
-                //context.Entry(expeditionCharacter.Items.First()).State = EntityState.Added;
-
-                context.SaveChanges();
-            }
-        }
-
         public Player GetPlayerFromExpedition(Expedition expedition)
         {
+            //first find from sessions, otherwise go through database
+            Player sessionPlayer = SessionManager.Instance.Sessions.Values.SingleOrDefault(p => p.Character.Expedition?.ExpeditionID == expedition.ExpeditionID);
+            if(sessionPlayer != null)
+            {
+                return sessionPlayer;
+            }
+
             using(var context = new DataContext())
             {
                 Player dbPlayer = context.Player.SingleOrDefault(p => p.Character.Expedition.ExpeditionID == expedition.ExpeditionID);
@@ -131,26 +137,46 @@ namespace Server.Services
             }
         }
 
-        /*
-        public Character RemoveExpedition(Expedition expedition)
+        public Expedition GenerateExpeditionForPlayer(Player player, Mission mission)
         {
-            using (var context = new DataContext())
+            if(player == null || mission == null)
             {
-                Character expeditionCharacter = context.Character
-                    .Include(e => e.Expedition)
-                    .Include(e => e.Equipment)
-                    .Include(l => l.VisitedLocations)
-                    .Include(i => i.Items)
-                    .Where(c => c.Expedition.ExpeditionID == expedition.ExpeditionID)
-                    .FirstOrDefault();
+                return null;
+            }
 
-                if(expeditionCharacter == null){
+            if(player.Character.Expedition != null)
+            {
+                return null;
+            }
+
+            using(var context = new DataContext())
+            {
+                Mission realMission = context.Mission.Include(d => d.Drops).SingleOrDefault(m => m.MissionID == mission.MissionID);
+
+                if(realMission == null)
+                {
                     return null;
                 }
-                context.Expedition.Remove(expeditionCharacter.Expedition);
+
+                Random random = new Random();
+                Expedition expedition = new Expedition(realMission, DateTime.Now.ToUniversalTime(), new TimeSpan(LongRandom(realMission.MinDuration.Ticks, realMission.MaxDuration.Ticks, random)));
+                player.Character.Expedition = expedition;
+
+                context.Expedition.Add(expedition);
                 context.SaveChanges();
-                return expeditionCharacter;
+
+                return expedition;
             }
-        }*/
+        }
+
+        private long LongRandom(long min, long max, Random rand)
+        {
+            byte[] buf = new byte[8];
+            rand.NextBytes(buf);
+            long longRand = BitConverter.ToInt64(buf, 0);
+
+            return (Math.Abs(longRand % (max - min)) + min);
+        }
+
     }
 }

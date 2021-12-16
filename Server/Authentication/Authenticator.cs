@@ -45,7 +45,7 @@ namespace Server.Authentication
             {
                 using (var db = new DataContext())
                 {
-                    Player player = db.Player.First(p => p.Name == username);
+                    Player player = db.Player.SingleOrDefault(p => p.Name == username);
                     if (player == null) // if player doesn't exist
                     {
                         return new Tuple<int, Session>(-1, null); // -1 = player doesn't exist

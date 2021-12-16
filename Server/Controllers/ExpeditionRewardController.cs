@@ -27,21 +27,8 @@ namespace Server.Controllers
         [HttpPost]
         public Tuple<int,Character> Post([FromBody] Expedition expedition)
         {
-            int expeditionState = _expeditionService.CheckIfExpeditionCompleted(expedition);
-            if(expeditionState != 1)
-            {
-                return new Tuple<int, Character>(expeditionState, null);
-            }
-            List<Item> rewards = _expeditionService.GenerateExpeditionRewards(expedition);
-            Player player = _expeditionService.GetPlayerFromExpedition(expedition);
-            Console.WriteLine(player.Character.Items);
-            if (rewards != null)
-            {
-                _itemService.GiveItems(player, rewards);
-            }
-            _expeditionService.RemovePlayerExpedition(player);
 
-            return new Tuple<int, Character>(1, player.Character);
+            return _expeditionService.ProcessExpedition(expedition);
         }
     }
 }
