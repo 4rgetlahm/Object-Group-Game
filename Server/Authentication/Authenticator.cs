@@ -2,6 +2,7 @@
 using GameLibrary.Database;
 using Server;
 using Server.Authentication;
+using Server.Logging;
 using Server.Services;
 using System;
 using System.Collections.Generic;
@@ -78,7 +79,7 @@ namespace Server.Authentication
             }
             catch (Exception e)
             {
-                Console.WriteLine(e.Message + " " + e.StackTrace);
+                Logger.Log(e);
             }
 
             return new Tuple<int, Session>(0, null);
@@ -118,7 +119,7 @@ namespace Server.Authentication
             }
             catch (Exception e)
             {
-                Console.WriteLine(e.Message);
+                Logger.Log(e);
             }
             return new Tuple<int, Session>(0, null);
         }
@@ -138,7 +139,7 @@ namespace Server.Authentication
             }
             catch (Exception e)
             {
-                Console.WriteLine("Exception on logout: " + e.StackTrace);
+                Logger.Log(e);
             }
             return 0;
         }

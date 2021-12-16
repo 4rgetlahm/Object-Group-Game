@@ -3,6 +3,7 @@ using GameLibrary.Database;
 using GameLibrary.Inventory;
 using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json;
+using Server.Logging;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -50,7 +51,7 @@ namespace Server.Services
                 }
                 catch(Exception e)
                 {
-                    Console.WriteLine(e.Message + " " + e.StackTrace);
+                    Logger.Log(e.Message + " " + e.StackTrace);
                 }
                 context.Entry(truePlayer).State = EntityState.Detached;
             }
@@ -152,37 +153,16 @@ namespace Server.Services
                 }
                 catch(Exception e)
                 {
-                    Console.WriteLine(e.Message + " " + e.StackTrace);
+                    Logger.Log(e.Message + " " + e.StackTrace);
                 }
             } 
         }
-
-        private void ChangeEquipmentItem(ref Item item, Item newItem)
-        {
-            if (item != newItem)
-            {
-                if (newItem != null)
-                {
-                    using (var context = new DataContext())
-                    {
-                        var currentItem = context.Item.Find(item.ItemID);
-                        item = currentItem;
-                    }
-                }
-                else
-                {
-                    item = null;
-                }
-            }
-        }
-
         public void SaveExpedition(Player dbPlayer, Player localPlayer)
         {
             using (var context = new DataContext())
             {
                 if (dbPlayer.Character.Expedition != null && localPlayer.Character.Expedition == null)
                 {
-                    Console.WriteLine(dbPlayer.Character.Expedition.ExpeditionID);
                     context.Expedition.Remove(dbPlayer.Character.Expedition);
                     dbPlayer.Character.Expedition = null;
                 }

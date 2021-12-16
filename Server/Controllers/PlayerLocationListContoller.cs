@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Server.Authentication;
+using Server.Logging;
 
 namespace Server.Controllers
 {
@@ -28,7 +29,7 @@ namespace Server.Controllers
                 }
                 catch (Exception e)
                 {
-                    Console.WriteLine("Caught exception while trying to fetch locations: " + e.Message);
+                    Logger.Log(e);
                 }
             }
             return null;

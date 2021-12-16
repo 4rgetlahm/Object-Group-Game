@@ -25,12 +25,6 @@ namespace GameLibrary.Database
 
 		public DbSet<Equipment> Equipment { get; set; }
 
-		public void Replace<TEntity>(TEntity oldEntity, TEntity newEntity) where TEntity : class
-		{
-			ChangeTracker.TrackGraph(oldEntity, e => e.Entry.State = EntityState.Deleted);
-			ChangeTracker.TrackGraph(newEntity, e => e.Entry.State = e.Entry.IsKeySet ? EntityState.Modified : EntityState.Added);
-		}
-
 		protected override void OnConfiguring (DbContextOptionsBuilder optionsBuilder)
 		{
 			// SQL server connection string

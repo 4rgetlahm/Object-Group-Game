@@ -111,7 +111,7 @@ namespace Server.Controllers
                 }
                 catch (Exception e)
                 {
-                    Console.WriteLine("Caught exception while trying to fetch locations: " + e.Message);
+                    Logger.Log("Caught exception while trying to fetch locations: " + e.Message);
                 }
             }
             return null;

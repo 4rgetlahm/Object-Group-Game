@@ -2,6 +2,7 @@ using GameLibrary;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using Server.Authentication;
+using Server.Logging;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -19,12 +20,12 @@ namespace Server.Controllers
             try{
                 SessionManager.Instance.UpdateLastRequest(body, DateTime.Now);
             } catch (BadSessionException e){
-                Console.WriteLine("Session doesn't exist! SessionID: " + Convert.ToBase64String(body.SessionID) 
+                Logger.Log("Session doesn't exist! SessionID: " + Convert.ToBase64String(body.SessionID) 
                     + "\nException: " + e.StackTrace);
                 return BadRequest();
             } 
             catch (Exception e){
-                Console.WriteLine("Caught exception while updating state, sessionID: " + Convert.ToBase64String(body.SessionID) 
+                Logger.Log("Caught exception while updating state, sessionID: " + Convert.ToBase64String(body.SessionID) 
                     + "\nException: " + e.StackTrace);
                 return BadRequest();
             }

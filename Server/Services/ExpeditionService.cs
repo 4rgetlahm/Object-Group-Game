@@ -17,6 +17,7 @@ namespace Server.Services
         {
             Expedition realExpedition = GetRealExpedition(expedition);
 
+
             int expeditionState = CheckIfExpeditionCompleted(realExpedition);
             if (expeditionState != 1)
             {
@@ -46,8 +47,7 @@ namespace Server.Services
                      .Include(e => e.Mission)
                      .ThenInclude(m => m.Drops)
                      .ThenInclude(i => i.Item)
-                     .Where(e => e.ExpeditionID == expedition.ExpeditionID)
-                     .FirstOrDefault();
+                     .SingleOrDefault(e => e.ExpeditionID == expedition.ExpeditionID);
                 return realExpedition;
             }
         }
@@ -64,9 +64,6 @@ namespace Server.Services
                         rewards.Add(dropItem.Item);
                     }
                 }
-                foreach(Item item in rewards){
-                    Console.WriteLine(item.Name);
-                }
                 return rewards;
             }
         }
@@ -80,8 +77,6 @@ namespace Server.Services
                 {
                     return -1;
                 }
-                Console.WriteLine((realExpedition.StartTime + realExpedition.Duration).ToUniversalTime());
-                Console.WriteLine(DateTime.UtcNow);
                 if (DateTime.Compare((realExpedition.StartTime + realExpedition.Duration).ToUniversalTime(),DateTime.UtcNow) < 0)
                 {
                     return 1;
@@ -139,6 +134,7 @@ namespace Server.Services
 
         public Expedition GenerateExpeditionForPlayer(Player player, Mission mission)
         {
+
             if(player == null || mission == null)
             {
                 return null;

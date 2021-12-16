@@ -1,5 +1,7 @@
+using GameLibrary.Database;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
@@ -31,7 +33,6 @@ namespace Server
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddSingleton<IAuthenticator>(new Authenticator(new SavingService()));
-            services.AddSingleton<ILogger>(new Logger());
             services.AddScoped<IExpeditionService, ExpeditionService>();
             services.AddScoped<IItemService, ItemService>();
             services.AddScoped<IEquipmentService, EquipmentService>();
@@ -55,6 +56,11 @@ namespace Server
                 app.UseSwagger();
                 app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "Server v1"));
             }
+
+            /*app.Use(async (context, next) => {
+                context.Request.EnableBuffering();
+                await next();
+            });*/
 
             app.UseRequestLoggingMiddleware();
 

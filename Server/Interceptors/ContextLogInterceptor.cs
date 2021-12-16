@@ -9,11 +9,10 @@ namespace Server.Interceptors
 {
     public class ContextLogInterceptor : IInterceptor
     {
-        private readonly ILogger _logger;
         
-        public ContextLogInterceptor(ILogger logger)
+        public ContextLogInterceptor()
         {
-            _logger = logger;
+
         }
 
         public void Intercept(IInvocation invocation)

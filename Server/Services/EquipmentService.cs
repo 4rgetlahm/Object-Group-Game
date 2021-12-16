@@ -4,6 +4,7 @@ using GameLibrary.Inventory;
 using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json;
 using Server.Authentication;
+using Server.Logging;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -92,8 +93,6 @@ namespace Server.Services
 
         public void UnequipItem(Player player, ItemType itemType)
         {
-            Console.WriteLine(itemType.ToString());
-            Console.WriteLine("BEFORE: " + JsonConvert.SerializeObject(player));
             switch (itemType)
             {
                 case ItemType.HELMET:
@@ -112,7 +111,7 @@ namespace Server.Services
                     player.Character.Equipment.Weapon = null;
                     break;
             }
-            Console.WriteLine("AFTER: " + JsonConvert.SerializeObject(player));
+            Logger.Log("AFTER: " + JsonConvert.SerializeObject(player));
         }
     }
 }

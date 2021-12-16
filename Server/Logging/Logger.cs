@@ -7,8 +7,20 @@ using System.Threading.Tasks;
 
 namespace Server.Logging
 {
-    public class Logger : ILogger
+    public class Logger
     {
+        private static readonly Lazy<Logger> _instance =
+             new Lazy<Logger>(() => new Logger());
+
+        public static Logger Instance
+        {
+            get
+            {
+                return _instance.Value;
+            }
+        }
+
+
         private StreamWriter streamWriter;
 
         public Logger(string path)
@@ -29,7 +41,7 @@ namespace Server.Logging
             streamWriter = null;
         }
 
-        public void Log<T>(T log)
+        public static void Log<T>(T log)
         {
             string message;
             if(log is string)
@@ -46,13 +58,14 @@ namespace Server.Logging
                 message = JsonConvert.SerializeObject(log);
             }
 
+            /*
             if (streamWriter != null)
             {
                 lock (streamWriter)
                 {
                     streamWriter.WriteLine(message);
                 }
-            }
+            }*/
             Console.WriteLine(message);
 
         }

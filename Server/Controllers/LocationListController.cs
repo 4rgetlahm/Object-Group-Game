@@ -3,6 +3,7 @@ using GameLibrary.Database;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json;
+using Server.Logging;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -26,7 +27,7 @@ namespace Server.Controllers
             }
             catch (Exception e)
             {
-                Console.WriteLine("Caught exception while trying to fetch locations: " + e.Message);
+                Logger.Log(e);
             }
 
             return null;

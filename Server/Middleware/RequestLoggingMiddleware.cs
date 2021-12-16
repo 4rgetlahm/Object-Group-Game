@@ -13,14 +13,12 @@ namespace Server.Middleware
     public class RequestLoggingMiddleware
     {
         private readonly RequestDelegate _next;
-        private readonly ILogger _logger;
-        public RequestLoggingMiddleware(RequestDelegate next, ILogger logger)
+        public RequestLoggingMiddleware(RequestDelegate next)
         {
             _next = next;
-            _logger = logger;
         }
 
-        public Task Invoke(HttpContext httpContext)
+        public async Task Invoke(HttpContext httpContext)
         {
             try
             {
@@ -28,11 +26,39 @@ namespace Server.Middleware
             }
             catch
             {
-                Console.WriteLine("Exception occured on middleware");
+                Logger.Log("Exception occured on middleware");
             }
-            _logger.Log("Incoming " + httpContext.Request.Method + " request to: " + httpContext.Request.Path);
+            Logger.Log("Incoming " + httpContext.Request.Method + " request to: " + httpContext.Request.Path);
+            string bodyContent = await new StreamReader(httpContext.Request.Body).ReadToEndAsync();
+            Logger.Log("Request body: " + bodyContent);
+            httpContext.Request.Body.Position = 0;
 
-            return _next(httpContext);
+            Stream originalBody = httpContext.Response.Body;
+
+            try
+            {
+                using (var memStream = new MemoryStream())
+                {
+                    httpContext.Response.Body = memStream;
+
+                    await _next(httpContext);
+
+                    memStream.Position = 0;
+                    string responseBody = new StreamReader(memStream).ReadToEnd();
+
+                    Logger.Log("Request " + httpContext.Request.Path + " fulfilled");
+                    Logger.Log("Response body: " + responseBody);
+
+                    memStream.Position = 0;
+                    await memStream.CopyToAsync(originalBody);
+                }
+
+            }
+            finally
+            {
+                httpContext.Response.Body = originalBody;
+            }
+
         }
     }
 
