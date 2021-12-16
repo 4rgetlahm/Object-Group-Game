@@ -5,9 +5,11 @@ namespace Server.Services
 {
     public interface IExpeditionService
     {
-        Character ApplyRewards(Expedition expedition, List<Item> rewards);
+        void ApplyRewards(Expedition expedition, List<Item> rewards);
         int CheckIfExpeditionCompleted(Expedition expedition);
         List<Item> GenerateExpeditionRewards(Expedition expedition);
-        Character RemoveExpedition(Expedition expedition);
+        void RemoveExpedition(Expedition expedition);
+        void RemovePlayerExpedition(Player player);
+        Player GetPlayerFromExpedition(Expedition expedition);
     }
 }

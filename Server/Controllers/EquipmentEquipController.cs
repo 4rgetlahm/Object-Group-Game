@@ -31,7 +31,7 @@ namespace Server.Controllers
             _equipmentService = equipmentService;
         }
 
-        /*[HttpPost]
+        [HttpPost]
         public Equipment Post([FromBody] ItemEquipRequest itemEquipRequest)
         {
             Session session = SessionManager.Instance.GetRealSession(Convert.FromBase64String(itemEquipRequest.SessionID));
@@ -40,20 +40,13 @@ namespace Server.Controllers
                 _equipmentService.EquipItem(Convert.FromBase64String(itemEquipRequest.SessionID), itemEquipRequest.Item);
                 using(var context = new DataContext())
                 {
-                    //context.Entry()
-                    Character realCharacter = context.Character
-                            .Include(i => i.Items)
-                            .Include(e => e.Equipment)
-                            .Where(c => c.CharacterID == SessionManager.Instance.Sessions[session].Character.CharacterID).FirstOrDefault();
-
-                    context.Entry(realCharacter).Reference(c => c.Equipment).Load();
-                    Console.WriteLine(JsonConvert.SerializeObject(realCharacter));
-                    return realCharacter.Equipment;
+                    return SessionManager.Instance.Sessions[session].Character.Equipment;
                 }
             }
             return null;
-        }*/
-        [HttpPost]
+        }
+
+        /*[HttpPost]
         public Equipment Post([FromBody] ItemEquipRequest itemEquipRequest)
         {
             Session session = SessionManager.Instance.GetRealSession(Convert.FromBase64String(itemEquipRequest.SessionID));
@@ -122,7 +115,7 @@ namespace Server.Controllers
                 }
             }
             return null;
-        }
+        }*/
 
     }
 }

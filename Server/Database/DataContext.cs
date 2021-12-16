@@ -23,6 +23,14 @@ namespace GameLibrary.Database
 		public DbSet<Mission> Mission { get; set; }
 		public DbSet<Expedition> Expedition { get; set; }
 
+		public DbSet<Equipment> Equipment { get; set; }
+
+		public void Replace<TEntity>(TEntity oldEntity, TEntity newEntity) where TEntity : class
+		{
+			ChangeTracker.TrackGraph(oldEntity, e => e.Entry.State = EntityState.Deleted);
+			ChangeTracker.TrackGraph(newEntity, e => e.Entry.State = e.Entry.IsKeySet ? EntityState.Modified : EntityState.Added);
+		}
+
 		protected override void OnConfiguring (DbContextOptionsBuilder optionsBuilder)
 		{
 			// SQL server connection string

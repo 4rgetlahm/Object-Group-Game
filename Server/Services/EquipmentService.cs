@@ -15,12 +15,7 @@ namespace Server.Services
     {
         public void EquipItem(Session session, Item item)
         {
-            Session realSession = SessionManager.Instance.GetRealSession(session);
-            if (realSession == null)
-            {
-                return;
-            }
-            EquipItem(SessionManager.Instance.Sessions[realSession].Character, item);
+            EquipItem(session.SessionID, item);
         }
 
         public void EquipItem(byte[] sessionID, Item item)
@@ -30,17 +25,19 @@ namespace Server.Services
             {
                 return;
             }
-            EquipItem(SessionManager.Instance.Sessions[realSession].Character, item);
+            EquipItem(SessionManager.Instance.Sessions[realSession], item);
         }
 
-        public void EquipItem(Character character, Item item)
+        public void EquipItem(Player player, Item item)
         {
-            if (character == null)
+            if (player == null)
             {
                 return;
             }
-
-            Console.WriteLine(character.Name);
+            if (player.Character == null)
+            {
+                return;
+            }
             if (item == null)
             {
                 return;
@@ -48,46 +45,74 @@ namespace Server.Services
 
             IItemService itemService = new ItemService();
             Item dbItem = itemService.GetRealItem(item);
-            Console.WriteLine(dbItem.Name);
+
             if (dbItem == null)
             {
                 return;
             }
-            // check if player has the item
-            using (var context = new DataContext())
+
+            if (!itemService.CheckIfPlayerHasItem(player, dbItem))
             {
-                Console.WriteLine("checkitems");
-                if (character.Items.Find(i => i.ItemID == dbItem.ItemID) == null)
-                {
-                    return;
-                }
-
-                switch (dbItem.ItemType)
-                {
-                    case ItemType.HELMET:
-                        character.Equipment.Helmet = dbItem;
-                        break;
-                    case ItemType.BODY:
-                        character.Equipment.BodyItem = dbItem;
-                        break;
-                    case ItemType.LEGS:
-                        character.Equipment.LegItem = dbItem;
-                        break;
-                    case ItemType.BOOTS:
-                        character.Equipment.Boots = dbItem;
-                        break;
-                    case ItemType.WEAPON:
-                        character.Equipment.Weapon = dbItem;
-                        break;
-                }
-                context.Entry(character).State = EntityState.Modified;
-                context.SaveChanges();
-                Character realCharacter = context.Character
-                            .Include(i => i.Items)
-                            .Include(e => e.Equipment)
-                            .Where(c => c.CharacterID == character.CharacterID).FirstOrDefault();
-
+                return;
             }
+
+            switch (dbItem.ItemType)
+            {
+                case ItemType.HELMET:
+                    player.Character.Equipment.Helmet = dbItem;
+                    break;
+                case ItemType.BODY:
+                    player.Character.Equipment.BodyItem = dbItem;
+                    break;
+                case ItemType.LEGS:
+                    player.Character.Equipment.LegItem = dbItem;
+                    break;
+                case ItemType.BOOTS:
+                    player.Character.Equipment.Boots = dbItem;
+                    break;
+                case ItemType.WEAPON:
+                    player.Character.Equipment.Weapon = dbItem;
+                    break;
+            }
+        }
+        public void UnequipItem(Session session, ItemType itemType)
+        {
+            UnequipItem(session.SessionID, itemType);
+        }
+
+        public void UnequipItem(byte[] sessionID, ItemType itemType)
+        {
+            Session realSession = SessionManager.Instance.GetRealSession(sessionID);
+            if (realSession == null)
+            {
+                return;
+            }
+            UnequipItem(SessionManager.Instance.Sessions[realSession], itemType);
+        }
+
+        public void UnequipItem(Player player, ItemType itemType)
+        {
+            Console.WriteLine(itemType.ToString());
+            Console.WriteLine("BEFORE: " + JsonConvert.SerializeObject(player));
+            switch (itemType)
+            {
+                case ItemType.HELMET:
+                    player.Character.Equipment.Helmet = null;
+                    break;
+                case ItemType.BODY:
+                    player.Character.Equipment.BodyItem = null;
+                    break;
+                case ItemType.LEGS:
+                    player.Character.Equipment.LegItem = null;
+                    break;
+                case ItemType.BOOTS:
+                    player.Character.Equipment.Boots = null;
+                    break;
+                case ItemType.WEAPON:
+                    player.Character.Equipment.Weapon = null;
+                    break;
+            }
+            Console.WriteLine("AFTER: " + JsonConvert.SerializeObject(player));
         }
     }
 }

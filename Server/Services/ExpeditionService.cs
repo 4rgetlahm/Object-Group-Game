@@ -3,6 +3,7 @@ using GameLibrary.Database;
 using GameLibrary.Inventory;
 using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json;
+using Server.Authentication;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -41,7 +42,7 @@ namespace Server.Services
         {
             using (var context = new DataContext())
             {
-                Expedition realExpedition = context.Expedition.Include(e => e.Mission).Where(e => e.ExpeditionID == expedition.ExpeditionID).FirstOrDefault();
+                Expedition realExpedition = context.Expedition.Include(e => e.Mission).SingleOrDefault(e => e.ExpeditionID == expedition.ExpeditionID);
                 if (realExpedition == null)
                 {
                     return -1;
@@ -56,7 +57,7 @@ namespace Server.Services
             }
         }
 
-        public Character ApplyRewards(Expedition expedition, List<Item> rewards)
+        public void ApplyRewards(Expedition expedition, List<Item> rewards)
         {
             using (var context = new DataContext())
             {
@@ -69,7 +70,7 @@ namespace Server.Services
                 var expeditionCharacter = context.Character.Include(e => e.Expedition).Include(i => i.Items).SingleOrDefault(c => c.Expedition.ExpeditionID == expedition.ExpeditionID);
                 if (expeditionCharacter == null || realExpedition == null)
                 {
-                    return null;
+                    return;
                 }
                 context.Entry(expeditionCharacter).State = EntityState.Detached;
                 context.Character.Attach(expeditionCharacter);
@@ -87,10 +88,50 @@ namespace Server.Services
                 //context.Entry(expeditionCharacter.Items.First()).State = EntityState.Added;
 
                 context.SaveChanges();
-                return expeditionCharacter;
             }
         }
 
+        public Player GetPlayerFromExpedition(Expedition expedition)
+        {
+            using(var context = new DataContext())
+            {
+                Player dbPlayer = context.Player.SingleOrDefault(p => p.Character.Expedition.ExpeditionID == expedition.ExpeditionID);
+                if(dbPlayer == null)
+                {
+                    return null;
+                }
+                return SessionManager.Instance.GetRealPlayer(dbPlayer);
+            }
+        }
+
+        public void RemoveExpedition(Expedition expedition)
+        {
+            Player player = GetPlayerFromExpedition(expedition);
+            using (var context = new DataContext())
+            {
+                //Expedition realExpedition = context.Expedition.SingleOrDefault(e => e.ExpeditionID == expedition.ExpeditionID);
+                Player realPlayer = context.Player
+                    .Include(p => p.Character)
+                    .ThenInclude(e => e.Expedition)
+                    .SingleOrDefault(p => p.Character.Expedition.ExpeditionID == expedition.ExpeditionID);
+                if (realPlayer != null)
+                {
+                    context.Remove(realPlayer.Character.Expedition);
+                    //context.Remove(realExpedition);
+                    context.SaveChanges();
+                }
+            }
+        }
+
+        public void RemovePlayerExpedition(Player player)
+        {
+            if(player != null)
+            {
+                player.Character.Expedition = null;
+            }
+        }
+
+        /*
         public Character RemoveExpedition(Expedition expedition)
         {
             using (var context = new DataContext())
@@ -110,6 +151,6 @@ namespace Server.Services
                 context.SaveChanges();
                 return expeditionCharacter;
             }
-        }
+        }*/
     }
 }

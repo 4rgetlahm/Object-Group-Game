@@ -3,6 +3,7 @@ using GameLibrary.Database;
 using GameLibrary.Inventory;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Server.Authentication;
 using Server.Services;
 using System;
 using System.Collections.Generic;
@@ -16,9 +17,11 @@ namespace Server.Controllers
     public class ExpeditionRewardController : ControllerBase
     {
         private readonly IExpeditionService _expeditionService;
-        public ExpeditionRewardController(IExpeditionService expeditionService)
+        private readonly IItemService _itemService;
+        public ExpeditionRewardController(IExpeditionService expeditionService, IItemService itemService)
         {
             _expeditionService = expeditionService;
+            _itemService = itemService;
         }
 
         [HttpPost]
@@ -30,13 +33,15 @@ namespace Server.Controllers
                 return new Tuple<int, Character>(expeditionState, null);
             }
             List<Item> rewards = _expeditionService.GenerateExpeditionRewards(expedition);
-            Character applyCharacter = _expeditionService.ApplyRewards(expedition, rewards);
-            if (applyCharacter == null)
+            Player player = _expeditionService.GetPlayerFromExpedition(expedition);
+            Console.WriteLine(player.Character.Items);
+            if (rewards != null)
             {
-                return new Tuple<int, Character>(-2, null);
+                _itemService.GiveItems(player, rewards);
             }
-            Character finalCharacter = _expeditionService.RemoveExpedition(expedition);
-            return new Tuple<int, Character>(1, finalCharacter);
+            _expeditionService.RemovePlayerExpedition(player);
+
+            return new Tuple<int, Character>(1, player.Character);
         }
     }
 }

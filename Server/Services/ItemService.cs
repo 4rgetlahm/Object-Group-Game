@@ -29,31 +29,41 @@ namespace Server.Services
             {
                 return;
             }
-            GiveItem(SessionManager.Instance.Sessions[realSession].Character, item);
+            GiveItem(SessionManager.Instance.Sessions[realSession], item);
         }
 
-        public void GiveItems(Character character, List<Item> items)
+        public void GiveItems(Player player, List<Item> items)
         {
+            if(player == null || items == null)
+            {
+                return;
+            }
             foreach(Item item in items)
             {
-                GiveItem(character, item);
+                GiveItem(player, item);
             }
         }
 
-        public void GiveItem(Character character, Item item)
+        public void GiveItem(Player player, Item item)
         {
             if (item == null)
             {
                 return;
             }
-            using (var context = new DataContext())
+            if(!CheckIfPlayerHasItem(player, item))
             {
-                Item realItem = context.Item.Find(item.ItemID);
-                List<Item> newItemList = new List<Item>(character.Items);
-                newItemList.Add(realItem);
-                character.Items = newItemList;
-                context.SaveChanges();
+                player.Character.Items.Add(item);
             }
+        }
+
+        public bool CheckIfPlayerHasItem(Player player, Item item)
+        {
+            if(item == null)
+            {
+                return false;
+            }
+
+            return player.Character.Items.Find(i => i.ItemID == item.ItemID) != null;
         }
     }
 }

@@ -2,6 +2,7 @@
 using GameLibrary.Database;
 using Server;
 using Server.Authentication;
+using Server.Services;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,6 +15,12 @@ namespace Server.Authentication
 {
     public class Authenticator : IAuthenticator
     {
+        private ISavingService _savingService;
+        public Authenticator(ISavingService savingService)
+        {
+            _savingService = savingService;
+        }
+
         static byte[] GenerateSaltedHash(byte[] plainText, byte[] salt)
         {
             HashAlgorithm algorithm = new SHA256Managed();
@@ -60,6 +67,7 @@ namespace Server.Authentication
                         db.Entry(player.Character).Collection(l => l.VisitedLocations).Load();
                         db.Entry(player.Character).Reference(e => e.Equipment).Load();
                         db.Entry(player.Character).Reference(e => e.Expedition).Load();
+
                         if (player.Character.Expedition != null)
                         {
                             db.Entry(player.Character.Expedition).Reference(m => m.Mission).Load();
@@ -122,6 +130,7 @@ namespace Server.Authentication
                 Session realSession = SessionManager.Instance.GetRealSession(session);
                 if(realSession != null)
                 {
+                    _savingService.Save(SessionManager.Instance.Sessions[realSession]);
                     SessionManager.Instance.Sessions.Remove(realSession);
                     return 1;
                 }

@@ -4,6 +4,7 @@ using GameLibrary.Inventory;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Server.Authentication;
+using Server.Services;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -22,62 +23,22 @@ namespace Server.Controllers
     [Route("equipment/unequip")]
     public class EquipmentUnequipController : Controller
     {
+        private readonly IEquipmentService _equipmentService;
+
+        public EquipmentUnequipController(IEquipmentService equipmentService)
+        {
+            _equipmentService = equipmentService;
+        }
+
         [HttpPost]
         public Equipment Post([FromBody] ItemUnequipRequest itemUnequipRequest)
         {
             Session session = SessionManager.Instance.GetRealSession(Convert.FromBase64String(itemUnequipRequest.SessionID));
-            Console.WriteLine(itemUnequipRequest.ItemType);
             if (session != null)
             {
-                try
-                {
-                    using (var context = new DataContext())
-                    {
-                        // get player by sessionid
-                        Player player = SessionManager.Instance.Sessions[session];
-                        //get character by player via db
-                        Character realCharacter = context.Character
-                            .Include(i => i.Items)
-                            .Include(e => e.Equipment)
-                            .Where(c => c.CharacterID == player.Character.CharacterID).FirstOrDefault();
-                        if (realCharacter == null)
-                        {
-                            return null;
-                        }
-
-                        switch (itemUnequipRequest.ItemType)
-                        {
-                            case ItemType.HELMET:
-                                realCharacter.Equipment.Helmet = null;
-                                break;
-                            case ItemType.BODY:
-                                realCharacter.Equipment.BodyItem = null;
-                                break;
-                            case ItemType.LEGS:
-                                realCharacter.Equipment.LegItem = null;
-                                break;
-                            case ItemType.BOOTS:
-                                realCharacter.Equipment.Boots = null;
-                                break;
-                            case ItemType.WEAPON:
-                                realCharacter.Equipment.Weapon = null;
-                                break;
-
-                        }
-                        context.Entry(player).State = EntityState.Modified;
-                        context.SaveChanges();
-                        //context.Entry(player).State = Microsoft.EntityFrameworkCore.EntityState.Detached;
-                        player.Character = realCharacter;
-                        return realCharacter.Equipment;
-                    }
-
-                }
-                catch (Exception e)
-                {
-                    Console.WriteLine("Caught exception while trying to fetch locations: " + e.Message);
-                }
+                _equipmentService.UnequipItem(Convert.FromBase64String(itemUnequipRequest.SessionID), itemUnequipRequest.ItemType);
             }
-            return null;
+            return SessionManager.Instance.Sessions[session].Character.Equipment;
         }
 
     }

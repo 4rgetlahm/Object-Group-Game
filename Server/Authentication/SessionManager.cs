@@ -103,6 +103,14 @@ namespace Server.Authentication
             }
         }
 
+        public Player GetRealPlayer(Player player)
+        {
+            lock (this.Sessions)
+            {
+                return this.Sessions.Values.SingleOrDefault(p => p.PlayerID == player.PlayerID);
+            }
+        }
+
         public bool IsLoggedIn(Player player)
         {
             lock (this.Sessions)
