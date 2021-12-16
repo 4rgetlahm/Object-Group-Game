@@ -2,6 +2,7 @@
 using GameLibrary.Database;
 using NUnit.Framework;
 using Server.Authentication;
+using Server.Services;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,6 +14,7 @@ namespace Tests.Authentication
     class AuthenticationTests
     {
         private IAuthenticator _authenticator;
+        private IExpeditionService _expeditionService;
         private SessionManager sessionManager;
         private string username;
         private string password;
@@ -21,8 +23,8 @@ namespace Tests.Authentication
         [OneTimeSetUp]
         public void FirstTimeSetUp()
         {
-            _authenticator = new Authenticator();
-            username = "testuser";
+            _authenticator = new Authenticator(new SavingService());
+            username = "testuser1";
             password = "password12@c";
             sessionManager = SessionManager.Instance;
         }
