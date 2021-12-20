@@ -34,7 +34,6 @@ public class PlayerLoader : MonoBehaviour
                 throw new BadResponseException("Returned player is null!");
             }
             LocalPlayer.Instance.Player = player;
-            //ChangeLocalData(player);
         }
         catch (BadResponseException e)
         {

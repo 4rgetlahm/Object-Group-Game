@@ -61,9 +61,10 @@ namespace Server.Authentication
         {
             lock (this.LastRequest)
             {
-                if (LastRequest.ContainsKey(session))
+                Session realSession = this.GetRealSession(session);
+                if (LastRequest.ContainsKey(realSession))
                 {
-                    LastRequest[session] = dateTime;
+                    LastRequest[realSession] = dateTime.ToUniversalTime();
                 }
             }
         }

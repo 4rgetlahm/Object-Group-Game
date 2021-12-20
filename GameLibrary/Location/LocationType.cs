@@ -18,6 +18,7 @@ namespace GameLibrary
         HOLY,
         DARK,
         PARK,
-        MISC
+        MISC,
+        LANDMARK
     }
 }

@@ -16,6 +16,11 @@ namespace GameLibrary.Inventory
         HOLY_SWORD,
         ROGUE_HOOD,
         STEEL_BOOTS,
-        DARK_BOW
+        DARK_BOW,
+        FIRE_SWORD,
+        WARDEN_ARMOR,
+        STAFF_OF_THE_UNDEAD,
+        SHIELD,
+        FISH
     }
 }

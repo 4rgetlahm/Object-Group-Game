@@ -23,7 +23,7 @@ public class ProgressBar : MonoBehaviour
     [SerializeField]
     BarType barType;
 
-    void Start()
+    void Awake()
     {
         LocalPlayer.Instance.LocalPlayerUpdateEvent += this.OnLocalPlayerDataChange;
     }

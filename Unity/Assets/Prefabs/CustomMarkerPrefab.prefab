@@ -239,6 +239,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bc686be0f0b0e5b4293ba110f8702bb9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  locationColors:
+  - {r: 0.08235294, g: 0.5372549, b: 0, a: 0}
+  - {r: 0.37254903, g: 1, b: 0.427451, a: 0}
+  - {r: 0.83921576, g: 0.5686275, b: 0, a: 0}
+  - {r: 0.15686275, g: 0.7019608, b: 1, a: 0}
+  - {r: 0.18431373, g: 1, b: 0.93725497, a: 0}
+  - {r: 0.21176472, g: 0.6156863, b: 1, a: 0}
+  - {r: 0.28627452, g: 0.38823533, b: 1, a: 0}
+  - {r: 1, g: 0.98823535, b: 0, a: 0}
+  - {r: 0.454902, g: 0, b: 1, a: 0}
+  - {r: 0.9960785, g: 0.40000004, b: 1, a: 0}
+  - {r: 1, g: 0, b: 0, a: 0}
+  - {r: 1, g: 0.6353313, b: 0.3537736, a: 0}
   forestColor: {r: 0.08185915, g: 0.5377358, b: 0, a: 0}
   plainsColor: {r: 0.3726415, g: 1, b: 0.42623818, a: 0}
   dunesColor: {r: 0.8396226, g: 0.5673315, b: 0, a: 0}
@@ -250,6 +263,7 @@ MonoBehaviour:
   darkColor: {r: 0.4533291, g: 0, b: 1, a: 0}
   parkColor: {r: 0.99618566, g: 0.4009434, b: 1, a: 0}
   miscColor: {r: 1, g: 0, b: 0, a: 0}
+  landmarkColor: {r: 0, g: 0, b: 0, a: 0}
   meshRenderer: {fileID: 5782911830088302083}
 --- !u!114 &7507267982873469165
 MonoBehaviour:

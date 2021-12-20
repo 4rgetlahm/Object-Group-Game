@@ -117,6 +117,8 @@ namespace Tests.Database
                 Mission mission2 = new Mission("Collect Holy Herbs", "Area around Cathedral have a lot of holy herbs that are used in potions.\nGather those herbs for a reward!", MissionType.GATHER, new TimeSpan(0, 2, 0), new TimeSpan(0, 5, 0), gatherDrops, 200.0, 10.0);
                 location.Missions.Add(mission);
                 location.Missions.Add(mission2);
+                db.Add(location);
+                db.SaveChanges();
 
                 Assert.Multiple(() =>
                     {

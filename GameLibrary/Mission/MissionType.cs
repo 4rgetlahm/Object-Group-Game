@@ -8,6 +8,8 @@ namespace GameLibrary
     {
         FIGHT,
         SCOUT,
-        GATHER
+        GATHER,
+        DELIVER,
+        HELP
     }
 }

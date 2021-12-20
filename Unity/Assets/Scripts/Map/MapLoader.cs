@@ -121,7 +121,7 @@ public class MapLoader : MonoBehaviour
 			//Debug.Log(1 / _map.Zoom);
 			//location.Value.GetComponent<RadiusRenderer>().ChangeZoomLevel(_map.Zoom);
 		}
-		if (GPS.Instance.isLocationServiceActive)
+		/*if (GPS.Instance.isLocationServiceActive)
 		{
 			if(playerMarker == null)
             {
@@ -130,6 +130,6 @@ public class MapLoader : MonoBehaviour
 				playerMarker.GetComponent<LabelSetter>().Set("PLAYER");
 			}
 			playerMarker.transform.localPosition = _map.GeoToWorldPosition(new Vector2d(GPS.Instance.Latitude, GPS.Instance.Longtitude), true);
-		}
+		}*/
 	}
 }

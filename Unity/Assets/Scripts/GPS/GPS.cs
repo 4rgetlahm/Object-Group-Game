@@ -7,21 +7,21 @@ public class GPS : MonoBehaviour
 {
 
 
-    private static readonly Lazy<GPS> _instance =
-        new Lazy<GPS>(() => new GPS());
+    /*private static readonly Lazy<GPS> _instance =
+        new Lazy<GPS>(() => new GPS());*/
 
     public bool isLocationServiceActive = false;
 
     public float Latitude { get; set; }
     public float Longtitude { get; set; }
 
-    public static GPS Instance
+    /*public static GPS Instance
     {
         get
         {
             return _instance.Value;
         }
-    }
+    }*/
 
     private void Start()
     {
