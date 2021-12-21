@@ -2,6 +2,8 @@
 using GameLibrary.Database;
 using Server;
 using Server.Authentication;
+using Server.Logging;
+using Server.Services;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,6 +16,12 @@ namespace Server.Authentication
 {
     public class Authenticator : IAuthenticator
     {
+        private ISavingService _savingService;
+        public Authenticator(ISavingService savingService)
+        {
+            _savingService = savingService;
+        }
+
         static byte[] GenerateSaltedHash(byte[] plainText, byte[] salt)
         {
             HashAlgorithm algorithm = new SHA256Managed();
@@ -38,7 +46,7 @@ namespace Server.Authentication
             {
                 using (var db = new DataContext())
                 {
-                    Player player = db.Player.First(p => p.Name == username);
+                    Player player = db.Player.SingleOrDefault(p => p.Name == username);
                     if (player == null) // if player doesn't exist
                     {
                         return new Tuple<int, Session>(-1, null); // -1 = player doesn't exist
@@ -58,19 +66,26 @@ namespace Server.Authentication
                         db.Entry(player).Reference(c => c.Character).Load();
                         db.Entry(player.Character).Collection(i => i.Items).Load();
                         db.Entry(player.Character).Collection(l => l.VisitedLocations).Load();
+                        db.Entry(player.Character).Reference(e => e.Equipment).Load();
+                        db.Entry(player.Character).Reference(e => e.Expedition).Load();
+
+                        if (player.Character.Expedition != null)
+                        {
+                            db.Entry(player.Character.Expedition).Reference(m => m.Mission).Load();
+                        }
                         return new Tuple<int, Session>(1, SessionManager.Instance.CreateSession(player)); // login
                     }
                 }
             }
             catch (Exception e)
             {
-                Console.WriteLine(e.Message);
+                Logger.Log(e);
             }
 
             return new Tuple<int, Session>(0, null);
         }
 
-        public Tuple<int, Session> Register(string username, string password)
+        public Tuple<int, Session> Register(string username, string password, CharacterType characterType = CharacterType.MODEL_MALE_1)
         {
             Regex regex = new Regex(Configuration.GetInstance().Settings["usernameregex"]);
             if (!regex.IsMatch(username))
@@ -92,7 +107,7 @@ namespace Server.Authentication
                     rngCSP.GetBytes(salt);
 
                     Player player = new Player(username);
-                    player.Character = new Character(name: username, gold: 50.0);
+                    player.Character = new Character(username, characterType);
                     db.Entry(player).Property("Salt").CurrentValue = Convert.ToBase64String(salt);
                     db.Entry(player).Property("Password").CurrentValue = Convert.ToBase64String(GenerateSaltedHash(Encoding.UTF8.GetBytes(password), salt));
                     db.Add(player);
@@ -104,7 +119,7 @@ namespace Server.Authentication
             }
             catch (Exception e)
             {
-                Console.WriteLine(e.Message);
+                Logger.Log(e);
             }
             return new Tuple<int, Session>(0, null);
         }
@@ -116,6 +131,7 @@ namespace Server.Authentication
                 Session realSession = SessionManager.Instance.GetRealSession(session);
                 if(realSession != null)
                 {
+                    _savingService.Save(SessionManager.Instance.Sessions[realSession]);
                     SessionManager.Instance.Sessions.Remove(realSession);
                     return 1;
                 }
@@ -123,7 +139,7 @@ namespace Server.Authentication
             }
             catch (Exception e)
             {
-                Console.WriteLine("Exception on logout: " + e.StackTrace);
+                Logger.Log(e);
             }
             return 0;
         }

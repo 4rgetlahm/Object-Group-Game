@@ -22,11 +22,20 @@ namespace GameLibrary
 
         [DefaultValue(PlayerRole.Default)]
         public PlayerRole PlayerRole { get; private set; }
-        public Character Character { get; set; }
+        private Character _character;
+        public Character Character
+        {
+            get { return _character; }
+            set
+            {
+                _character = value;
+                OnPlayerUpdate(new PlayerEventArgs(this));
+            }
+        }
 
         protected Player()
         {
-
+            
         }
 
         public Player(string name)
@@ -34,7 +43,7 @@ namespace GameLibrary
             this.Name = name;
         }
 
-        public Player(int PlayerID, string name)
+        public Player(int PlayerID, string name) : base()
         {
             this.PlayerID = PlayerID;
             this.Name = name;

@@ -22,7 +22,7 @@ namespace Server.Authentication
         }
 
         private Timer SessionHandlingTimer { get; set; }
-        private Authentication.SessionHandler SessionHandler { get; set; }
+        public Authentication.SessionHandler SessionHandler { get; set; }
         public Dictionary<Session, Player> Sessions { get; set; }
         public Dictionary<Session, DateTime> LastRequest { get; set; }
 
@@ -34,7 +34,7 @@ namespace Server.Authentication
             SessionHandler = new SessionHandler(Int64.Parse(Configuration.GetInstance().Settings["sessionexpirytime"]));
             var autoEvent = new AutoResetEvent(false);
 
-            SessionHandlingTimer = new Timer(SessionHandler.ExpireSessions, null, 0, Int64.Parse(Configuration.GetInstance().Settings["sessionexpirychecktime"]));
+            SessionHandlingTimer = new Timer(SessionHandler.ExpireSessionsTick, null, 0, Int64.Parse(Configuration.GetInstance().Settings["sessionexpirychecktime"]));
         }
 
         public Session CreateSession(Player player)
@@ -61,9 +61,10 @@ namespace Server.Authentication
         {
             lock (this.LastRequest)
             {
-                if (LastRequest.ContainsKey(session))
+                Session realSession = this.GetRealSession(session);
+                if (LastRequest.ContainsKey(realSession))
                 {
-                    LastRequest[session] = dateTime;
+                    LastRequest[realSession] = dateTime.ToUniversalTime();
                 }
             }
         }
@@ -89,17 +90,7 @@ namespace Server.Authentication
         {
             lock (this.Sessions)
             { 
-                Session realSession = this.Sessions.Keys.FirstOrDefault(
-                    delegate (Session currentSession)
-                    {
-                        if (currentSession.SessionID.SequenceEqual(session.SessionID))
-                        {
-                            return true;
-                        }
-                        return false;
-                    }
-                );
-
+                Session realSession = this.Sessions.Keys.FirstOrDefault(s => s.SessionID.SequenceEqual(session.SessionID));
                 return realSession;
             }
         }
@@ -108,18 +99,16 @@ namespace Server.Authentication
         {
             lock (this.Sessions)
             {
-                Session realSession = this.Sessions.Keys.FirstOrDefault(
-                    delegate (Session currentSession)
-                    {
-                        if (currentSession.SessionID.SequenceEqual(session))
-                        {
-                            return true;
-                        }
-                        return false;
-                    }
-                );
-
+                Session realSession = this.Sessions.Keys.FirstOrDefault(s => s.SessionID.SequenceEqual(session));
                 return realSession;
+            }
+        }
+
+        public Player GetRealPlayer(Player player)
+        {
+            lock (this.Sessions)
+            {
+                return this.Sessions.Values.SingleOrDefault(p => p.PlayerID == player.PlayerID);
             }
         }
 

@@ -10,6 +10,7 @@ using RestSharp;
 using Mapbox.Json;
 using System;
 using GameLibrary.Exceptions;
+using GameLibrary;
 
 public class MapLoader : MonoBehaviour
 {
@@ -18,12 +19,26 @@ public class MapLoader : MonoBehaviour
 		public double Latitude { get; set; }
 		public double Longtitude { get; set; }
 	}
-	class LocationModel
-    {
-		public string DisplayName { get; set; }
+	class LocationModel : IEquatable<LocationModel>
+	{
+		public int LocationID { get; set; }
+		public string Name { get; set; }
 		public LocationType LocationType { get; set; }
 
+		public int Radius { get;  set;}
+
 		public Coordinate Coordinate;
+
+		public List<Mission> Missions { get; set; }
+
+		public bool Equals(LocationModel other)
+        {
+            if(this.LocationID == other.LocationID)
+            {
+				return true;
+            }
+			return false;
+        }
     }
 
 
@@ -31,7 +46,10 @@ public class MapLoader : MonoBehaviour
 	AbstractMap _map;
 
 	[SerializeField]
-	List<LocationModel> Locations;
+	List<LocationModel> VisitedLocations;
+
+	[SerializeField]
+	List<LocationModel> AllLocations;
 
 	[SerializeField]
 	float _spawnScale;
@@ -39,12 +57,18 @@ public class MapLoader : MonoBehaviour
 	[SerializeField]
 	GameObject _markerPrefab;
 
+	private GameObject playerMarker;
+
+
+
 	Dictionary<LocationModel, GameObject> SpawnedObjects;
 
 	void Start()
 	{
-		Locations = new List<LocationModel>();
-		var request = new RestRequest("/locationlist?sessionid=" + Uri.EscapeDataString(Convert.ToBase64String(Session.SessionID)), Method.GET);
+		VisitedLocations = new List<LocationModel>();
+		 
+		var request = new RestRequest("/player/location/list?sessionid=" + Uri.EscapeDataString(Convert.ToBase64String(Session.SessionID)), Method.GET);
+		var requestAllLocations = new RestRequest("/locationlist", Method.GET);
 		try
 		{
 			var response = Network.Instance.restClient.Execute(request);
@@ -52,7 +76,15 @@ public class MapLoader : MonoBehaviour
             {
 				throw new BadResponseException("Request failed!");
             }
-			Locations = JsonConvert.DeserializeObject<List<LocationModel>>(response.Content);
+			VisitedLocations = JsonConvert.DeserializeObject<List<LocationModel>>(response.Content);
+
+			var allLocationsResponse = Network.Instance.restClient.Execute(requestAllLocations);
+			if (allLocationsResponse.StatusCode != System.Net.HttpStatusCode.OK)
+			{
+				throw new BadResponseException("Request failed!");
+			}
+			AllLocations = JsonConvert.DeserializeObject<List<LocationModel>>(allLocationsResponse.Content);
+			Debug.Log(allLocationsResponse.Content);
 		}
 		catch(Exception e)
         {
@@ -61,14 +93,22 @@ public class MapLoader : MonoBehaviour
         }
 
 		SpawnedObjects = new Dictionary<LocationModel, GameObject>();
-		foreach(var location in Locations)
+		foreach(var location in AllLocations)
 		{
 			var instance = Instantiate(_markerPrefab);
-			instance.GetComponent<MaterialSetter>().Set(location.LocationType);
-			instance.GetComponent<LabelSetter>().Set(location.DisplayName);
+			instance.GetComponent<ColorSetter>().Set(location.LocationType);
+			instance.GetComponent<LabelSetter>().Set(location.Name);
+			//instance.GetComponent<RadiusRenderer>().SetRadius(location.Radius);
+			instance.GetComponent<LocationInfoHolder>().Location = new Location(location.LocationID, location.Name, location.LocationType, location.Coordinate.Latitude, location.Coordinate.Longtitude, location.Radius, location.Missions);
+			instance.GetComponent<LocationInfoHolder>().Visited = false;
+			if (VisitedLocations.Contains(location))
+            {
+				instance.GetComponent<LocationInfoHolder>().Visited = true;
+			}
 			instance.transform.localPosition = _map.GeoToWorldPosition(new Vector2d(location.Coordinate.Latitude, location.Coordinate.Longtitude), true);
 			instance.transform.localScale = new Vector3(_spawnScale, _spawnScale, _spawnScale);
 			SpawnedObjects.Add(location, instance);
+			Debug.Log(location.Radius);
 		}
 	}
 
@@ -77,7 +117,19 @@ public class MapLoader : MonoBehaviour
 		foreach (var location in SpawnedObjects)
 		{
 			location.Value.transform.localPosition = _map.GeoToWorldPosition(new Vector2d(location.Key.Coordinate.Latitude, location.Key.Coordinate.Longtitude), true);
-			location.Value.transform.localScale = new Vector3(_spawnScale, _spawnScale, _spawnScale);
+			//location.Value.transform.localScale = new Vector3(_spawnScale, _spawnScale, _spawnScale);
+			//Debug.Log(1 / _map.Zoom);
+			//location.Value.GetComponent<RadiusRenderer>().ChangeZoomLevel(_map.Zoom);
 		}
+		/*if (GPS.Instance.isLocationServiceActive)
+		{
+			if(playerMarker == null)
+            {
+				playerMarker = Instantiate(_markerPrefab);
+				playerMarker.GetComponent<ColorSetter>().Set(LocationType.DARK);
+				playerMarker.GetComponent<LabelSetter>().Set("PLAYER");
+			}
+			playerMarker.transform.localPosition = _map.GeoToWorldPosition(new Vector2d(GPS.Instance.Latitude, GPS.Instance.Longtitude), true);
+		}*/
 	}
 }

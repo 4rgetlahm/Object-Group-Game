@@ -5,24 +5,23 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Text;
 
-namespace GameLibrary
+namespace GameLibrary.Inventory
 {
 	[Table("Effects")]
 	public class Effect
 	{
 		[Key]
 		public int ID { get; set; }
-		public string StatusName { get; set; }
-		public string DisplayName { get; set; }
-		public int Value { get; set; }
+		public string Name { get; set; }
+
+		public EffectType EffectType { get; set; }
 		[JsonIgnore]
 		public List<Item> Items { get; set; }
 
-		public Effect(string statusName, string displayName, int value)
+		public Effect(string name, EffectType effectType)
 		{
-			this.StatusName = statusName;
-			this.DisplayName = displayName;
-			this.Value = value;
+			this.Name = name;
+			this.EffectType = effectType;
 		}
 
 		protected Effect()

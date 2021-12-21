@@ -1,4 +1,6 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using GameLibrary.Inventory;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using System.Text.Json;
 
 namespace GameLibrary.Database
@@ -10,6 +12,7 @@ namespace GameLibrary.Database
 			//use when want to add tables
 			//Database.EnsureDeleted();
 			Database.EnsureCreated();
+			this.ChangeTracker.LazyLoadingEnabled = true;
 		}
 
 		public DbSet<Character> Character { get; set; }
@@ -17,6 +20,10 @@ namespace GameLibrary.Database
 		public DbSet<Item> Item { get; set; }
 		public DbSet<Effect> Effect { get; set; }
 		public DbSet<Player> Player { get; set; }
+		public DbSet<Mission> Mission { get; set; }
+		public DbSet<Expedition> Expedition { get; set; }
+
+		public DbSet<Equipment> Equipment { get; set; }
 
 		protected override void OnConfiguring (DbContextOptionsBuilder optionsBuilder)
 		{
@@ -41,6 +48,7 @@ namespace GameLibrary.Database
 			modelBuilder.Entity<Character>().HasMany(l => l.VisitedLocations);
 			modelBuilder.Entity<Location>().HasMany(c => c.Characters);
 
+			modelBuilder.Entity<Character>().HasOne(e => e.Equipment);
 
 			modelBuilder.Entity<Item>().HasMany(e => e.Effects);
 			modelBuilder.Entity<Effect>().HasMany(i => i.Items);
@@ -53,6 +61,12 @@ namespace GameLibrary.Database
 					v => JsonSerializer.Serialize(v, null),
 					v => JsonSerializer.Deserialize<Coordinate>(v, null)
 				);
+			modelBuilder.Entity<Location>().HasMany(m => m.Missions);
+
+			modelBuilder.Entity<Mission>().Property(m => m.MinDuration).HasConversion(new TimeSpanToTicksConverter());
+			modelBuilder.Entity<Mission>().Property(m => m.MaxDuration).HasConversion(new TimeSpanToTicksConverter());
+
+			modelBuilder.Entity<Expedition>().Property(d => d.Duration).HasConversion(new TimeSpanToTicksConverter());
 
 			base.OnModelCreating(modelBuilder);
         }

@@ -23,7 +23,7 @@ public class ProgressBar : MonoBehaviour
     [SerializeField]
     BarType barType;
 
-    void Start()
+    void Awake()
     {
         LocalPlayer.Instance.LocalPlayerUpdateEvent += this.OnLocalPlayerDataChange;
     }
@@ -33,20 +33,19 @@ public class ProgressBar : MonoBehaviour
         switch (barType)
         {
             case BarType.HEALTH:
-                Current = LocalPlayer.Instance.Health;
+                Current = LocalPlayer.Instance.Player.Character.Health;
                 break;
             case BarType.MANA:
-                Current = LocalPlayer.Instance.Mana;
+                Current = LocalPlayer.Instance.Player.Character.Mana;
                 break;
             case BarType.EXPERIENCE:
-                Current = LocalPlayer.Instance.Experience;
+                Current = LocalPlayer.Instance.Player.Character.Experience;
                 break;
         }
         if (Value != null)
         {
             Value.text = Current + " / " + Maximum;
         }
-        float fillAmount = (float) Current / (float) Maximum;
-        Mask.fillAmount = fillAmount;
+        Mask.fillAmount = (float)Current / (float)Maximum;
     }
 }

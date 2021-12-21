@@ -15,12 +15,12 @@ class SessionResponse
     public string SessionID { get; set; }
 }
 
-class RequestModel
+class LoginRequestModel
 {
     public string Username { get; set; }
     public string Password { get; set; }
 
-    public RequestModel(string Username, string Password)
+    public LoginRequestModel(string Username, string Password)
     {
         this.Username = Username;
         this.Password = Password;
@@ -29,8 +29,10 @@ class RequestModel
 
 public class AuthenticationHandler : MonoBehaviour
 {
-    public GameObject usernameInput;
-    public GameObject passwordInput;
+    [SerializeField]
+    private GameObject usernameInput;
+    [SerializeField]
+    private GameObject passwordInput;
 
     private RestRequest FormatAuthRequest(string apiURL, Method method)
     {
@@ -38,7 +40,7 @@ public class AuthenticationHandler : MonoBehaviour
         string password = passwordInput.GetComponent<TMP_InputField>().text;
 
         var request = new RestRequest(apiURL, method);
-        var body = new RequestModel(username, password);
+        var body = new LoginRequestModel(username, password);
 
         request.AddParameter("application/json; charset=utf-8", JsonConvert.SerializeObject(body, Formatting.Indented), ParameterType.RequestBody);
         request.RequestFormat = DataFormat.Json;
@@ -51,41 +53,6 @@ public class AuthenticationHandler : MonoBehaviour
         SceneManager.LoadScene("Game");
     }
 
-    public void Register()
-    {
-        try
-        {
-            var response = Network.Instance.restClient.Execute(FormatAuthRequest("/register", Method.POST));
-            if (!response.IsSuccessful)
-            {
-                Debug.Log("Error authenticating");
-                return;
-            }
-            Tuple<int, SessionResponse> serverResponse = JsonConvert.DeserializeObject<Tuple<int, SessionResponse>>(response.Content);
-            switch (serverResponse.Item1)
-            {
-                case 1:
-                    Session.SessionID = Convert.FromBase64String(serverResponse.Item2.SessionID);
-                    Debug.Log("Registered, status 1, session: " + serverResponse.Item2.SessionID);
-                    OnLogin();
-                    break;
-                case -1:
-                    Debug.Log("Username already exists!");
-                    break;
-                case -2:
-                    Debug.Log("Invalid username!");
-                    break;
-                default:
-                    Debug.Log("Something went wrong...");
-                    break;
-            }
-        }
-        catch (Exception e)
-        {
-            Debug.Log("Caught exception");
-        }
-    }
-
     public void Login(){
         try
         {
@@ -96,6 +63,7 @@ public class AuthenticationHandler : MonoBehaviour
                 return;
             }
             Tuple<int, SessionResponse> serverResponse = JsonConvert.DeserializeObject<Tuple<int, SessionResponse>>(response.Content);
+            Debug.Log(serverResponse);
             switch (serverResponse.Item1)
             {
                 case 1:

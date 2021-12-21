@@ -1,14 +1,18 @@
+using GameLibrary.Database;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
 using Newtonsoft.Json.Serialization;
 using Server.Authentication;
+using Server.Logging;
+using Server.Middleware;
+using Server.Services;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -28,7 +32,10 @@ namespace Server
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddSingleton<IAuthenticator, Authenticator>();
+            services.AddSingleton<IAuthenticator>(new Authenticator(new SavingService()));
+            services.AddScoped<IExpeditionService, ExpeditionService>();
+            services.AddScoped<IItemService, ItemService>();
+            services.AddScoped<IEquipmentService, EquipmentService>();
 
             services.AddControllersWithViews().AddNewtonsoftJson(options =>
                 options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore)
@@ -50,6 +57,13 @@ namespace Server
                 app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "Server v1"));
             }
 
+            /*app.Use(async (context, next) => {
+                context.Request.EnableBuffering();
+                await next();
+            });*/
+
+            app.UseRequestLoggingMiddleware();
+
             app.UseHttpsRedirection();
 
             app.UseRouting();
@@ -60,6 +74,7 @@ namespace Server
             {
                 endpoints.MapControllers();
             });
+
         }
 
     }

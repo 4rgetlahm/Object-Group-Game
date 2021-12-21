@@ -25,15 +25,15 @@ namespace GameLibrary
 				OnLocationEdited(new LocationEventArgs(this));
 			}
 		}
-		private string _displayName;
-		public string DisplayName {
+		private string _name;
+		public string Name {
 			get
 			{
-				return _displayName;
+				return _name;
 			}
 			set
 			{
-				_displayName = value;
+				_name = value;
 				OnLocationEdited(new LocationEventArgs(this));
 			}
 		}
@@ -73,6 +73,35 @@ namespace GameLibrary
 				OnLocationEdited(new LocationEventArgs(this));
 			}
 		}
+
+		private int _level;
+		public int Level
+        {
+            get
+            {
+				return _level;
+            }
+            set
+            {
+				_level = value;
+				OnLocationEdited(new LocationEventArgs(this));
+            }
+        }
+
+		private List<Mission> _missions;
+		public virtual List<Mission> Missions
+        {
+            get
+            {
+				return _missions;
+            }
+            set
+            {
+				_missions = value;
+				OnLocationEdited(new LocationEventArgs(this));
+            }
+        }
+
 		[JsonIgnore]
 		public List<Character> Characters { get; set; }
 
@@ -80,12 +109,23 @@ namespace GameLibrary
 		public event LocationUpdateEventHandler LocationUpdateEvent;
 
 
-		public Location (string DisplayName, LocationType LocationType, double Latitude, double Longtitude, int Radius)
+		public Location (string Name, LocationType LocationType, double Latitude, double Longtitude, int Radius)
 		{
-			this.DisplayName = DisplayName;
+			this.Name = Name;
 			this.LocationType = LocationType;
 			Coordinate = new Coordinate(Latitude, Longtitude);
 			this.Radius = Radius;
+			this.Missions = new List<Mission>();
+		}
+
+		public Location(int locationID, string Name, LocationType LocationType, double Latitude, double Longtitude, int Radius, List<Mission> missions)
+		{
+			this.LocationID = locationID;
+			this.Name = Name;
+			this.LocationType = LocationType;
+			Coordinate = new Coordinate(Latitude, Longtitude);
+			this.Radius = Radius;
+			this.Missions = missions;
 		}
 
 		protected Location()

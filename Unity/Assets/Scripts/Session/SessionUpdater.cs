@@ -31,7 +31,6 @@ public class SessionUpdater
 
         try
         {
-            Console.WriteLine(body);
             var response = Network.Instance.restClient.Execute(request);
             if (!response.IsSuccessful)
             {
